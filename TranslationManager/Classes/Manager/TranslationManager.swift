@@ -45,7 +45,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     public internal(set) var currentLanguage: L?
     
     /// Internal handler closure for language change.
-    internal var languageChangedAction: (() -> Void)?
+    public weak var delegate: TranslationManagerDelegate?
     
     /// The previous accept header string that was used.
     internal var lastAcceptHeader: String? {
@@ -168,22 +168,21 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
             case .success(let translationsData):
                 // New translations downloaded
                 
-                var languageChanged = false
-                if self.lastAcceptHeader != self.acceptLanguage {
+                if let lastAcceptHeader = self.lastAcceptHeader,
+                    lastAcceptHeader != self.acceptLanguage {
                     // Language changed from last time, clearing first
                     try self.clearTranslations(includingPersisted: true)
-                    languageChanged = true
+
+                    // Running language changed action
+                    defer {
+                        self.delegate?.translationManager(self, languageUpdated: self.currentLanguage)
+                    }
                 }
                 
                 self.lastAcceptHeader = self.acceptLanguage
                 try self.set(response: translationsData)
                 
                 try completion?(nil)
-                
-                if languageChanged {
-                    // Running language changed action
-                    self.languageChangedAction?()
-                }
                 
             case .failure(let error):
                 // Error downloading translations data
