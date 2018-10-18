@@ -122,6 +122,9 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         self.repository = repository
         self.fileManager = fileManager
         self.userDefaults = userDefaults
+        
+        // Try updating the translations
+        updateTranslations()
     }
     
     ///Find a translation for a key.
