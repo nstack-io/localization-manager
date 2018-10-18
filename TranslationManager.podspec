@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "TranslationManager"
-  spec.version      = "0.0.1"
+  spec.version      = "0.0.2"
   spec.summary      = "A manager for handling translation in your iOS application."
 
   # This description is used to generate tags and improve search results.
