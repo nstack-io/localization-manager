@@ -59,6 +59,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.platforms = { :ios => "10.3" }
+  spec.swift_version = '4.2'
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
