@@ -1,5 +1,5 @@
 //
-//  TranslationManager.swift
+//  TranslatableManager.swift
 //  TranslationManager
 //
 //  Created by Dominik Hadl on 18/10/2018.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-/// The Translation Manager handles everything related to translations.
-public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
+/// The TranslatableManager handles everything related to translations.
+public class TranslatableManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
     
     /// Repository that provides translations.
     let repository: TranslationRepository
