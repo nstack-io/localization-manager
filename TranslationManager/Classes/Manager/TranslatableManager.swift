@@ -1,5 +1,5 @@
 //
-//  TranslationManager.swift
+//  TranslatableManager.swift
 //  TranslationManager
 //
 //  Created by Dominik Hadl on 18/10/2018.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-/// The Translations Manager handles everything related to translations.
-public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
+/// The TranslatableManager handles everything related to translations.
+public class TranslatableManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
     
     /// Repository that provides translations.
-    let repository: TranslationsRepository
+    let repository: TranslationRepository
     
     /// File manager handling persisting new translation data.
     let fileManager: FileManager
@@ -39,13 +39,13 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     }()
 
     /// In memory cache of the translations object.
-    internal var translationsObject: Translatable?
+    internal var translatableObject: Translatable?
     
     /// In memory cache of the last language object.
     public internal(set) var currentLanguage: L?
     
     /// Internal handler closure for language change.
-    internal var languageChangedAction: (() -> Void)?
+    public weak var delegate: TranslationManagerDelegate?
     
     /// The previous accept header string that was used.
     internal var lastAcceptHeader: String? {
@@ -116,12 +116,15 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     ///
     /// - Parameters:
     ///   - repository: Repository that can provide translations.
-    required public init(repository: TranslationsRepository,
+    required public init(repository: TranslationRepository,
                          fileManager: FileManager = .default,
                          userDefaults: UserDefaults = .standard) {
         self.repository = repository
         self.fileManager = fileManager
         self.userDefaults = userDefaults
+        
+        // Try updating the translations
+        updateTranslations()
     }
     
     ///Find a translation for a key.
@@ -145,11 +148,11 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         let key = keys[1]
         
         // Try to load if we don't have any translations
-        if translationsObject == nil {
+        if translatableObject == nil {
             try createTranslatableObject(T.self)
         }
         
-        return translationsObject?[section]?[key]
+        return translatableObject?[section]?[key]
     }
     
     // MARK: - Update & Fetch -
@@ -165,22 +168,21 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
             case .success(let translationsData):
                 // New translations downloaded
                 
-                var languageChanged = false
-                if self.lastAcceptHeader != self.acceptLanguage {
+                if let lastAcceptHeader = self.lastAcceptHeader,
+                    lastAcceptHeader != self.acceptLanguage {
                     // Language changed from last time, clearing first
                     try self.clearTranslations(includingPersisted: true)
-                    languageChanged = true
+
+                    // Running language changed action
+                    defer {
+                        self.delegate?.translationManager(self, languageUpdated: self.currentLanguage)
+                    }
                 }
                 
                 self.lastAcceptHeader = self.acceptLanguage
                 try self.set(response: translationsData)
                 
                 try completion?(nil)
-                
-                if languageChanged {
-                    // Running language changed action
-                    self.languageChangedAction?()
-                }
                 
             case .failure(let error):
                 // Error downloading translations data
@@ -227,7 +229,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         }
         
         // Check object in memory
-        if let cachedObject = translationsObject as? T {
+        if let cachedObject = translatableObject as? T {
             return cachedObject
         }
         
@@ -235,7 +237,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         try createTranslatableObject(T.self)
         
         // Now we must have correct translations, so return it
-        return translationsObject as! T
+        return translatableObject as! T
     }
     
     /// Clears both the memory and persistent cache. Used for debugging purposes.
@@ -244,7 +246,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     ///                                 file will be deleted.
     public func clearTranslations(includingPersisted: Bool = false) throws {
         // In memory translations cleared
-        translationsObject = nil
+        translatableObject = nil
         
         if includingPersisted {
             try set(response: nil)
@@ -260,12 +262,12 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         
         // Figure out and set translations
         guard let parsed = try processAllTranslations(translations)  else {
-            translationsObject = nil
+            translatableObject = nil
             return
         }
 
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
-        translationsObject = try decoder.decode(T.self, from: data)
+        translatableObject = try decoder.decode(T.self, from: data)
     }
     
     // MARK: - Dictionaries -
