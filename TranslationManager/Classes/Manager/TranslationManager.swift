@@ -9,10 +9,6 @@
 import Foundation
 
 /// The Translations Manager handles everything related to translations.
-///
-/// Usually, direct interaction with the `Translations Manager` shouldn't be neccessary, since
-/// it is setup automatically by the NStack manager, and the translations are accessible by the
-/// global 'tr' variable defined in the auto-generated translations Swift file.
 public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
     
     /// Repository that provides translations.
@@ -54,16 +50,16 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     /// The previous accept header string that was used.
     internal var lastAcceptHeader: String? {
         get {
-            return UserDefaults.standard.string(forKey: Constants.Keys.previousAcceptLanguage)
+            return userDefaults.string(forKey: Constants.Keys.previousAcceptLanguage)
         }
         set {
             guard let newValue = newValue else {
                 // Last accept header deleted
-                UserDefaults.standard.removeObject(forKey: Constants.Keys.previousAcceptLanguage)
+                userDefaults.removeObject(forKey: Constants.Keys.previousAcceptLanguage)
                 return
             }
             // Last accept header set to: \(newValue).
-            UserDefaults.standard.set(newValue, forKey: Constants.Keys.previousAcceptLanguage)
+            userDefaults.set(newValue, forKey: Constants.Keys.previousAcceptLanguage)
         }
     }
     
@@ -71,120 +67,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     /// to call `updateTranslations()` after changing the value.
     /// Otherwise, the effect will not be seen.
     internal var languageOverride: L? {
-        get {
-            return UserDefaults.standard.model(forKey: Constants.Keys.languageOverride)
-        }
-        set {
-            if let newValue = newValue {
-                // Override language set to: \(newValue.locale)
-                UserDefaults.standard.set(newValue, forKey: Constants.Keys.languageOverride)
-            } else {
-                // Override language deleted.
-                UserDefaults.standard.removeObject(forKey: Constants.Keys.languageOverride)
-            }
-            clearTranslations()
-        }
-    }
-    
-    // MARK: - Lifecycle -
-    
-    /// Instantiates and sets the type of the translations object and the repository from which
-    /// translations are fetched. Usually this is invoked by the NStack start method, so under normal
-    /// circumstances, it should not be neccessary to invoke it directly.
-    ///
-    /// - Parameters:
-    ///   - repository: Repository that can provide translations.
-    required public init(repository: TranslationsRepository,
-                         fileManager: FileManager = .default,
-                         userDefaults: UserDefaults = .standard) {
-        self.repository = repository
-        self.fileManager = fileManager
-        self.userDefaults = userDefaults
-    }
-    
-    ///Find a translation for a key.
-    ///
-    /// - Parameters:
-    ///   - keyPath: The key that string should be found on.
-    public func translationString(keyPath: String) throws -> String? {
-        guard !keyPath.isEmpty else {
-            return nil
-        }
-        
-        // Split the key path
-        let keys = keyPath.components(separatedBy: ".")
-        
-        // Make sure we only have section and key components
-        guard keys.count == 2 else {
-            throw TranslationError.invalidKeyPath
-        }
-        
-        let section = keys[0]
-        let key = keys[1]
-        
-        // Try to load if we don't have any translations
-        if translationsObject == nil {
-            loadTranslations(T.self)
-        }
-        
-        return translationsObject?[section]?[key]
-    }
-    
-    // MARK: - Update & Fetch -
-    
-    /// Fetches the latest version of the translations. Normally, the translations are aquired
-    /// when performing the NStack public call, so in most scenarios, this method won't have to
-    /// be called directly. Use it if you need to force refresh the translations during
-    /// app use, for example if manually switching language.
-    ///
-    /// - Parameter completion: Called when translation fetching has finished. Check if the error
-    ///                         object is nil to determine whether the operation was a succes.
-    public func updateTranslations(_ completion: ((_ error: TranslationError?) -> Void)? = nil) {
-        // Starting translations update asynchronously.
-        repository.getTranslations(acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
-            switch result {
-            case .success(let translationsData):
-                // New translations downloaded
-                
-                var languageChanged = false
-                if self.lastAcceptHeader != self.acceptLanguage {
-                    // Language changed from last time, clearing first
-                    self.clearTranslations(includingPersisted: true)
-                    languageChanged = true
-                }
-                
-                self.lastAcceptHeader = self.acceptLanguage
-                self.set(response: translationsData)
-                
-                completion?(nil)
-                
-                if languageChanged {
-                    // Running language changed action
-                    self.languageChangedAction?()
-                }
-                
-            case .failure(let error):
-                // Error downloading translations data
-                completion?(.updateFailed(error))
-                
-            }
-        }
-    }
-    
-    /// Gets the languages for which translations are available.
-    ///
-    /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
-    public func fetchAvailableLanguages(_ completion: @escaping (Result<[L]>) -> Void) {
-        // Fetching available language asynchronously
-        repository.getAvailableLanguages(completion: completion)
-    }
-    
-    /// Gets the language which is currently used for translations, based on the accept header.
-    ///
-    /// - Parameter completion: An Alamofire DataResponse object containing the language on success.
-    public func fetchCurrentLanguage(_ completion: @escaping (Result<L>) -> Void) {
-        // Fetching current language asynchronously
-        repository.getCurrentLanguage(acceptLanguage: acceptLanguage, completion: completion)
+        return userDefaults.model(forKey: Constants.Keys.languageOverride)
     }
     
     // MARK: - Accept Language -
@@ -226,19 +109,121 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         return components.joined(separator: ",")
     }
     
+    // MARK: - Lifecycle -
+    
+    /// Instantiates and sets the type of the translations object and the repository from which
+    /// translations are fetched.
+    ///
+    /// - Parameters:
+    ///   - repository: Repository that can provide translations.
+    required public init(repository: TranslationsRepository,
+                         fileManager: FileManager = .default,
+                         userDefaults: UserDefaults = .standard) {
+        self.repository = repository
+        self.fileManager = fileManager
+        self.userDefaults = userDefaults
+    }
+    
+    ///Find a translation for a key.
+    ///
+    /// - Parameters:
+    ///   - keyPath: The key that string should be found on.
+    public func translationString(keyPath: String) throws -> String? {
+        guard !keyPath.isEmpty else {
+            return nil
+        }
+        
+        // Split the key path
+        let keys = keyPath.components(separatedBy: ".")
+        
+        // Make sure we only have section and key components
+        guard keys.count == 2 else {
+            throw TranslationError.invalidKeyPath
+        }
+        
+        let section = keys[0]
+        let key = keys[1]
+        
+        // Try to load if we don't have any translations
+        if translationsObject == nil {
+            try createTranslatableObject(T.self)
+        }
+        
+        return translationsObject?[section]?[key]
+    }
+    
+    // MARK: - Update & Fetch -
+    
+    /// Fetches the latest version of the translations.
+    ///
+    /// - Parameter completion: Called when translation fetching has finished. Check if the error
+    ///                         object is nil to determine whether the operation was a succes.
+    public func updateTranslations(_ completion: ((_ error: TranslationError?) throws -> Void)? = nil) rethrows {
+        // Starting translations update asynchronously.
+        try repository.getTranslations(acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
+            switch result {
+            case .success(let translationsData):
+                // New translations downloaded
+                
+                var languageChanged = false
+                if self.lastAcceptHeader != self.acceptLanguage {
+                    // Language changed from last time, clearing first
+                    try self.clearTranslations(includingPersisted: true)
+                    languageChanged = true
+                }
+                
+                self.lastAcceptHeader = self.acceptLanguage
+                try self.set(response: translationsData)
+                
+                try completion?(nil)
+                
+                if languageChanged {
+                    // Running language changed action
+                    self.languageChangedAction?()
+                }
+                
+            case .failure(let error):
+                // Error downloading translations data
+                try completion?(.updateFailed(error))
+                
+            }
+        }
+    }
+    
+    /// Gets the languages for which translations are available.
+    ///
+    /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
+    public func fetchAvailableLanguages(_ completion: @escaping (Result<[L]>) -> Void) {
+        // Fetching available language asynchronously
+        repository.getAvailableLanguages(completion: completion)
+    }
+    
+    /// Useful for setting language override, fx. if you want to choose language in the settings of your app.
+    ///
+    /// - Parameter language: The language you would like to use.
+    /// - Throws: A `TranslationError` error if clearing translations fails.
+    func set<L>(languageOverride language: L?) throws where L: LanguageModel {
+        if let newValue = language {
+            userDefaults.set(newValue, forKey: Constants.Keys.languageOverride)
+        } else {
+            userDefaults.removeObject(forKey: Constants.Keys.languageOverride)
+        }
+        try clearTranslations()
+    }
+    
     // MARK: - Translations -
     
     /// The parsed translations object is cached in memory, but persisted as a dictionary.
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A translations object.
-    public func translations<T: Translatable>() -> T {
+    public func translations<T: Translatable>() throws -> T {
         // Clear translations if language changed
         if let lastAcceptHeader = lastAcceptHeader,
             lastAcceptHeader != acceptLanguage {
             // Language changed from last time, clearing translations
             self.lastAcceptHeader = acceptLanguage
-            clearTranslations()
+            try clearTranslations()
         }
         
         // Check object in memory
@@ -247,7 +232,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         }
         
         // Load persisted or fallback translations
-        loadTranslations(T.self)
+        try createTranslatableObject(T.self)
         
         // Now we must have correct translations, so return it
         return translationsObject as! T
@@ -257,36 +242,30 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     ///
     /// - Parameter includingPersisted: If set to `true`, local persisted translation
     ///                                 file will be deleted.
-    public func clearTranslations(includingPersisted: Bool = false) {
+    public func clearTranslations(includingPersisted: Bool = false) throws {
         // In memory translations cleared
         translationsObject = nil
         
         if includingPersisted {
-            persistedTranslations = nil
+            try set(response: nil)
         }
     }
     
     /// Loads and initializes the translations object from either persisted or fallback dictionary.
-    internal func loadTranslations<T>(_ type: T.Type) where T: Translatable {
-        // Loading translations
+    func createTranslatableObject<T>(_ type: T.Type) throws where T: Translatable {
+        let translations = try loadTranslations()
         
         // Set our language
-        currentLanguage = languageOverride ?? translationsDictionary.language
+        currentLanguage = languageOverride ?? translations.language
         
         // Figure out and set translations
-        guard let parsed = processAllTranslations(translationsDictionary),
-            let data = try? JSONSerialization.data(withJSONObject: parsed, options: []) else {
-                // logger?.log error couldn't get translations
-                translationsObject = nil
-                return
-        }
-        
-        guard let translations = try? decoder.decode(T.self, from: data) else {
-            // logger?.log error couldn't decode translations
+        guard let parsed = try processAllTranslations(translations)  else {
+            translationsObject = nil
             return
         }
-        
-        translationsObject = translations
+
+        let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
+        translationsObject = try decoder.decode(T.self, from: data)
     }
     
     // MARK: - Dictionaries -
@@ -294,98 +273,55 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     /// Saves the translations set.
     ///
     /// - Parameter translations: The new translations.
-    internal func set(response: TranslationResponse<L>?) {
-        //        guard let dictionary = response?.encodableRepresentation() as? NSDictionary else {
-        //            logger?.logError("Failed to create dicitonary from translations API response.")
-        //            return
-        //        }
-        //
-        //        // Persist the object
-        //        persistedTranslations = dictionary
-        //
-        //        // Reload the translations
-        //        _ = loadTranslations()
-        guard let object = response else {
-            // logger?.logError()
-            return
+    internal func set(response: TranslationResponse<L>?) throws {
+        guard let translationsFileUrl = translationsFileUrl else {
+            throw TranslationError.translationsFileUrlUnavailable
         }
         
-        // Persist the object
-        persistedTranslations = object
+        // Delete if new value is nil
+        guard let newValue = response else {
+            // No persisted translation file stored, no need to do anything
+            guard fileManager.fileExists(atPath: translationsFileUrl.path) else { return }
+            
+            // Delete persisted translations file
+            try fileManager.removeItem(at: translationsFileUrl)
+            
+            return
+        }
+
+        // Get encoded data
+        let data = try encoder.encode(newValue)
+        
+        // Save to disk
+        try data.write(to: translationsFileUrl, options: [.atomic])
+        
+        // Exclude from backup
+        try excludeUrlFromBackup(translationsFileUrl)
         
         // Reload the translations
-        loadTranslations(T.self)
+        try createTranslatableObject(T.self)
     }
     
     /// Returns the saved dictionary representation of the translations.
-    internal var translationsDictionary: TranslationResponse<L> {
-        return persistedTranslations ?? fallbackTranslations
+    internal func loadTranslations() throws -> TranslationResponse<L> {
+        guard let persisted = try persistedTranslations() else {
+            return try fallbackTranslations()
+        }
+        return persisted
     }
     
     /// Translations that were downloaded and persisted on disk.
-    internal var persistedTranslations: TranslationResponse<L>? {
-        get {
-            // Getting persisted traslations
-            guard let url = translationsFileUrl,
-                let data = try? Data(contentsOf: url) else {
-                    // No persisted translations available, returing nil
-                    return nil
-            }
-            
-            guard let object = try? decoder.decode(TranslationResponse<L>.self, from: data) else {
-                // Invalid data saved
-                return nil
-            }
-            
-            return object
+    internal func persistedTranslations() throws -> TranslationResponse<L>? {
+        // Getting persisted traslations
+        guard let url = translationsFileUrl else {
+            throw TranslationError.translationsFileUrlUnavailable
         }
-        set {
-            guard let translationsFileUrl = translationsFileUrl else {
-                return
-            }
-            
-            // Delete if new value is nil
-            guard let newValue = newValue else {
-                guard fileManager.fileExists(atPath: translationsFileUrl.path) else {
-                    // No persisted translation file stored, aborting
-                    return
-                }
-                
-                do {
-                    // Deleting persisted translations file
-                    try fileManager.removeItem(at: translationsFileUrl)
-                } catch {
-                    // Failed to delete persisted translatons
-                }
-                return
-            }
-            
-            guard let data = try? encoder.encode(newValue) else {
-                // Failed at encoding
-                // logger?.log something
-                return
-            }
-            
-            // Save to disk
-            var url = translationsFileUrl
-            do {
-                try data.write(to: url, options: [.atomic])
-            } catch {
-                // Failed to persist translations to disk: \(error.localizedDescription)
-                return
-            }
-            // Translations persisted to disk
-            
-            // Exclude from backup
-            do {
-                // Excluding persisted translations from backup
-                var resourceValues = URLResourceValues()
-                resourceValues.isExcludedFromBackup = true
-                try url.setResourceValues(resourceValues)
-            } catch {
-                // Failed to exclude translations from backup. \(error.localizedDescription)
-            }
-        }
+        
+        // If file doesn't exist, return nil
+        guard fileManager.fileExists(atPath: url.path) else { return nil }
+        
+        let data = try Data(contentsOf: url)
+        return try decoder.decode(TranslationResponse<L>.self, from: data)
     }
     
     /// Loads the local JSON copy, has a return value so that it can be synchronously
@@ -393,34 +329,28 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     /// and the right one is chosen based on the current locale.
     ///
     /// - Returns: A dictionary representation of the selected local translations set.
-    internal var fallbackTranslations: TranslationResponse<L> {
+    internal func fallbackTranslations() throws -> TranslationResponse<L> {
+        // Iterate through bundle until we find the translations file
         for bundle in repository.fetchBundles() {
+            // Check if bundle contains translations file, otheriwse continue with next bundle
             guard let filePath = bundle.path(forResource: "Translations", ofType: "json") else {
-                // Bundle did not contain Translations.json file
                 continue
             }
             
             let fileUrl = URL(fileURLWithPath: filePath)
-            let data: Data
-            
-            do {
-                // Loading fallback translations file at: \(filePath)
-                data = try Data(contentsOf: fileUrl)
-            } catch {
-                // Failed to get data from fallback translations file
-                continue
-            }
-            
-            do {
-                // Converting loaded file to JSON object
-                return try decoder.decode(TranslationResponse.self, from: data)
-            } catch {
-                // Error loading translations JSON file
-            }
+            let data = try Data(contentsOf: fileUrl)
+            return try decoder.decode(TranslationResponse.self, from: data)
         }
         
         // Failed to load fallback translations, file non-existent
-        return TranslationResponse()
+        throw TranslationError.loadingFallbackTranslationsFailed
+    }
+    
+    internal func excludeUrlFromBackup(_ url: URL) throws {
+        var mutableUrl = url
+        var resourceValues = URLResourceValues()
+        resourceValues.isExcludedFromBackup = true
+        try mutableUrl.setResourceValues(resourceValues)
     }
     
     // MARK: - Parsing -
@@ -430,21 +360,21 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     ///
     /// - Parameter dictionary: Dictionary containing all translations under the `data` key.
     /// - Returns: Returns extracted language dictioanry for current accept language.
-    internal func processAllTranslations(_ object: TranslationResponse<L>) -> [String: Any]? {
+    internal func processAllTranslations(_ object: TranslationResponse<L>) throws -> [String: Any]? {
         // Processing translations dictionary
         guard !object.translations.isEmpty else {
             // Failed to get data from all translations dictionary
-            return nil
+            throw TranslationError.noTranslationsFound
         }
         
-        return extractLanguageDictionary(fromDictionary: object.translations)
+        return try extractLanguageDictionary(fromDictionary: object.translations)
     }
     
     /// Uses the device's current locale to select the appropriate translations set.
     ///
     /// - Parameter json: A dictionary containing translation sets by language code key.
     /// - Returns: A translations set as a dictionary.
-    internal func extractLanguageDictionary(fromDictionary dictionary: [String: Any]) -> [String: Any] {
+    internal func extractLanguageDictionary(fromDictionary dictionary: [String: Any]) throws -> [String: Any] {
         // Extracting language dictionary
         var languageDictionary: [String: Any]? = nil
         
@@ -476,9 +406,9 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         // Find matching language only
         for lanShort in shortLanguages {
             // Match just on language
-            if let dictinoary = translationsMatching(locale: lanShort, inDictionary: dictionary) {
+            if let dictionary = translationsMatching(locale: lanShort, inDictionary: dictionary) {
                 // Found matching language for short language code
-                return dictinoary
+                return dictionary
             }
         }
         
@@ -498,7 +428,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         }
         
         // Error loading translations. No translations available
-        return [:]
+        throw TranslationError.noTranslationsFound
     }
     
     /// Searches the translation file for a key matching the provided language code.
@@ -538,6 +468,6 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     /// The URL used to persist downloaded translations.
     internal var translationsFileUrl: URL? {
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-        return url?.appendingPathComponent("Translations.nstack")
+        return url?.appendingPathComponent("Translations.tmfile")
     }
 }

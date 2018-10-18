@@ -10,9 +10,8 @@ import Foundation
 
 public protocol TranslationsRepository {
     func getTranslations<L: LanguageModel>(acceptLanguage: String,
-                                           completion: @escaping (Result<TranslationResponse<L>>) -> Void)
-    func getCurrentLanguage<L: LanguageModel>(acceptLanguage: String, completion: @escaping (Result<L>) -> Void)
-    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
+                                           completion: @escaping (Result<TranslationResponse<L>>) throws -> Void) rethrows
+    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) throws -> Void) rethrows
     func fetchPreferredLanguages() -> [String]
     func fetchBundles() -> [Bundle]
 }
