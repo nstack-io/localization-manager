@@ -234,9 +234,10 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     /// - Returns: A translations object.
     public func translations<T: Translatable>() -> T {
         // Clear translations if language changed
-        if lastAcceptHeader != acceptLanguage {
+        if let lastAcceptHeader = lastAcceptHeader,
+            lastAcceptHeader != acceptLanguage {
             // Language changed from last time, clearing translations
-            lastAcceptHeader = acceptLanguage
+            self.lastAcceptHeader = acceptLanguage
             clearTranslations()
         }
         
