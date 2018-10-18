@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol TranslationManagerType: class {
-    init(repository: TranslationsRepository,
+    init(repository: TranslationRepository,
          fileManager: FileManager,
          userDefaults: UserDefaults)
     

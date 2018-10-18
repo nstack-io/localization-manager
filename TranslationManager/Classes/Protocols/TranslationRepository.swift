@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol TranslationsRepository {
+public protocol TranslationRepository {
     func getTranslations<L: LanguageModel>(acceptLanguage: String,
                                            completion: @escaping (Result<TranslationResponse<L>>) throws -> Void) rethrows
     func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) throws -> Void) rethrows

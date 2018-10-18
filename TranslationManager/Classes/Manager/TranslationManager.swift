@@ -8,11 +8,11 @@
 
 import Foundation
 
-/// The Translations Manager handles everything related to translations.
+/// The Translation Manager handles everything related to translations.
 public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
     
     /// Repository that provides translations.
-    let repository: TranslationsRepository
+    let repository: TranslationRepository
     
     /// File manager handling persisting new translation data.
     let fileManager: FileManager
@@ -39,7 +39,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     }()
 
     /// In memory cache of the translations object.
-    internal var translationsObject: Translatable?
+    internal var translatableObject: Translatable?
     
     /// In memory cache of the last language object.
     public internal(set) var currentLanguage: L?
@@ -116,7 +116,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     ///
     /// - Parameters:
     ///   - repository: Repository that can provide translations.
-    required public init(repository: TranslationsRepository,
+    required public init(repository: TranslationRepository,
                          fileManager: FileManager = .default,
                          userDefaults: UserDefaults = .standard) {
         self.repository = repository
@@ -148,11 +148,11 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         let key = keys[1]
         
         // Try to load if we don't have any translations
-        if translationsObject == nil {
+        if translatableObject == nil {
             try createTranslatableObject(T.self)
         }
         
-        return translationsObject?[section]?[key]
+        return translatableObject?[section]?[key]
     }
     
     // MARK: - Update & Fetch -
@@ -229,7 +229,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         }
         
         // Check object in memory
-        if let cachedObject = translationsObject as? T {
+        if let cachedObject = translatableObject as? T {
             return cachedObject
         }
         
@@ -237,7 +237,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         try createTranslatableObject(T.self)
         
         // Now we must have correct translations, so return it
-        return translationsObject as! T
+        return translatableObject as! T
     }
     
     /// Clears both the memory and persistent cache. Used for debugging purposes.
@@ -246,7 +246,7 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
     ///                                 file will be deleted.
     public func clearTranslations(includingPersisted: Bool = false) throws {
         // In memory translations cleared
-        translationsObject = nil
+        translatableObject = nil
         
         if includingPersisted {
             try set(response: nil)
@@ -262,12 +262,12 @@ public class TranslationManager<T: Translatable, L: LanguageModel>: TranslationM
         
         // Figure out and set translations
         guard let parsed = try processAllTranslations(translations)  else {
-            translationsObject = nil
+            translatableObject = nil
             return
         }
 
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
-        translationsObject = try decoder.decode(T.self, from: data)
+        translatableObject = try decoder.decode(T.self, from: data)
     }
     
     // MARK: - Dictionaries -
