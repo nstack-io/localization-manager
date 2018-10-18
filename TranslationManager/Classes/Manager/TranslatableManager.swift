@@ -161,17 +161,21 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     ///
     /// - Parameter completion: Called when translation fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
-    public func updateTranslations(_ completion: ((_ error: TranslationError?) throws -> Void)? = nil) rethrows {
+    public func updateTranslations(_ completion: ((_ error: Error?) -> Void)? = nil) {
         // Starting translations update asynchronously.
-        try repository.getTranslations(acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
+        repository.getTranslations(acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
             switch result {
             case .success(let translationsData):
                 // New translations downloaded
                 
                 if let lastAcceptHeader = self.lastAcceptHeader,
                     lastAcceptHeader != self.acceptLanguage {
-                    // Language changed from last time, clearing first
-                    try self.clearTranslations(includingPersisted: true)
+                    do {
+                        // Language changed from last time, clearing first
+                        try self.clearTranslations(includingPersisted: true)
+                    } catch {
+                        completion?(error)
+                    }
 
                     // Running language changed action
                     defer {
@@ -180,13 +184,18 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
                 }
                 
                 self.lastAcceptHeader = self.acceptLanguage
-                try self.set(response: translationsData)
                 
-                try completion?(nil)
+                do {
+                    try self.set(response: translationsData)
+                } catch {
+                    completion?(error)
+                }
+                
+                completion?(nil)
                 
             case .failure(let error):
                 // Error downloading translations data
-                try completion?(.updateFailed(error))
+                completion?(error)
                 
             }
         }
