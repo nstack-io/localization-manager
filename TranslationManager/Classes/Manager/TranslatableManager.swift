@@ -215,6 +215,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
                         try self.clearTranslations(includingPersisted: true)
                     } catch {
                         completion?(error)
+                        return
                     }
 
                     // Running language changed action
@@ -229,6 +230,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
                     try self.set(response: translationsData)
                 } catch {
                     completion?(error)
+                    return
                 }
                 
                 completion?(nil)
