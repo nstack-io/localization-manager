@@ -10,20 +10,9 @@ import Foundation
 
 /// The TranslatableManager handles everything related to translations.
 public class TranslatableManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
-    
-    /// Repository that provides translations.
-    let repository: TranslationRepository
-    
-    /// File manager handling persisting new translation data.
-    let fileManager: FileManager
-    
-    /// User defaults used to store basic information and settings.
-    let userDefaults: UserDefaults
-    
-    /// An observer used to observe application state.
-    internal lazy var stateObserver: ApplicationStateObserverType = {
-        return ApplicationStateObserver(delegate: self)
-    }()
+
+    // MARK: - Properties -
+    // MARK: Public
     
     /// The decoder used to decode on-the-fly downloaded translations into models.
     /// By default uses a `.convertFromSnakeCase` for the `keyDecodingStrategy` property,
@@ -42,38 +31,13 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         encoder.keyEncodingStrategy = .convertToSnakeCase
         return encoder
     }()
-
-    /// In memory cache of the translations object.
-    internal var translatableObject: Translatable?
+    
     
     /// In memory cache of the last language object.
     public internal(set) var currentLanguage: L?
     
     /// Internal handler closure for language change.
     public weak var delegate: TranslationManagerDelegate?
-    
-    /// The previous accept header string that was used.
-    internal var lastAcceptHeader: String? {
-        get {
-            return userDefaults.string(forKey: Constants.Keys.previousAcceptLanguage)
-        }
-        set {
-            guard let newValue = newValue else {
-                // Last accept header deleted
-                userDefaults.removeObject(forKey: Constants.Keys.previousAcceptLanguage)
-                return
-            }
-            // Last accept header set to: \(newValue).
-            userDefaults.set(newValue, forKey: Constants.Keys.previousAcceptLanguage)
-        }
-    }
-    
-    /// This language will be used instead of the phones' language when it is not `nil`. Remember
-    /// to call `updateTranslations()` after changing the value.
-    /// Otherwise, the effect will not be seen.
-    internal var languageOverride: L? {
-        return userDefaults.model(forKey: Constants.Keys.languageOverride)
-    }
     
     /// Returns a string containing the current locale's preferred languages in a prioritized
     /// manner to be used in a accept-language header. If no preferred language available,
@@ -112,7 +76,56 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         return components.joined(separator: ",")
     }
     
-    // MARK: - Lifecycle -
+    // MARK: Private
+    
+    /// Repository that provides translations.
+    fileprivate let repository: TranslationRepository
+    
+    /// File manager handling persisting new translation data.
+    fileprivate let fileManager: FileManager
+    
+    /// User defaults used to store basic information and settings.
+    fileprivate let userDefaults: UserDefaults
+    
+    /// An observer used to observe application state.
+    internal lazy var stateObserver: ApplicationStateObserverType = {
+        return ApplicationStateObserver(delegate: self)
+    }()
+
+    /// In memory cache of the translations object.
+    internal var translatableObject: Translatable?
+    
+    /// The previous accept header string that was used.
+    internal var lastAcceptHeader: String? {
+        get {
+            return userDefaults.string(forKey: Constants.Keys.previousAcceptLanguage)
+        }
+        set {
+            guard let newValue = newValue else {
+                // Last accept header deleted
+                userDefaults.removeObject(forKey: Constants.Keys.previousAcceptLanguage)
+                return
+            }
+            // Last accept header set to: \(newValue).
+            userDefaults.set(newValue, forKey: Constants.Keys.previousAcceptLanguage)
+        }
+    }
+    
+    /// This language will be used instead of the phones' language when it is not `nil`. Remember
+    /// to call `updateTranslations()` after changing the value.
+    /// Otherwise, the effect will not be seen.
+    internal var languageOverride: L? {
+        return userDefaults.model(forKey: Constants.Keys.languageOverride)
+    }
+    
+    /// The URL used to persist downloaded translations.
+    internal var translationsFileUrl: URL? {
+        let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        return url?.appendingPathComponent("Translations.tmfile")
+    }
+    
+    // MARK: - Methods -
+    // MARK: Lifecycle
     
     /// Instantiates and sets the type of the translations object and the repository from which
     /// translations are fetched.
@@ -136,8 +149,6 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         // Stop observing on deinit
         stateObserver.stopObserving()
     }
-    
-    // MARK: - Public -
     
     /// Find a translation for a key.
     ///
@@ -167,7 +178,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         return translatableObject?[section]?[key]
     }
     
-    // MARK: - Update & Fetch -
+    // MARK: Update & Fetch
     
     /// Fetches the latest version of the translations.
     ///
@@ -234,7 +245,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         try clearTranslations()
     }
     
-    // MARK: - Translations -
+    // MARK: Translations
     
     /// The parsed translations object is cached in memory, but persisted as a dictionary.
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
@@ -291,7 +302,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         translatableObject = try decoder.decode(T.self, from: data)
     }
     
-    // MARK: - Dictionaries -
+    // MARK: Dictionaries
     
     /// Saves the translations set.
     ///
@@ -376,7 +387,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         try mutableUrl.setResourceValues(resourceValues)
     }
     
-    // MARK: - Parsing -
+    // MARK: Parsing
     
     /// Unwraps and extracts proper language dictionary out of the dictionary containing
     /// all translations.
@@ -485,15 +496,9 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         
         return nil
     }
-    
-    // MARK: - Helpers -
-    
-    /// The URL used to persist downloaded translations.
-    internal var translationsFileUrl: URL? {
-        let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-        return url?.appendingPathComponent("Translations.tmfile")
-    }
 }
+
+// MARK: - ApplicationStateObserverDelegate
 
 extension TranslatableManager: ApplicationStateObserverDelegate {
     func applicationStateHasChanged(_ state: ApplicationState) {
