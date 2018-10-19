@@ -14,6 +14,9 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     // MARK: - Properties -
     // MARK: Public
     
+    /// The update mode used to determine how translations should update.
+    public var updateMode: UpdateMode
+    
     /// The decoder used to decode on-the-fly downloaded translations into models.
     /// By default uses a `.convertFromSnakeCase` for the `keyDecodingStrategy` property,
     /// which you can change if your API works differently.
@@ -127,22 +130,36 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     // MARK: - Methods -
     // MARK: Lifecycle
     
-    /// Instantiates and sets the type of the translations object and the repository from which
-    /// translations are fetched.
+    /// Instantiates and sets the repository from which translations are fetched and update mode
+    /// that determines how translations should be updated.
     ///
     /// - Parameters:
-    ///   - repository: Repository that can provide translations.
+    ///   - repository: The repository used to fetch translations and locale/language settings.
+    ///   - updateMode: Update mode that determines how should translations be updated. See `UpdateMode`.
+    ///   - fileManager: A file manager used to persist downloaded translations and load fallback translations.
+    ///   - userDefaults: User defaults that are used to accept headers and language override.
     required public init(repository: TranslationRepository,
+                         updateMode: UpdateMode = .automatic,
                          fileManager: FileManager = .default,
                          userDefaults: UserDefaults = .standard) {
+        // Set the properties
+        self.updateMode = updateMode
         self.repository = repository
         self.fileManager = fileManager
         self.userDefaults = userDefaults
         
         // Start observing state changes
         stateObserver.startObserving()
-        // Try updating the translations
-        updateTranslations()
+        
+        switch updateMode {
+        case .automatic:
+            // Try updating the translations
+            updateTranslations()
+            
+        case .manual:
+            // Don't do anything on manual update mode
+            break
+        }
     }
     
     deinit {
@@ -504,8 +521,16 @@ extension TranslatableManager: ApplicationStateObserverDelegate {
     func applicationStateHasChanged(_ state: ApplicationState) {
         switch state {
         case .foreground:
-            // Update translations when we go to foreground
-            break
+            // Update translations when we go to foreground and update mode is automatic
+            switch updateMode {
+            case .automatic:
+                updateTranslations()
+                
+            case .manual:
+                // Don't do anything on manual update mode
+                break
+            }
+            
         case .background:
             // Do nothing when we go to background
             break

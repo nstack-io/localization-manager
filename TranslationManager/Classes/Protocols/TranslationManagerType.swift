@@ -9,9 +9,5 @@
 import Foundation
 
 public protocol TranslationManagerType: class {
-    init(repository: TranslationRepository,
-         fileManager: FileManager,
-         userDefaults: UserDefaults)
-    
     func translations<T: Translatable>() throws -> T
 }
