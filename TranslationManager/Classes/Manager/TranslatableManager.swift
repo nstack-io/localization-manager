@@ -373,8 +373,17 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         // If file doesn't exist, return nil
         guard fileManager.fileExists(atPath: url.path) else { return nil }
         
-        let data = try Data(contentsOf: url)
-        return try decoder.decode(TranslationResponse<L>.self, from: data)
+        // If downloaded data is corrupted or wrong, try and delete it
+        do {
+            let data = try Data(contentsOf: url)
+            return try decoder.decode(TranslationResponse<L>.self, from: data)
+        } catch {
+            // Try deleting the file
+            if fileManager.isDeletableFile(atPath: url.path){
+                try? fileManager.removeItem(at: url)
+            }
+            return nil
+        }
     }
     
     /// Loads the local JSON copy, has a return value so that it can be synchronously
