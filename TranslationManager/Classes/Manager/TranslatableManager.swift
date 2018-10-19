@@ -20,6 +20,11 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     /// User defaults used to store basic information and settings.
     let userDefaults: UserDefaults
     
+    /// An observer used to observe application state.
+    internal lazy var stateObserver: ApplicationStateObserverType = {
+        return ApplicationStateObserver(delegate: self)
+    }()
+    
     /// The decoder used to decode on-the-fly downloaded translations into models.
     /// By default uses a `.convertFromSnakeCase` for the `keyDecodingStrategy` property,
     /// which you can change if your API works differently.
@@ -69,8 +74,6 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     internal var languageOverride: L? {
         return userDefaults.model(forKey: Constants.Keys.languageOverride)
     }
-    
-    // MARK: - Accept Language -
     
     /// Returns a string containing the current locale's preferred languages in a prioritized
     /// manner to be used in a accept-language header. If no preferred language available,
@@ -123,11 +126,20 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
         self.fileManager = fileManager
         self.userDefaults = userDefaults
         
+        // Start observing state changes
+        stateObserver.startObserving()
         // Try updating the translations
         updateTranslations()
     }
     
-    ///Find a translation for a key.
+    deinit {
+        // Stop observing on deinit
+        stateObserver.stopObserving()
+    }
+    
+    // MARK: - Public -
+    
+    /// Find a translation for a key.
     ///
     /// - Parameters:
     ///   - keyPath: The key that string should be found on.
@@ -480,5 +492,18 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     internal var translationsFileUrl: URL? {
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
         return url?.appendingPathComponent("Translations.tmfile")
+    }
+}
+
+extension TranslatableManager: ApplicationStateObserverDelegate {
+    func applicationStateHasChanged(_ state: ApplicationState) {
+        switch state {
+        case .foreground:
+            // Update translations when we go to foreground
+            break
+        case .background:
+            // Do nothing when we go to background
+            break
+        }
     }
 }
