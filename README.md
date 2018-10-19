@@ -37,6 +37,22 @@ on-the-fly translations in your iOS application.
 
 > TODO: Write info
 
+## Contributing
+
+> TODO: Write
+
+#### Release
+
+To make releases easier, there is a makefile in the repository that automatically updates all required files (ie. `podspec`, `CHANGELOG.md` and the `Info.plist`).
+
+To use it run the following:
+
+```bash
+$ make release '[VERSION]: [VERSION TEXT]'
+# ... ie.
+$ make release '0.0.7: Update mode feature'
+```
+
 ## 👥 Credits
 Made with ❤️ at [Nodes](http://nodesagency.com).
 
