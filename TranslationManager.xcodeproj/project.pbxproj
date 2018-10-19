@@ -26,6 +26,7 @@
 		C04AFBF32179DDC2002CB099 /* ApplicationStateObserverDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF22179DDC2002CB099 /* ApplicationStateObserverDelegate.swift */; };
 		C04AFBF52179DE04002CB099 /* ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF42179DE04002CB099 /* ApplicationState.swift */; };
 		C04AFBF72179E16E002CB099 /* ApplicationStateObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */; };
+		C04AFBF92179E2C7002CB099 /* UpdateMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF82179E2C7002CB099 /* UpdateMode.swift */; };
 		C061C1FB217889E400449A14 /* TranslationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C061C1F1217889E400449A14 /* TranslationManager.framework */; };
 		C061C202217889E400449A14 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -60,6 +61,7 @@
 		C04AFBF22179DDC2002CB099 /* ApplicationStateObserverDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStateObserverDelegate.swift; sourceTree = "<group>"; };
 		C04AFBF42179DE04002CB099 /* ApplicationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationState.swift; sourceTree = "<group>"; };
 		C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStateObserverType.swift; sourceTree = "<group>"; };
+		C04AFBF82179E2C7002CB099 /* UpdateMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMode.swift; sourceTree = "<group>"; };
 		C061C1F1217889E400449A14 /* TranslationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TranslationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C061C1F4217889E400449A14 /* TranslationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslationManager.h; sourceTree = "<group>"; };
 		C061C1F5217889E400449A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				C01D69E0217891DF00A1B354 /* TranslationResponse.swift */,
 				C01D69E22178923B00A1B354 /* Language.swift */,
 				C04AFBF42179DE04002CB099 /* ApplicationState.swift */,
+				C04AFBF82179E2C7002CB099 /* UpdateMode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				C01D69E32178923B00A1B354 /* Language.swift in Sources */,
 				C04AFBF32179DDC2002CB099 /* ApplicationStateObserverDelegate.swift in Sources */,
 				C01D69DE2178918200A1B354 /* Result.swift in Sources */,
+				C04AFBF92179E2C7002CB099 /* UpdateMode.swift in Sources */,
 				C01D69F32178989E00A1B354 /* String+Substring.swift in Sources */,
 				C01D69E8217893D500A1B354 /* Codable+Dictionary.swift in Sources */,
 				C01D69DA2178913A00A1B354 /* TranslationManagerType.swift in Sources */,
