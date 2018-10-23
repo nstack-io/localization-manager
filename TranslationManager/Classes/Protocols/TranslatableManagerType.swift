@@ -25,6 +25,7 @@ public protocol TranslatableManagerType: class {
     func updateTranslations(_ completion: ((_ error: Error?) -> Void)?)
     func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel
     
+    func set<L>(response: TranslationResponse<L>) throws where L: LanguageModel
     func set<L>(languageOverride language: L?) throws where L: LanguageModel
     func clearTranslations(includingPersisted: Bool) throws
 }

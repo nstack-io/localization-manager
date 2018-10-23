@@ -300,7 +300,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         translatableObject = nil
         
         if includingPersisted {
-            try set(response: nil)
+            try deletePersistedTranslations()
         }
     }
     
@@ -326,24 +326,13 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     /// Saves the translations set.
     ///
     /// - Parameter translations: The new translations.
-    internal func set(response: TranslationResponse<L>?) throws {
+    public func set<L>(response: TranslationResponse<L>) throws where L : LanguageModel {
         guard let translationsFileUrl = translationsFileUrl else {
             throw TranslationError.translationsFileUrlUnavailable
         }
         
-        // Delete if new value is nil
-        guard let newValue = response else {
-            // No persisted translation file stored, no need to do anything
-            guard fileManager.fileExists(atPath: translationsFileUrl.path) else { return }
-            
-            // Delete persisted translations file
-            try fileManager.removeItem(at: translationsFileUrl)
-            
-            return
-        }
-
         // Get encoded data
-        let data = try encoder.encode(newValue)
+        let data = try encoder.encode(response)
         
         // Save to disk
         try data.write(to: translationsFileUrl, options: [.atomic])
@@ -353,6 +342,18 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         
         // Reload the translations
         try createTranslatableObject(T.self)
+    }
+    
+    internal func deletePersistedTranslations() throws {
+        guard let translationsFileUrl = translationsFileUrl else {
+            throw TranslationError.translationsFileUrlUnavailable
+        }
+        
+        // No persisted translation file stored, no need to do anything
+        guard fileManager.fileExists(atPath: translationsFileUrl.path) else { return }
+        
+        // Delete persisted translations file
+        try fileManager.removeItem(at: translationsFileUrl)
     }
     
     /// Returns the saved dictionary representation of the translations.
