@@ -9,7 +9,7 @@
 import Foundation
 
 /// The TranslatableManager handles everything related to translations.
-public class TranslatableManager<T: Translatable, L: LanguageModel>: TranslationManagerType {
+public class TranslatableManager<T: Translatable, L: LanguageModel>: TranslatableManagerType {
 
     // MARK: - Properties -
     // MARK: Public
@@ -40,7 +40,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     public internal(set) var currentLanguage: L?
     
     /// Internal handler closure for language change.
-    public weak var delegate: TranslationManagerDelegate?
+    public weak var delegate: TranslatableManagerDelegate?
     
     /// Returns a string containing the current locale's preferred languages in a prioritized
     /// manner to be used in a accept-language header. If no preferred language available,
@@ -171,7 +171,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     ///
     /// - Parameters:
     ///   - keyPath: The key that string should be found on.
-    public func translationString(keyPath: String) throws -> String? {
+    public func translation(for keyPath: String) throws -> String? {
         guard !keyPath.isEmpty else {
             return nil
         }
@@ -220,7 +220,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
 
                     // Running language changed action
                     defer {
-                        self.delegate?.translationManager(self, languageUpdated: self.currentLanguage)
+                        self.delegate?.translationManager(languageUpdated: self.currentLanguage)
                     }
                 }
                 
@@ -255,7 +255,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translation
     ///
     /// - Parameter language: The language you would like to use.
     /// - Throws: A `TranslationError` error if clearing translations fails.
-    func set<L>(languageOverride language: L?) throws where L: LanguageModel {
+    public func set<L>(languageOverride language: L?) throws where L: LanguageModel {
         if let newValue = language {
             userDefaults.set(newValue, forKey: Constants.Keys.languageOverride)
         } else {
