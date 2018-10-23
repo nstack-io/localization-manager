@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C00F5EE22178FAE600066823 /* TranslationManagerDeleegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F5EE12178FAE600066823 /* TranslationManagerDeleegate.swift */; };
+		C00F5EE22178FAE600066823 /* TranslatableManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F5EE12178FAE600066823 /* TranslatableManagerDelegate.swift */; };
 		C01D69D12178904400A1B354 /* TranslationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D02178904400A1B354 /* TranslationManagerTests.swift */; };
 		C01D69D82178912300A1B354 /* Translatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D72178912300A1B354 /* Translatable.swift */; };
-		C01D69DA2178913A00A1B354 /* TranslationManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D92178913A00A1B354 /* TranslationManagerType.swift */; };
+		C01D69DA2178913A00A1B354 /* TranslatableManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D92178913A00A1B354 /* TranslatableManagerType.swift */; };
 		C01D69DC2178916B00A1B354 /* TranslationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69DB2178916B00A1B354 /* TranslationRepository.swift */; };
 		C01D69DE2178918200A1B354 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69DD2178918200A1B354 /* Result.swift */; };
 		C01D69E1217891DF00A1B354 /* TranslationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69E0217891DF00A1B354 /* TranslationResponse.swift */; };
@@ -42,10 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C00F5EE12178FAE600066823 /* TranslationManagerDeleegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManagerDeleegate.swift; sourceTree = "<group>"; };
+		C00F5EE12178FAE600066823 /* TranslatableManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatableManagerDelegate.swift; sourceTree = "<group>"; };
 		C01D69D02178904400A1B354 /* TranslationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationManagerTests.swift; sourceTree = "<group>"; };
 		C01D69D72178912300A1B354 /* Translatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translatable.swift; sourceTree = "<group>"; };
-		C01D69D92178913A00A1B354 /* TranslationManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManagerType.swift; sourceTree = "<group>"; };
+		C01D69D92178913A00A1B354 /* TranslatableManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatableManagerType.swift; sourceTree = "<group>"; };
 		C01D69DB2178916B00A1B354 /* TranslationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationRepository.swift; sourceTree = "<group>"; };
 		C01D69DD2178918200A1B354 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		C01D69E0217891DF00A1B354 /* TranslationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationResponse.swift; sourceTree = "<group>"; };
@@ -126,8 +126,8 @@
 				C01D69D72178912300A1B354 /* Translatable.swift */,
 				C01D69E42178925900A1B354 /* LanguageModel.swift */,
 				C01D69DB2178916B00A1B354 /* TranslationRepository.swift */,
-				C01D69D92178913A00A1B354 /* TranslationManagerType.swift */,
-				C00F5EE12178FAE600066823 /* TranslationManagerDeleegate.swift */,
+				C01D69D92178913A00A1B354 /* TranslatableManagerType.swift */,
+				C00F5EE12178FAE600066823 /* TranslatableManagerDelegate.swift */,
 				C04AFBF22179DDC2002CB099 /* ApplicationStateObserverDelegate.swift */,
 				C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */,
 			);
@@ -311,7 +311,7 @@
 			files = (
 				C01D69D82178912300A1B354 /* Translatable.swift in Sources */,
 				C01D69E1217891DF00A1B354 /* TranslationResponse.swift in Sources */,
-				C00F5EE22178FAE600066823 /* TranslationManagerDeleegate.swift in Sources */,
+				C00F5EE22178FAE600066823 /* TranslatableManagerDelegate.swift in Sources */,
 				C01D69E52178925900A1B354 /* LanguageModel.swift in Sources */,
 				C01D69DC2178916B00A1B354 /* TranslationRepository.swift in Sources */,
 				C01D69ED217894FC00A1B354 /* TranslationError.swift in Sources */,
@@ -324,7 +324,7 @@
 				C04AFBF92179E2C7002CB099 /* UpdateMode.swift in Sources */,
 				C01D69F32178989E00A1B354 /* String+Substring.swift in Sources */,
 				C01D69E8217893D500A1B354 /* Codable+Dictionary.swift in Sources */,
-				C01D69DA2178913A00A1B354 /* TranslationManagerType.swift in Sources */,
+				C01D69DA2178913A00A1B354 /* TranslatableManagerType.swift in Sources */,
 				C04AFBF12179DB79002CB099 /* ApplicationStateObserver.swift in Sources */,
 				C01D69F12178968700A1B354 /* Constants.swift in Sources */,
 				C04AFBF52179DE04002CB099 /* ApplicationState.swift in Sources */,
