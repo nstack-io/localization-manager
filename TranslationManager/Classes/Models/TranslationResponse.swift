@@ -21,7 +21,7 @@ public struct TranslationResponse<L: LanguageModel>: Codable {
         case language
     }
     
-    init(translations: [String: Any] = [:], language: L? = nil) {
+    public init(translations: [String: Any] = [:], language: L? = nil) {
         self.translations = [:]
         self.language = nil
     }
