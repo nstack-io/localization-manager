@@ -10,7 +10,7 @@ import Foundation
 
 public struct TranslationResponse<L: LanguageModel>: Codable {
     public internal(set) var translations: [String: Any]
-    let language: L?
+    public let language: L?
     
     enum CodingKeys: String, CodingKey {
         case translations = "data"
