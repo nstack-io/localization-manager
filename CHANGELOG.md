@@ -1,4 +1,5 @@
 ## Master
+## 0.0.11: More refactoring
 ## 0.0.10: More refactoring
 ## 0.0.9: Refactoring and naming alignment
 ## 0.0.8: Persisted file edge-case handling
