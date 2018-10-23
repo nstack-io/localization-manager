@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol TranslatableManagerDelegate: class {
-    func translationManager<L>(languageUpdated: L?) where L: LanguageModel
+    func translationManager(languageUpdated: LanguageModel?)
 }

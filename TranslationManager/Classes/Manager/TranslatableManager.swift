@@ -37,7 +37,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     
     
     /// In memory cache of the last language object.
-    public internal(set) var currentLanguage: L?
+    public internal(set) var currentLanguage: LanguageModel?
     
     /// Internal handler closure for language change.
     public weak var delegate: TranslatableManagerDelegate?
@@ -246,7 +246,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     /// Gets the languages for which translations are available.
     ///
     /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
-    public func fetchAvailableLanguages(_ completion: @escaping (Result<[L]>) -> Void) {
+    public func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel {
         // Fetching available language asynchronously
         repository.getAvailableLanguages(completion: completion)
     }

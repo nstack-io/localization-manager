@@ -9,22 +9,22 @@
 import Foundation
 
 public protocol TranslatableManagerType: class {
-    associatedtype L: LanguageModel
+//    associatedtype L: LanguageModel
     
     var updateMode: UpdateMode { get }
     
     var decoder: JSONDecoder { get }
     var encoder: JSONEncoder { get }
     
-    var currentLanguage: L? { get }
+    var currentLanguage: LanguageModel? { get }
     var acceptLanguage: String { get }
     
     func translation(for keyPath: String) throws -> String?
     func translations<T: Translatable>() throws -> T
     
     func updateTranslations(_ completion: ((_ error: Error?) -> Void)?)
-    func fetchAvailableLanguages(_ completion: @escaping (Result<[L]>) -> Void)
+    func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel
     
-    func set(languageOverride language: L?) throws
+    func set<L>(languageOverride language: L?) throws where L: LanguageModel
     func clearTranslations(includingPersisted: Bool) throws
 }
