@@ -118,7 +118,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     /// to call `updateTranslations()` after changing the value.
     /// Otherwise, the effect will not be seen.
     internal var languageOverride: L? {
-        return userDefaults.model(forKey: Constants.Keys.languageOverride)
+        return userDefaults.codable(forKey: Constants.Keys.languageOverride)
     }
     
     /// The URL used to persist downloaded translations.
@@ -257,7 +257,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     /// - Throws: A `TranslationError` error if clearing translations fails.
     public func set<L>(languageOverride language: L?) throws where L: LanguageModel {
         if let newValue = language {
-            userDefaults.set(newValue, forKey: Constants.Keys.languageOverride)
+            userDefaults.setCodable(newValue, forKey: Constants.Keys.languageOverride)
         } else {
             userDefaults.removeObject(forKey: Constants.Keys.languageOverride)
         }
