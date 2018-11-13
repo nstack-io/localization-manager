@@ -1,4 +1,5 @@
 ## Master
+## 0.0.14: Fixes in UserDefaults and Codable
 ## 0.0.13: More refactoring
 ## 0.0.12: More refactoring
 ## 0.0.11: More refactoring
