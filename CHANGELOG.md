@@ -1,4 +1,5 @@
 ## Master
+## 0.0.17: Persisted Translations Improvements
 ## 0.0.16: Persisted Translations Improvements
 ## 0.0.15: Persisted Translations Improvements
 ## 0.0.14: Fixes in UserDefaults and Codable
