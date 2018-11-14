@@ -313,7 +313,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         
         if let persisted = try persistedTranslations(),
             let typeString = userDefaults.string(forKey: Constants.Keys.persistedTranslationType),
-            let type = PersistedTranslationType(rawValue: typeString) {
+            let translationType = PersistedTranslationType(rawValue: typeString) {
             
             // Make sure the persisted translations have correct language
             if let override = languageOverride, persisted.language?.locale.identifier != override.locale.identifier {
@@ -321,7 +321,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
             } else {
                 // Otherwise use the persisted language
                 translations = persisted
-                shouldUnwrapTranslation = type == .all // only unwrap when all translations are stored
+                shouldUnwrapTranslation = translationType == .all // only unwrap when all translations are stored
             }
         } else {
             translations = try fallbackTranslations()
@@ -360,7 +360,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         try excludeUrlFromBackup(translationsFileUrl)
 
         // Save type of persisted translations
-        userDefaults.set(type, forKey: Constants.Keys.persistedTranslationType)
+        userDefaults.set(type.rawValue, forKey: Constants.Keys.persistedTranslationType)
         
         // Reload the translations
         try createTranslatableObject(T.self)
