@@ -203,7 +203,9 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     ///                         object is nil to determine whether the operation was a succes.
     public func updateTranslations(_ completion: ((_ error: Error?) -> Void)? = nil) {
         // Starting translations update asynchronously.
-        repository.getTranslations(acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
+        repository.getTranslations(acceptLanguage: acceptLanguage) {
+            (result: Result<TranslationResponse<L>>, type: PersistedTranslationType) in
+            
             switch result {
             case .success(let translationsData):
                 // New translations downloaded
@@ -227,7 +229,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
                 self.lastAcceptHeader = self.acceptLanguage
                 
                 do {
-                    try self.set(response: translationsData)
+                    try self.set(response: translationsData, type: type)
                 } catch {
                     completion?(error)
                     return
@@ -306,13 +308,30 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     
     /// Loads and initializes the translations object from either persisted or fallback dictionary.
     func createTranslatableObject<T>(_ type: T.Type) throws where T: Translatable {
-        let translations = try loadTranslations()
+        let translations: TranslationResponse<L>
+        var shouldUnwrapTranslation = true
+        
+        if let persisted = try persistedTranslations(),
+            let typeString = userDefaults.string(forKey: Constants.Keys.persistedTranslationType),
+            let type = PersistedTranslationType(rawValue: typeString) {
+            
+            // Make sure the persisted translations have correct language
+            if let override = languageOverride, persisted.language?.locale.identifier != override.locale.identifier {
+                translations = try fallbackTranslations()
+            } else {
+                // Otherwise use the persisted language
+                translations = persisted
+                shouldUnwrapTranslation = type == .all // only unwrap when all translations are stored
+            }
+        } else {
+            translations = try fallbackTranslations()
+        }
         
         // Set our language
         currentLanguage = languageOverride ?? translations.language
         
         // Figure out and set translations
-        guard let parsed = try processAllTranslations(translations)  else {
+        guard let parsed = try processAllTranslations(translations, shouldUnwrap: shouldUnwrapTranslation)  else {
             translatableObject = nil
             return
         }
@@ -326,7 +345,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     /// Saves the translations set.
     ///
     /// - Parameter translations: The new translations.
-    public func set<L>(response: TranslationResponse<L>) throws where L : LanguageModel {
+    public func set<L>(response: TranslationResponse<L>, type: PersistedTranslationType) throws where L : LanguageModel {
         guard let translationsFileUrl = translationsFileUrl else {
             throw TranslationError.translationsFileUrlUnavailable
         }
@@ -339,6 +358,9 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         
         // Exclude from backup
         try excludeUrlFromBackup(translationsFileUrl)
+
+        // Save type of persisted translations
+        userDefaults.set(type, forKey: Constants.Keys.persistedTranslationType)
         
         // Reload the translations
         try createTranslatableObject(T.self)
@@ -354,14 +376,6 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         
         // Delete persisted translations file
         try fileManager.removeItem(at: translationsFileUrl)
-    }
-    
-    /// Returns the saved dictionary representation of the translations.
-    internal func loadTranslations() throws -> TranslationResponse<L> {
-        guard let persisted = try persistedTranslations() else {
-            return try fallbackTranslations()
-        }
-        return persisted
     }
     
     /// Translations that were downloaded and persisted on disk.
@@ -423,14 +437,18 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     ///
     /// - Parameter dictionary: Dictionary containing all translations under the `data` key.
     /// - Returns: Returns extracted language dictioanry for current accept language.
-    internal func processAllTranslations(_ object: TranslationResponse<L>) throws -> [String: Any]? {
+    internal func processAllTranslations(_ object: TranslationResponse<L>, shouldUnwrap: Bool) throws -> [String: Any]? {
         // Processing translations dictionary
         guard !object.translations.isEmpty else {
             // Failed to get data from all translations dictionary
             throw TranslationError.noTranslationsFound
         }
         
-        return try extractLanguageDictionary(fromDictionary: object.translations)
+        if shouldUnwrap {
+            return try extractLanguageDictionary(fromDictionary: object.translations)
+        } else {
+            return object.translations
+        }
     }
     
     /// Uses the device's current locale to select the appropriate translations set.
@@ -442,13 +460,9 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         var languageDictionary: [String: Any]? = nil
         
         // First try overriden language
-        if let languageOverride = languageOverride {
-            // Language override enabled, trying it first
-            languageDictionary = translationsMatching(language: languageOverride,
-                                                      inDictionary: dictionary)
-            if let languageDictionary = languageDictionary {
-                return languageDictionary
-            }
+        if let languageOverride = languageOverride,
+            let dictionary = translationsMatching(language: languageOverride, inDictionary: dictionary) {
+            return dictionary
         }
         
         let languages = repository.fetchPreferredLanguages()

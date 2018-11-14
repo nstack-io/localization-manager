@@ -12,5 +12,6 @@ enum Constants {
     enum Keys {
         static let previousAcceptLanguage = "TranslationManager-PAL"
         static let languageOverride = "TranslationManager-LGO"
+        static let persistedTranslationType = "TranslationManager-PTT"
     }
 }
