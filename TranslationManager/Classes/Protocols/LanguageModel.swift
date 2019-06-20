@@ -11,3 +11,11 @@ import Foundation
 public protocol LanguageModel: Codable {
     var locale: Locale { get }
 }
+
+public struct LanguageBaseModel: LanguageModel {
+    public var locale: Locale
+    
+    public init(locale: Locale) {
+        self.locale = locale
+    }
+}

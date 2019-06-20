@@ -9,8 +9,7 @@
 import Foundation
 
 /// The TranslatableManager handles everything related to translations.
-public class TranslatableManager<T: Translatable, L: LanguageModel>: TranslatableManagerType {
-
+public class TranslatableManager<T: Translatable, L: LanguageModel, C: LocalizationModel>: TranslatableManagerType {
     // MARK: - Properties -
     // MARK: Public
     
@@ -37,7 +36,18 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     
     
     /// In memory cache of the last language object.
-    public internal(set) var currentLanguage: LanguageModel?
+    public internal(set) var currentLanguage: Language? {
+        get {
+            return userDefaults.codable(forKey: Constants.Keys.currentBestFitLanguage)
+        }
+        set {
+            guard let newValue = newValue else {
+                userDefaults.removeObject(forKey: Constants.Keys.currentBestFitLanguage)
+                return
+            }
+            userDefaults.setCodable(newValue, forKey: Constants.Keys.currentBestFitLanguage)
+        }
+    }
     
     /// Internal handler closure for language change.
     public weak var delegate: TranslatableManagerDelegate?
@@ -95,8 +105,8 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         return ApplicationStateObserver(delegate: self)
     }()
 
-    /// In memory cache of the translations object.
-    internal var translatableObject: Translatable?
+    /// In memory cache of translations objects mapped with their locale id.
+    internal var translatableObjectDictonary: [String : Translatable] = [:]
     
     /// The previous accept header string that was used.
     internal var lastAcceptHeader: String? {
@@ -117,14 +127,24 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     /// This language will be used instead of the phones' language when it is not `nil`. Remember
     /// to call `updateTranslations()` after changing the value.
     /// Otherwise, the effect will not be seen.
+    #warning("Not sure if we still need language override, cant we just send the accept header to backend and choose language by best fit?")
     internal var languageOverride: L? {
         return userDefaults.codable(forKey: Constants.Keys.languageOverride)
     }
     
+    /// The URL used to persist downloaded localizations.
+    internal func localizationConfigFileURL() -> URL? {
+        var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        url = url?.appendingPathComponent("Localization", isDirectory: true)
+        return url?.appendingPathComponent("LocalizationData.lclfile", isDirectory: false)
+    }
+    
     /// The URL used to persist downloaded translations.
-    internal var translationsFileUrl: URL? {
-        let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-        return url?.appendingPathComponent("Translations.tmfile")
+    internal func translationsFileUrl(localeId: String) -> URL? {
+        var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        url = url?.appendingPathComponent("Localization", isDirectory: true)
+        url = url?.appendingPathComponent("Locales", isDirectory: true)
+        return url?.appendingPathComponent("\(localeId).tmfile", isDirectory: false)
     }
     
     // MARK: - Methods -
@@ -187,62 +207,102 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         let section = keys[0]
         let key = keys[1]
         
-        // Try to load if we don't have any translations
-        if translatableObject == nil {
-            try createTranslatableObject(T.self)
+        #warning("Rethink current language? currentlty caches 'Best Fit' from Localizations, should always have this")
+        guard let currentLangCode = currentLanguage?.acceptLanguage else {
+            return nil
         }
         
-        return translatableObject?[section]?[key]
+        // Try to load if we don't have any translations
+        if translatableObjectDictonary[currentLangCode] == nil {
+            try createTranslatableObject(currentLangCode, type: T.self)
+        }
+        
+        return translatableObjectDictonary[currentLangCode]?[section]?[key]
     }
     
     // MARK: Update & Fetch
     
-    /// Fetches the latest version of the translations.
+    /// Fetches the latest version of the translations config
     ///
     /// - Parameter completion: Called when translation fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
     public func updateTranslations(_ completion: ((_ error: Error?) -> Void)? = nil) {
-        // Starting translations update asynchronously.
-        repository.getTranslations(acceptLanguage: acceptLanguage) {
-            (result: Result<TranslationResponse<L>>, type: PersistedTranslationType) in
-            
-            switch result {
-            case .success(let translationsData):
-                // New translations downloaded
-                
-                if let lastAcceptHeader = self.lastAcceptHeader,
-                    lastAcceptHeader != self.acceptLanguage {
-                    do {
-                        // Language changed from last time, clearing first
-                        try self.clearTranslations(includingPersisted: true)
-                    } catch {
-                        completion?(error)
-                        return
-                    }
-
-                    // Running language changed action
-                    defer {
-                        self.delegate?.translationManager(languageUpdated: self.currentLanguage)
-                    }
-                }
-                
-                self.lastAcceptHeader = self.acceptLanguage
-                
+        repository.getLocalizationConfig(acceptLanguage: acceptLanguage) { (response: Result<[LocalizationModel]>) in
+            switch response {
+            case .success(let configs):
                 do {
-                    try self.set(response: translationsData, type: type)
+                    try self.saveLocalizations(localizations: configs)
                 } catch {
                     completion?(error)
                     return
                 }
                 
-                completion?(nil)
-                
+                let localizationsThatRequireUpdate = configs.filter({ $0.shouldUpdate == true })
+                for localization in localizationsThatRequireUpdate {
+                    self.updateLocaleTranslations(localization, completion: completion)
+                }
             case .failure(let error):
-                // Error downloading translations data
+                //error fetching configs
                 completion?(error)
-                
             }
         }
+    }
+    
+    /// Fetches the latest version of the translations for the locale specified
+    ///
+    /// - Parameter localization: The locale required to request translations for
+    /// - Parameter completion: Called when translation fetching has finished. Check if the error
+    ///                         object is nil to determine whether the operation was a succes.
+    func updateLocaleTranslations(_ localization: LocalizationModel, completion: ((_ error: Error?) -> Void)? = nil) {
+        repository.getTranslations(localization: localization,
+                                   acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<Language>>, type: PersistedTranslationType) in
+                                    
+                                    switch result {
+                                    case .success(let translationsData):
+                                        // New translations downloaded
+                                        
+                                        if let lastAcceptHeader = self.lastAcceptHeader,
+                                            lastAcceptHeader != self.acceptLanguage {
+                                            //update what the last accept header was that was used
+                                            self.lastAcceptHeader = self.acceptLanguage
+                                            
+                                            do {
+                                                // Language changed from last time, clearing first
+                                                try self.clearTranslations(includingPersisted: true)
+                                            } catch {
+                                                completion?(error)
+                                                return
+                                            }
+
+                                            
+                                            // Running language changed action
+                                            defer {
+                                                self.delegate?.translationManager(languageUpdated: self.currentLanguage)
+                                            }
+                                        }
+
+                                        //cache current best fit language to default to
+                                        if let lang = translationsData.language {
+                                            if lang.isBestFit {
+                                                self.currentLanguage = lang
+                                            }
+                                        }
+                                        
+                                        do {
+                                            try self.set(response: translationsData, type: type)
+                                        } catch {
+                                            completion?(error)
+                                            return
+                                        }
+                                        
+                                        completion?(nil)
+                                        
+                                    case .failure(let error):
+                                        // Error downloading translations data
+                                        completion?(error)
+                                        
+                                    }
+            }
     }
     
     /// Gets the languages for which translations are available.
@@ -272,7 +332,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A translations object.
-    public func translations<T: Translatable>() throws -> T {
+    public func translations<T: Translatable>(localeId: String) throws -> T {
         // Clear translations if language changed
         if let lastAcceptHeader = lastAcceptHeader,
             lastAcceptHeader != acceptLanguage {
@@ -282,15 +342,15 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         }
         
         // Check object in memory
-        if let cachedObject = translatableObject as? T {
+        if let cachedObject = translatableObjectDictonary[localeId] as? T {
             return cachedObject
         }
         
         // Load persisted or fallback translations
-        try createTranslatableObject(T.self)
+        try createTranslatableObject(localeId, type: T.self)
         
         // Now we must have correct translations, so return it
-        return translatableObject as! T
+        return translatableObjectDictonary[localeId] as! T
     }
     
     /// Clears both the memory and persistent cache. Used for debugging purposes.
@@ -299,7 +359,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     ///                                 file will be deleted.
     public func clearTranslations(includingPersisted: Bool = false) throws {
         // In memory translations cleared
-        translatableObject = nil
+        translatableObjectDictonary.removeAll()
         
         if includingPersisted {
             try deletePersistedTranslations()
@@ -307,51 +367,90 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     }
     
     /// Loads and initializes the translations object from either persisted or fallback dictionary.
-    func createTranslatableObject<T>(_ type: T.Type) throws where T: Translatable {
-        let translations: TranslationResponse<L>
+    func createTranslatableObject<T>(_ localeId: String, type: T.Type) throws where T: Translatable {
+        let translations: TranslationResponse<Language>
         var shouldUnwrapTranslation = true
         
-        if let persisted = try persistedTranslations(),
+        if let persisted = try persistedTranslations(localeId: localeId),
             let typeString = userDefaults.string(forKey: Constants.Keys.persistedTranslationType),
             let translationType = PersistedTranslationType(rawValue: typeString) {
             
             // Make sure the persisted translations have correct language
             if let override = languageOverride, persisted.language?.locale.identifier != override.locale.identifier {
-                translations = try fallbackTranslations()
+                translations = try fallbackTranslations(localeId: override.locale.identifier)
             } else {
                 // Otherwise use the persisted language
                 translations = persisted
                 shouldUnwrapTranslation = translationType == .all // only unwrap when all translations are stored
             }
         } else {
-            translations = try fallbackTranslations()
+            translations = try fallbackTranslations(localeId: localeId)
         }
         
         // Set our language
-        currentLanguage = languageOverride ?? translations.language
+        #warning("TODO: Hadle override properly with new 'isBestFit' Boolean")
+        //currentLanguage = languageOverride ?? translations.language
         
         // Figure out and set translations
         guard let parsed = try processAllTranslations(translations, shouldUnwrap: shouldUnwrapTranslation)  else {
-            translatableObject = nil
+            translatableObjectDictonary.removeValue(forKey: localeId)
             return
         }
 
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
-        translatableObject = try decoder.decode(T.self, from: data)
+        translatableObjectDictonary[localeId] = try decoder.decode(T.self, from: data)
     }
     
     // MARK: Dictionaries
+    
+    /// Saves the localization config set.
+    ///
+    /// - Parameter [Localizations]: The current Localizations available.
+    public func saveLocalizations(localizations: [LocalizationModel]) throws {
+        guard let configFileUrl = localizationConfigFileURL() else {
+            throw TranslationError.localizationsConfigFileUrlUnavailable
+        }
+        var configModels: [LocalizationConfig] = []
+        for localize in localizations {
+            let config = LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: localize.localeIdentifier, shouldUpdate: localize.shouldUpdate)
+            configModels.append(config)
+        }
+        let configWrapper = ConfigWrapper(data: configModels)
+        
+        // Get encoded data
+        let data = try encoder.encode(configWrapper)
+        createDirIfNeeded(dirName: "Localization")
+        
+        try data.write(to: configFileUrl, options: [.atomic])
+    }
+    
+    func createDirIfNeeded(dirName: String) {
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(dirName + "/")
+        do {
+            try FileManager.default.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
     /// Saves the translations set.
     ///
     /// - Parameter translations: The new translations.
     public func set<L>(response: TranslationResponse<L>, type: PersistedTranslationType) throws where L : LanguageModel {
-        guard let translationsFileUrl = translationsFileUrl else {
+        guard let locale = response.language?.locale.identifier else {
+            throw TranslationError.translationsFileUrlUnavailable
+        }
+        
+        guard let translationsFileUrl = translationsFileUrl(localeId: locale) else {
             throw TranslationError.translationsFileUrlUnavailable
         }
         
         // Get encoded data
         let data = try encoder.encode(response)
+        
+        //create directory if needed
+        createDirIfNeeded(dirName: "Localization")
+        createDirIfNeeded(dirName: "Localization/Locales")
         
         // Save to disk
         try data.write(to: translationsFileUrl, options: [.atomic])
@@ -363,25 +462,25 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         userDefaults.set(type.rawValue, forKey: Constants.Keys.persistedTranslationType)
         
         // Reload the translations
-        try createTranslatableObject(T.self)
+        try createTranslatableObject(locale, type: T.self)
     }
     
     internal func deletePersistedTranslations() throws {
-        guard let translationsFileUrl = translationsFileUrl else {
-            throw TranslationError.translationsFileUrlUnavailable
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        
+        //get all filepaths in locale directory
+        let filePaths = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
+        
+        //remove all files in this directory
+        for fp in filePaths {
+            try fileManager.removeItem(at: fp)
         }
-        
-        // No persisted translation file stored, no need to do anything
-        guard fileManager.fileExists(atPath: translationsFileUrl.path) else { return }
-        
-        // Delete persisted translations file
-        try fileManager.removeItem(at: translationsFileUrl)
     }
     
     /// Translations that were downloaded and persisted on disk.
-    internal func persistedTranslations() throws -> TranslationResponse<L>? {
+    internal func persistedTranslations(localeId: String) throws -> TranslationResponse<Language>? {
         // Getting persisted traslations
-        guard let url = translationsFileUrl else {
+        guard let url = translationsFileUrl(localeId: localeId) else {
             throw TranslationError.translationsFileUrlUnavailable
         }
         
@@ -391,7 +490,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
         // If downloaded data is corrupted or wrong, try and delete it
         do {
             let data = try Data(contentsOf: url)
-            return try decoder.decode(TranslationResponse<L>.self, from: data)
+            return try decoder.decode(TranslationResponse<Language>.self, from: data)
         } catch {
             // Try deleting the file
             if fileManager.isDeletableFile(atPath: url.path){
@@ -402,15 +501,14 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     }
     
     /// Loads the local JSON copy, has a return value so that it can be synchronously
-    /// loaded the first time they're needed. The local JSON copy contains all available languages,
-    /// and the right one is chosen based on the current locale.
+    /// loaded the first time they're needed.
     ///
     /// - Returns: A dictionary representation of the selected local translations set.
-    internal func fallbackTranslations() throws -> TranslationResponse<L> {
+    internal func fallbackTranslations(localeId: String) throws -> TranslationResponse<Language> {
         // Iterate through bundle until we find the translations file
         for bundle in repository.fetchBundles() {
             // Check if bundle contains translations file, otheriwse continue with next bundle
-            guard let filePath = bundle.path(forResource: "Translations", ofType: "json") else {
+            guard let filePath = bundle.path(forResource: "Translations_\(localeId)", ofType: "json") else {
                 continue
             }
             
@@ -437,7 +535,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel>: Translatabl
     ///
     /// - Parameter dictionary: Dictionary containing all translations under the `data` key.
     /// - Returns: Returns extracted language dictioanry for current accept language.
-    internal func processAllTranslations(_ object: TranslationResponse<L>, shouldUnwrap: Bool) throws -> [String: Any]? {
+    internal func processAllTranslations(_ object: TranslationResponse<Language>, shouldUnwrap: Bool) throws -> [String: Any]? {
         // Processing translations dictionary
         guard !object.translations.isEmpty else {
             // Failed to get data from all translations dictionary

@@ -11,13 +11,18 @@ import Foundation
 public struct Language: LanguageModel {
     public let id: Int
     public let name: String
-    public let locale: Locale
+
     public let direction: String
     public let acceptLanguage: String
+    public let isDefault: Bool
+    public let isBestFit: Bool
     
-    enum CodingKeys: String, CodingKey {
-        case id, name, locale, direction
-        case acceptLanguage = "Accept-Language"
+    public var locale: Locale {
+        return Locale(identifier: acceptLanguage)
     }
     
+    enum CodingKeys: String, CodingKey {
+        case id, name, direction, isDefault, isBestFit
+        case acceptLanguage = "accept-Language"
+    }
 }

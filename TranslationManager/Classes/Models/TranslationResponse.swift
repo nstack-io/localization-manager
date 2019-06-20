@@ -22,8 +22,8 @@ public struct TranslationResponse<L: LanguageModel>: Codable {
     }
     
     public init(translations: [String: Any] = [:], language: L? = nil) {
-        self.translations = [:]
-        self.language = nil
+        self.translations = translations
+        self.language = language
     }
     
     public init(from decoder: Decoder) throws {

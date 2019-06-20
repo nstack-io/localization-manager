@@ -16,11 +16,11 @@ public protocol TranslatableManagerType: class {
     var decoder: JSONDecoder { get }
     var encoder: JSONEncoder { get }
     
-    var currentLanguage: LanguageModel? { get }
+    var currentLanguage: Language? { get }
     var acceptLanguage: String { get }
     
     func translation(for keyPath: String) throws -> String?
-    func translations<T: Translatable>() throws -> T
+    func translations<T: Translatable>(localeId: String) throws -> T
     
     func updateTranslations(_ completion: ((_ error: Error?) -> Void)?)
     func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel
