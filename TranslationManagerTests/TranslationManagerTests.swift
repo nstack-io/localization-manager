@@ -165,6 +165,55 @@ class TranslationManagerTests: XCTestCase {
         }
     }
     
+    func testUpdateCurrentLanguageWithBestFit() {
+        let config = mockLocalizationConfigWithUpdate //mock Danish config
+        let localizations: [LocalizationConfig] = [config]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = TranslationResponse(translations:
+            [
+                "default" : ["successKey" : "SuccessUpdated"],
+                "otherSection" : ["anotherKey" : "HeresAValue"],
+            ],
+                                                                  language: Language(id: 1, name: "Danish",
+                                                                                     direction: "LRM", acceptLanguage: "da-DK",
+                                                                                     isDefault: true, isBestFit: true))
+        manager.updateTranslations()
+        XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
+    }
+    
+    func testDoNotUpdateCurrentLanguageWithBestFit() {
+        let config = mockLocalizationConfigWithUpdate //mock Danish config
+        let localizations: [LocalizationConfig] = [config]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = TranslationResponse(translations:
+            [
+                "default" : ["successKey" : "SuccessUpdated"],
+                "otherSection" : ["anotherKey" : "HeresAValue"],
+            ],
+                                                                  language: Language(id: 1, name: "Danish",
+                                                                                     direction: "LRM", acceptLanguage: "da-DK",
+                                                                                     isDefault: true, isBestFit: true))
+        manager.updateTranslations()
+        
+        //current language should be Danish
+        XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
+        
+        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true)]
+        repositoryMock.translationsResponse = TranslationResponse(translations:
+            [
+                "default" : ["successKey" : "SuccessUpdated"],
+                "otherSection" : ["anotherKey" : "HeresAValue"],
+            ],
+                                                                  language: Language(id: 1, name: "English",
+                                                                                     direction: "LRM", acceptLanguage: "en-GB",
+                                                                                     isDefault: false, isBestFit: false))
+        
+        manager.updateTranslations()
+        
+        //current language should still be Danish as English is not 'best fit'
+        XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
+    }
+    
     // MARK: - Test Clear
     
     func testClearPersistedTranslations() {
@@ -206,6 +255,12 @@ class TranslationManagerTests: XCTestCase {
     }
     
     func testTranslationForKeyFailure() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = mockTranslations
+        manager.updateTranslations()
+        
         do {
             let str = try manager.translation(for: "default.nonExistingString")
             XCTAssertNil(str)
@@ -214,22 +269,6 @@ class TranslationManagerTests: XCTestCase {
             XCTFail()
         }
     }
-
-//    func testTranslationForWrongKeyFailure() {
-//        repositoryMock.preferredLanguages = [mockLanguage.locale]
-//        XCTAssertNil(manager.translationString(keyPath: "wrong.successKey"))
-//    }
-//
-//    func testTranslationForKeySuccess() {
-//        repositoryMock.preferredLanguages = [mockLanguage.locale]
-//        XCTAssertEqual(manager.translationString(keyPath: "default.successKey"), "Fedt")
-//    }
-//
-//    func testTranslationForEmptyKey() {
-//        repositoryMock.preferredLanguages = [mockLanguage.locale]
-//        XCTAssertNil(manager.translationString(keyPath: ""))
-//    }
-
     
     //
 //    // MARK: - Fetch -
