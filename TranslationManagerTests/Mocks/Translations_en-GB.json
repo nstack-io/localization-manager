@@ -1,0 +1,30 @@
+{
+    "data": {
+        "default": {
+            "successKey": "Success",
+            "keyys": "ffw"
+        },
+        "otherSection": {
+            "anotherKey": "FallbackValue"
+        },
+        "oneMoreSection": {
+            "soManyKeys": "AndValues",
+            "test1": "<p>test</p>\r\n",
+            "test2": "__test2"
+        }
+    },
+    "meta": {
+        "language": {
+            "id": 11,
+            "name": "English (UK)",
+            "locale": "en-GB",
+            "direction": "LRM",
+            "is_default": false,
+            "is_best_fit": false
+        },
+        "platform": {
+            "id": 24,
+            "slug": "mobile"
+        }
+    }
+}

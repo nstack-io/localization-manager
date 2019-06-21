@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2376952122BB7FF800D40DC1 /* ConfigWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376952022BB7FF800D40DC1 /* ConfigWrapper.swift */; };
+		2376952822BD3DE800D40DC1 /* Translations_en-GB.json in Resources */ = {isa = PBXBuildFile; fileRef = 2376952722BD3DE800D40DC1 /* Translations_en-GB.json */; };
 		23A4296A22BA2AA400D09EA1 /* TranslationsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296722BA2AA400D09EA1 /* TranslationsRepositoryMock.swift */; };
 		23A4296B22BA2AA400D09EA1 /* BundleMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296822BA2AA400D09EA1 /* BundleMock.swift */; };
 		23A4296C22BA2AA400D09EA1 /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		2376952022BB7FF800D40DC1 /* ConfigWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigWrapper.swift; sourceTree = "<group>"; };
+		2376952722BD3DE800D40DC1 /* Translations_en-GB.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Translations_en-GB.json"; sourceTree = "<group>"; };
 		23A4296722BA2AA400D09EA1 /* TranslationsRepositoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationsRepositoryMock.swift; sourceTree = "<group>"; };
 		23A4296822BA2AA400D09EA1 /* BundleMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleMock.swift; sourceTree = "<group>"; };
 		23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerMock.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				23A4296822BA2AA400D09EA1 /* BundleMock.swift */,
 				23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */,
 				23A4296722BA2AA400D09EA1 /* TranslationsRepositoryMock.swift */,
+				2376952722BD3DE800D40DC1 /* Translations_en-GB.json */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2376952822BD3DE800D40DC1 /* Translations_en-GB.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -51,7 +51,7 @@ class TranslationManagerTests: XCTestCase {
 
         repositoryMock = TranslationsRepositoryMock()
         fileManagerMock = FileManagerMock()
-        manager = TranslatableManager.init(repository: repositoryMock)
+        manager = TranslatableManager.init(repository: repositoryMock, fallbackLocale: Locale.current)
     }
 
     override func tearDown() {
@@ -260,6 +260,25 @@ class TranslationManagerTests: XCTestCase {
         do {
             let str = try manager.translation(for: "default.nonExistingString")
             XCTAssertNil(str)
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+    
+    func testFallbackToJSONLocale() {
+        #warning("THIS TEST IS CURRENTLY FAILING BECAUSE THE RESPONSE IN THE FALLBACK JSON (which the api returns) DOESNT MATCH THE MODELS IN THIS FRAMEWORK. WE NEED TO UPDATE THE RESPONSE TO MATCH THE JSON. WITH CORRECT META FORMAT.")
+        
+        let locale = Locale(identifier: "en-GB")
+        XCTAssertNotNil(locale)
+        
+        manager.currentLanguage = nil
+        manager.fallbackLocale = locale
+        XCTAssertNil(manager.currentLanguage)
+        do {
+            try manager.clearTranslations(includingPersisted: true)
+            let str = try manager.translation(for: "otherSection.anotherKey")
+            XCTAssertEqual(str, "FallbackValue")
         }
         catch {
             XCTFail(error.localizedDescription)

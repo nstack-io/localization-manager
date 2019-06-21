@@ -136,6 +136,10 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         return userDefaults.codable(forKey: Constants.Keys.languageOverride)
     }
     
+    /// This language will be used when there is no current language set.
+    /// We should assure this is always set and is always set to a Locale that the bundle has JSON fallback translations for.
+    internal var fallbackLocale: Locale
+    
     /// The URL used to persist downloaded localizations.
     internal func localizationConfigFileURL() -> URL? {
         var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -165,12 +169,14 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     required public init(repository: TranslationRepository,
                          updateMode: UpdateMode = .automatic,
                          fileManager: FileManager = .default,
-                         userDefaults: UserDefaults = .standard) {
+                         userDefaults: UserDefaults = .standard,
+                         fallbackLocale: Locale) {
         // Set the properties
         self.updateMode = updateMode
         self.repository = repository
         self.fileManager = fileManager
         self.userDefaults = userDefaults
+        self.fallbackLocale = fallbackLocale
         
         // Start observing state changes
         stateObserver.startObserving()
@@ -211,10 +217,8 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         let section = keys[0]
         let key = keys[1]
         
-        #warning("Rethink current language? currentlty caches 'Best Fit' from Localizations, should always have this?")
-        guard let currentLangCode = currentLanguage?.acceptLanguage else {
-            return nil
-        }
+        //try to use currente language, if this is missing use fallback language that we are sure there is a backup json of in bundle
+        var currentLangCode = currentLanguage?.acceptLanguage ?? fallbackLocale.identifier
         
         // Try to load if we don't have any translations
         if translatableObjectDictonary[currentLangCode] == nil {
@@ -231,7 +235,10 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     /// - Parameter completion: Called when translation fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
     public func updateTranslations(_ completion: ((_ error: Error?) -> Void)? = nil) {
-        repository.getLocalizationConfig(acceptLanguage: acceptLanguage) { (response: Result<[LocalizationModel]>) in
+
+        //check if we've got an override, if not, use default accept language
+        let languageAcceptHeader = languageOverride?.locale.identifier ?? acceptLanguage
+        repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader) { (response: Result<[LocalizationModel]>) in
             switch response {
             case .success(let configs):
                 
@@ -274,8 +281,11 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     /// - Parameter completion: Called when translation fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
     func updateLocaleTranslations(_ localization: LocalizationModel, completion: ((_ error: Error?) -> Void)? = nil) {
+        //check if we've got an override, if not, use default accept language
+        let languageAcceptHeader = languageOverride?.locale.identifier ?? acceptLanguage
+        
         repository.getTranslations(localization: localization,
-                                   acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<Language>>, type: PersistedTranslationType) in
+                                   acceptLanguage: languageAcceptHeader) { (result: Result<TranslationResponse<Language>>, type: PersistedTranslationType) in
                                     
                                     switch result {
                                     case .success(let translationsData):
@@ -389,7 +399,6 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
             return
         }
 
-        
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
         
         //not sure how to get this to parse as dont know how to make a model that conforms to translatable
