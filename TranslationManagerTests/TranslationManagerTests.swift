@@ -15,12 +15,11 @@ class TranslationManagerTests: XCTestCase {
     typealias T = TranslatableModel
     typealias C = LocalizationConfig
     
-//    let store = NOPersistentStore.cache(withId: "TranslationManagerTests")!
+
     var repositoryMock: TranslationsRepositoryMock<L>!
     var fileManagerMock: FileManagerMock!
     var manager: TranslatableManager<T, L, C>!
-//    var logger: LoggerType!
-//
+
     let mockLanguage = Language(id: 0, name: "Danish",
                                 direction: "lrm", acceptLanguage: "da-DK",
                                 isDefault: false, isBestFit: false)
@@ -44,39 +43,8 @@ class TranslationManagerTests: XCTestCase {
         return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false)
     }
 
-//
-//    var testTranslations: Translations {
-//        return manager.translations()
-//    }
-//
-//    var mockBundle: BundleMock {
-//        let path = fileManagerMock.urls(for: .cachesDirectory, in: .userDomainMask)[0].absoluteString
-//        return BundleMock(path: path.replacingOccurrences(of: "file://", with: ""))!
-//    }
-//
-//    var invalidTranslationsJSONPath: String {
-//        return Bundle(for: type(of: self)).resourcePath! + "/InvalidTranslations.json"
-//    }
-//
-//    var emptyTranslationsJSONPath: String {
-//        return Bundle(for: type(of: self)).resourcePath! + "/EmptyTranslations.json"
-//    }
-//
-//    var emptyLanguageMetaTranslationsJSONPath: String {
-//        return Bundle(for: type(of: self)).resourcePath! + "/EmptyLanguageMetaTranslations.json"
-//    }
-//
-//    var wrongFormatJSONPath: String {
-//        return Bundle(for: type(of: self)).resourcePath! + "/WrongTypeTranslations.json"
-//    }
-//
-//    var backendSelectedTranslationsJSONPath: String {
-//        return Bundle(for: type(of: self)).resourcePath! + "/BackendSelectedLanguageTranslations.json"
-//    }
-//
-//
 //    // MARK: - Test Case Lifecycle -
-//
+
     override func setUp() {
         super.setUp()
         print()
@@ -90,7 +58,7 @@ class TranslationManagerTests: XCTestCase {
         super.tearDown()
 
         do {
-            try manager.clearTranslations()
+            try manager.clearTranslations(includingPersisted: true)
         }
         catch {
             XCTFail()
@@ -235,19 +203,46 @@ class TranslationManagerTests: XCTestCase {
             XCTFail()
         }
     }
-
-    // MARK: - Translation for key
-
-    func testTranslationForKeySuccess() {
+    
+    func testClearTranslations() {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.translationsResponse = mockTranslations
         manager.updateTranslations()
         
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        do {
+            let filePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
+            XCTAssertFalse(filePaths.isEmpty)
+            try manager.clearTranslations()
+            XCTAssertTrue(manager.translatableObjectDictonary.isEmpty)
+            let newFilePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
+            XCTAssertFalse(filePaths.isEmpty)
+        }
+        catch {
+            XCTFail()
+        }
+    }
+
+    // MARK: - Translation for key
+    
+    func testTranslationForKeySuccess() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = TranslationResponse(translations:
+            [
+                "default" : ["successKey" : "DanishSuccessUpdated"]
+            ],
+                                                                  language: Language(id: 1, name: "Danish",
+                                                                                     direction: "LRM", acceptLanguage: "da-DK",
+                                                                                     isDefault: true, isBestFit: true))
+        manager.updateTranslations()
+        
         do {
             let str = try manager.translation(for: "default.successKey")
-            XCTAssertNil(str)
+            XCTAssertEqual(str, "DanishSuccessUpdated")
         }
         catch {
             XCTFail()
@@ -269,6 +264,31 @@ class TranslationManagerTests: XCTestCase {
             XCTFail()
         }
     }
+    
+//    func testTranslationForCurrentLanguageSuccess() {
+//        let danishConfig = LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "da-DK", shouldUpdate: true)
+//        let frenchConfig = LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false)
+//        let localizations: [LocalizationConfig] = [danishConfig, frenchConfig]
+//        repositoryMock.availableLocalizations = localizations
+//
+//        //first set translations response to danish
+//        repositoryMock.translationsResponse = TranslationResponse(translations:
+//            [
+//                "default" : ["successKey" : "DanishSuccessUpdated"]
+//            ],
+//                                                                  language: Language(id: 1, name: "Danish",
+//                                                                                     direction: "LRM", acceptLanguage: "da-DK",
+//                                                                                     isDefault: true, isBestFit: true))
+//        manager.updateTranslations()
+//
+//        do {
+//            let str = try manager.translation(for: "default.successKey")
+//            XCTAssertEqual(str, "DanishSuccessUpdated")
+//        }
+//        catch {
+//            XCTFail()
+//        }
+//    }
     
     //
 //    // MARK: - Fetch -
@@ -581,23 +601,6 @@ class TranslationManagerTests: XCTestCase {
 //        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
 //        XCTAssertNotNil(dict)
 //        XCTAssertEqual(dict.allKeys.count, 0, "Extracted dictionary should not be empty.")
-//    }
-//
-//    // MARK: - Clearing -
-//
-//    func testClearTranslations() {
-//        manager.loadTranslations()
-//        XCTAssertNotNil(manager.translationsObject, "Translations shouldn't be nil.")
-//        manager.clearTranslations()
-//        XCTAssertNil(manager.translationsObject, "Translations should not exist after clear.")
-//    }
-//
-//    func testClearPersistedTranslations() {
-//        repositoryMock.translationsResponse = mockWrappedTranslations
-//        XCTAssertNil(manager.synchronousUpdateTranslations())
-//        XCTAssertNotNil(manager.persistedTranslations, "Persisted translations should exist.")
-//        manager.clearTranslations(includingPersisted: true)
-//        XCTAssertNil(manager.persistedTranslations, "Persisted translations should not exist after clear.")
 //    }
 }
 
