@@ -12,7 +12,7 @@ import XCTest
 class TranslationManagerTests: XCTestCase {
 
     typealias L = Language
-    typealias T = TranslatableModel
+    typealias T = Localization
     typealias C = LocalizationConfig
     
 
@@ -246,7 +246,7 @@ class TranslationManagerTests: XCTestCase {
             XCTAssertEqual(str, "DanishSuccessUpdated")
         }
         catch {
-            XCTFail()
+            XCTFail(error.localizedDescription)
         }
     }
     
@@ -262,7 +262,7 @@ class TranslationManagerTests: XCTestCase {
             XCTAssertNil(str)
         }
         catch {
-            XCTFail()
+            XCTFail(error.localizedDescription)
         }
     }
     
