@@ -9,7 +9,19 @@
 import Foundation
 
 public struct TranslatableModel: Translatable {
+    
+    public let sectionDictionary: [String: TranslatableSectionModel] = [:]
+    
+    
     public subscript(key: String) -> TranslatableSection? {
-        return nil
+        return sectionDictionary[key]
+    }
+}
+
+public struct TranslatableSectionModel: TranslatableSection {
+    
+    public let valueDictionary: [String: String]?
+    public subscript(key: String) -> String? {
+        return valueDictionary?[key]
     }
 }

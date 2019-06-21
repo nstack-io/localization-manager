@@ -220,7 +220,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         if translatableObjectDictonary[currentLangCode] == nil {
             try createTranslatableObject(currentLangCode, type: T.self)
         }
-        
+
         return translatableObjectDictonary[currentLangCode]?[section]?[key]
     }
     
@@ -389,7 +389,11 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
             return
         }
 
+        
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
+        
+        //not sure how to get this to parse as dont know how to make a model that conforms to translatable
+        //let dictionary = try decoder.decode(Dictionary<String, [String : String]>.self, from: data)
         translatableObjectDictonary[localeId] = try decoder.decode(T.self, from: data)
     }
     

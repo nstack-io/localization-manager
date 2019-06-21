@@ -233,7 +233,8 @@ class TranslationManagerTests: XCTestCase {
         repositoryMock.availableLocalizations = localizations
         repositoryMock.translationsResponse = TranslationResponse(translations:
             [
-                "default" : ["successKey" : "DanishSuccessUpdated"]
+                "default" : ["successKey" : "DanishSuccessUpdated", "successKey2" : "DanishSuccessUpdated2"],
+                "otherSection" : ["anotherKey" : "HeresAValue", "anotherKey2" : "HeresAValue2"]
             ],
                                                                   language: Language(id: 1, name: "Danish",
                                                                                      direction: "LRM", acceptLanguage: "da-DK",
