@@ -20,7 +20,7 @@ public protocol TranslatableManagerType: class {
     var acceptLanguage: String { get }
     
     func translation(for keyPath: String) throws -> String?
-    func translations<T: Translatable>(localeId: String) throws -> T
+    func translations<T: Translatable>(localeId: String) throws -> T?
     
     func updateTranslations(_ completion: ((_ error: Error?) -> Void)?)
     func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel

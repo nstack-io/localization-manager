@@ -35,7 +35,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     }()
     
     
-    /// In memory cache of the last language object.
+    /// In memory cache of the current best fit language object.
     public internal(set) var currentLanguage: Language? {
         get {
             return userDefaults.codable(forKey: Constants.Keys.currentBestFitLanguage)
@@ -121,13 +121,17 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
             }
             // Last accept header set to: \(newValue).
             userDefaults.set(newValue, forKey: Constants.Keys.previousAcceptLanguage)
+            
+            //if update mode is automatic update translations, to get new best fit language
+            if updateMode == .automatic {
+                updateTranslations()
+            }
         }
     }
     
     /// This language will be used instead of the phones' language when it is not `nil`. Remember
     /// to call `updateTranslations()` after changing the value.
     /// Otherwise, the effect will not be seen.
-    #warning("Not sure if we still need language override, cant we just send the accept header to backend and choose language by best fit?")
     internal var languageOverride: L? {
         return userDefaults.codable(forKey: Constants.Keys.languageOverride)
     }
@@ -207,7 +211,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         let section = keys[0]
         let key = keys[1]
         
-        #warning("Rethink current language? currentlty caches 'Best Fit' from Localizations, should always have this")
+        #warning("Rethink current language? currentlty caches 'Best Fit' from Localizations, should always have this?")
         guard let currentLangCode = currentLanguage?.acceptLanguage else {
             return nil
         }
@@ -230,6 +234,22 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         repository.getLocalizationConfig(acceptLanguage: acceptLanguage) { (response: Result<[LocalizationModel]>) in
             switch response {
             case .success(let configs):
+                
+                //if accept header has changed, update it
+                if let lastAcceptHeader = self.lastAcceptHeader,
+                    lastAcceptHeader != self.acceptLanguage {
+                    //update what the last accept header was that was used
+                    self.lastAcceptHeader = self.acceptLanguage
+                    
+                    do {
+                        // Language changed from last time, clearing first
+                        try self.clearTranslations(includingPersisted: true)
+                    } catch {
+                        completion?(error)
+                        return
+                    }
+                }
+                
                 do {
                     try self.saveLocalizations(localizations: configs)
                 } catch {
@@ -261,29 +281,13 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
                                     case .success(let translationsData):
                                         // New translations downloaded
                                         
-                                        if let lastAcceptHeader = self.lastAcceptHeader,
-                                            lastAcceptHeader != self.acceptLanguage {
-                                            //update what the last accept header was that was used
-                                            self.lastAcceptHeader = self.acceptLanguage
-                                            
-                                            do {
-                                                // Language changed from last time, clearing first
-                                                try self.clearTranslations(includingPersisted: true)
-                                            } catch {
-                                                completion?(error)
-                                                return
-                                            }
-
-                                            
-                                            // Running language changed action
-                                            defer {
-                                                self.delegate?.translationManager(languageUpdated: self.currentLanguage)
-                                            }
-                                        }
-
-                                        //cache current best fit language to default to
+                                        //cache current best fit language
                                         if let lang = translationsData.language {
                                             if lang.isBestFit {
+                                                if self.currentLanguage?.acceptLanguage != lang.acceptLanguage {
+                                                    // Running language changed action, if best fit language is now different
+                                                    self.delegate?.translationManager(languageUpdated: self.currentLanguage)
+                                                }
                                                 self.currentLanguage = lang
                                             }
                                         }
@@ -332,25 +336,17 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A translations object.
-    public func translations<T: Translatable>(localeId: String) throws -> T {
-        // Clear translations if language changed
-        if let lastAcceptHeader = lastAcceptHeader,
-            lastAcceptHeader != acceptLanguage {
-            // Language changed from last time, clearing translations
-            self.lastAcceptHeader = acceptLanguage
-            try clearTranslations()
-        }
-        
+    public func translations<T: Translatable>(localeId: String) throws -> T? {
         // Check object in memory
         if let cachedObject = translatableObjectDictonary[localeId] as? T {
             return cachedObject
         }
-        
+
         // Load persisted or fallback translations
         try createTranslatableObject(localeId, type: T.self)
-        
+
         // Now we must have correct translations, so return it
-        return translatableObjectDictonary[localeId] as! T
+        return translatableObjectDictonary[localeId] as? T
     }
     
     /// Clears both the memory and persistent cache. Used for debugging purposes.
@@ -386,10 +382,6 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         } else {
             translations = try fallbackTranslations(localeId: localeId)
         }
-        
-        // Set our language
-        #warning("TODO: Hadle override properly with new 'isBestFit' Boolean")
-        //currentLanguage = languageOverride ?? translations.language
         
         // Figure out and set translations
         guard let parsed = try processAllTranslations(translations, shouldUnwrap: shouldUnwrapTranslation)  else {
