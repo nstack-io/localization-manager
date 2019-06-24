@@ -260,7 +260,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
 
         //check if we've got an override, if not, use default accept language
         let languageAcceptHeader = languageOverride?.identifier ?? acceptLanguage
-        repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader) { (response: Result<[LocalizationModel]>) in
+        repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader) { (response: Result<[LocalizationModel], Error>) in
             switch response {
             case .success(let configs):
                 
@@ -298,7 +298,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         let languageAcceptHeader = languageOverride?.identifier ?? acceptLanguage
         
         repository.getTranslations(localization: localization,
-                                   acceptLanguage: languageAcceptHeader) { (result: Result<TranslationResponse<Language>>, type: PersistedTranslationType) in
+                                   acceptLanguage: languageAcceptHeader) { (result: Result<TranslationResponse<Language>, Error>) in
                                     
                                     switch result {
                                     case .success(let translationsData):
@@ -316,7 +316,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
                                         }
                                         
                                         do {
-                                            try self.set(response: translationsData, type: type)
+                                            try self.set(response: translationsData, type: .single)
                                         } catch {
                                             completion?(error)
                                             return
@@ -335,7 +335,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     /// Gets the languages for which translations are available.
     ///
     /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
-    public func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel {
+    public func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L], Error>) -> Void) where L: LanguageModel {
         // Fetching available language asynchronously
         repository.getAvailableLanguages(completion: completion)
     }

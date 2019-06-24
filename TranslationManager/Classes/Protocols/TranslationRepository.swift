@@ -10,11 +10,11 @@ import Foundation
 
 public protocol TranslationRepository {
     func getLocalizationConfig(acceptLanguage: String,
-                               completion: @escaping (Result<[LocalizationModel]>) -> Void)    
+                               completion: @escaping (Result<[LocalizationModel], Error>) -> Void)
     func getTranslations(localization: LocalizationModel,
                          acceptLanguage: String,
-                         completion: @escaping (Result<TranslationResponse<Language>>, PersistedTranslationType) -> Void)
-    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
+                         completion: @escaping (Result<TranslationResponse<Language>, Error>) -> Void)
+    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L], Error>) -> Void)
     func fetchPreferredLanguages() -> [String]
     func fetchBundles() -> [Bundle]
 }

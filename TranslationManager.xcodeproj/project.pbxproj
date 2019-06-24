@@ -23,7 +23,6 @@
 		C01D69D82178912300A1B354 /* Translatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D72178912300A1B354 /* Translatable.swift */; };
 		C01D69DA2178913A00A1B354 /* TranslatableManagerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D92178913A00A1B354 /* TranslatableManagerType.swift */; };
 		C01D69DC2178916B00A1B354 /* TranslationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69DB2178916B00A1B354 /* TranslationRepository.swift */; };
-		C01D69DE2178918200A1B354 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69DD2178918200A1B354 /* Result.swift */; };
 		C01D69E1217891DF00A1B354 /* TranslationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69E0217891DF00A1B354 /* TranslationResponse.swift */; };
 		C01D69E32178923B00A1B354 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69E22178923B00A1B354 /* Language.swift */; };
 		C01D69E52178925900A1B354 /* LanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69E42178925900A1B354 /* LanguageModel.swift */; };
@@ -70,7 +69,6 @@
 		C01D69D72178912300A1B354 /* Translatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translatable.swift; sourceTree = "<group>"; };
 		C01D69D92178913A00A1B354 /* TranslatableManagerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatableManagerType.swift; sourceTree = "<group>"; };
 		C01D69DB2178916B00A1B354 /* TranslationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationRepository.swift; sourceTree = "<group>"; };
-		C01D69DD2178918200A1B354 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		C01D69E0217891DF00A1B354 /* TranslationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationResponse.swift; sourceTree = "<group>"; };
 		C01D69E22178923B00A1B354 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		C01D69E42178925900A1B354 /* LanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModel.swift; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 		C01D69DF217891C100A1B354 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				C01D69DD2178918200A1B354 /* Result.swift */,
 				C01D69EC217894FC00A1B354 /* TranslationError.swift */,
 				C01D69F02178968700A1B354 /* Constants.swift */,
 			);
@@ -370,7 +367,6 @@
 				C01D69E32178923B00A1B354 /* Language.swift in Sources */,
 				C04AFBF32179DDC2002CB099 /* ApplicationStateObserverDelegate.swift in Sources */,
 				23A4297022BA44B000D09EA1 /* LocalizationConfig.swift in Sources */,
-				C01D69DE2178918200A1B354 /* Result.swift in Sources */,
 				C04AFBF92179E2C7002CB099 /* UpdateMode.swift in Sources */,
 				23A4296E22BA37C800D09EA1 /* LocalizationModel.swift in Sources */,
 				C01D69F32178989E00A1B354 /* String+Substring.swift in Sources */,
