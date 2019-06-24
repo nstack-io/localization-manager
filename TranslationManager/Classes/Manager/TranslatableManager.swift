@@ -187,6 +187,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     ///   - updateMode: Update mode that determines how should translations be updated. See `UpdateMode`.
     ///   - fileManager: A file manager used to persist downloaded translations and load fallback translations.
     ///   - userDefaults: User defaults that are used to accept headers and language override.
+    ///   - fallbackLocale: the locale used when there is no current language set. This should be a locale that has fallback translations in the bundle.
     required public init(repository: TranslationRepository,
                          updateMode: UpdateMode = .automatic,
                          fileManager: FileManager = .default,
