@@ -25,14 +25,12 @@ class TranslationManagerTests: XCTestCase {
                                 isDefault: false, isBestFit: false)
 
     var mockTranslations: TranslationResponse<Language> {
-        return TranslationResponse(translations:
-            [
-                "default" : ["successKey" : "SuccessUpdated"],
-                "otherSection" : ["anotherKey" : "HeresAValue"],
-            ],
-                                   language: Language(id: 1, name: "English",
-                                                      direction: "LRM", acceptLanguage: "en-GB",
-                                                      isDefault: true, isBestFit: true))
+        return TranslationResponse(translations: [
+            "default" : ["successKey" : "SuccessUpdated"],
+            "otherSection" : ["anotherKey" : "HeresAValue"],
+            ], meta: TranslationMeta(language: Language(id: 1, name: "English",
+                                                        direction: "LRM", acceptLanguage: "en-GB",
+                                                        isDefault: true, isBestFit: true)))
     }
     
     var mockLocalizationConfigWithUpdate: LocalizationConfig {
@@ -52,6 +50,7 @@ class TranslationManagerTests: XCTestCase {
         repositoryMock = TranslationsRepositoryMock()
         fileManagerMock = FileManagerMock()
         manager = TranslatableManager.init(repository: repositoryMock, fallbackLocale: Locale.current)
+        manager.languageOverride = nil
     }
 
     override func tearDown() {
@@ -107,7 +106,7 @@ class TranslationManagerTests: XCTestCase {
         manager.updateTranslations()
         
         
-        guard let localeId: String = mockTranslations.language?.acceptLanguage else {
+        guard let localeId: String = mockTranslations.meta?.language?.acceptLanguage else {
             XCTFail()
             return
         }
@@ -137,14 +136,12 @@ class TranslationManagerTests: XCTestCase {
         let config = mockLocalizationConfigWithUpdate //mock Danish config
         let localizations: [LocalizationConfig] = [config]
         repositoryMock.availableLocalizations = localizations
-        repositoryMock.translationsResponse = TranslationResponse(translations:
-            [
-                "default" : ["successKey" : "SuccessUpdated"],
-                "otherSection" : ["anotherKey" : "HeresAValue"],
-            ],
-                                                                  language: Language(id: 1, name: "Danish",
-                                                                                     direction: "LRM", acceptLanguage: "da-DK",
-                                                                                     isDefault: true, isBestFit: true))
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default" : ["successKey" : "SuccessUpdated"],
+            "otherSection" : ["anotherKey" : "HeresAValue"],
+            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
         manager.updateTranslations()
         XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
     }
@@ -153,28 +150,24 @@ class TranslationManagerTests: XCTestCase {
         let config = mockLocalizationConfigWithUpdate //mock Danish config
         let localizations: [LocalizationConfig] = [config]
         repositoryMock.availableLocalizations = localizations
-        repositoryMock.translationsResponse = TranslationResponse(translations:
-            [
-                "default" : ["successKey" : "SuccessUpdated"],
-                "otherSection" : ["anotherKey" : "HeresAValue"],
-            ],
-                                                                  language: Language(id: 1, name: "Danish",
-                                                                                     direction: "LRM", acceptLanguage: "da-DK",
-                                                                                     isDefault: true, isBestFit: true))
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default" : ["successKey" : "SuccessUpdated"],
+            "otherSection" : ["anotherKey" : "HeresAValue"],
+            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
         manager.updateTranslations()
         
         //current language should be Danish
         XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
         
         repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true)]
-        repositoryMock.translationsResponse = TranslationResponse(translations:
-            [
-                "default" : ["successKey" : "SuccessUpdated"],
-                "otherSection" : ["anotherKey" : "HeresAValue"],
-            ],
-                                                                  language: Language(id: 1, name: "English",
-                                                                                     direction: "LRM", acceptLanguage: "en-GB",
-                                                                                     isDefault: false, isBestFit: false))
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default" : ["successKey" : "SuccessUpdated"],
+            "otherSection" : ["anotherKey" : "HeresAValue"],
+            ], meta: TranslationMeta(language: Language(id: 1, name: "English",
+                                                        direction: "LRM", acceptLanguage: "en-GB",
+                                                        isDefault: false, isBestFit: false)))
         
         manager.updateTranslations()
         
@@ -231,14 +224,12 @@ class TranslationManagerTests: XCTestCase {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
-        repositoryMock.translationsResponse = TranslationResponse(translations:
-            [
-                "default" : ["successKey" : "DanishSuccessUpdated", "successKey2" : "DanishSuccessUpdated2"],
-                "otherSection" : ["anotherKey" : "HeresAValue", "anotherKey2" : "HeresAValue2"]
-            ],
-                                                                  language: Language(id: 1, name: "Danish",
-                                                                                     direction: "LRM", acceptLanguage: "da-DK",
-                                                                                     isDefault: true, isBestFit: true))
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default" : ["successKey" : "DanishSuccessUpdated", "successKey2" : "DanishSuccessUpdated2"],
+            "otherSection" : ["anotherKey" : "HeresAValue", "anotherKey2" : "HeresAValue2"]
+            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
         manager.updateTranslations()
         
         do {
@@ -266,9 +257,9 @@ class TranslationManagerTests: XCTestCase {
         }
     }
     
-    func testFallbackToJSONLocale() {
-        #warning("THIS TEST IS CURRENTLY FAILING BECAUSE THE RESPONSE IN THE FALLBACK JSON (which the api returns) DOESNT MATCH THE MODELS IN THIS FRAMEWORK. WE NEED TO UPDATE THE RESPONSE TO MATCH THE JSON. WITH CORRECT META FORMAT.")
-        
+    //MARK: - Fallback
+    
+    func testFallbackToJSONLocale() {        
         let locale = Locale(identifier: "en-GB")
         XCTAssertNotNil(locale)
         
@@ -277,367 +268,103 @@ class TranslationManagerTests: XCTestCase {
         XCTAssertNil(manager.currentLanguage)
         do {
             try manager.clearTranslations(includingPersisted: true)
-            let str = try manager.translation(for: "otherSection.anotherKey")
+            let str = try manager.translation(for: "other.otherKey")
             XCTAssertEqual(str, "FallbackValue")
         }
         catch {
             XCTFail(error.localizedDescription)
         }
     }
-    
-//    func testTranslationForCurrentLanguageSuccess() {
-//        let danishConfig = LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "da-DK", shouldUpdate: true)
-//        let frenchConfig = LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false)
-//        let localizations: [LocalizationConfig] = [danishConfig, frenchConfig]
-//        repositoryMock.availableLocalizations = localizations
-//
-//        //first set translations response to danish
-//        repositoryMock.translationsResponse = TranslationResponse(translations:
-//            [
-//                "default" : ["successKey" : "DanishSuccessUpdated"]
-//            ],
-//                                                                  language: Language(id: 1, name: "Danish",
-//                                                                                     direction: "LRM", acceptLanguage: "da-DK",
-//                                                                                     isDefault: true, isBestFit: true))
-//        manager.updateTranslations()
-//
-//        do {
-//            let str = try manager.translation(for: "default.successKey")
-//            XCTAssertEqual(str, "DanishSuccessUpdated")
-//        }
-//        catch {
-//            XCTFail()
-//        }
-//    }
-    
-    //
-//    // MARK: - Fetch -
-//
-//    func testFetchCurrentLanguageSuccess() {
-//        repositoryMock.currentLanguage = mockLanguage
-//        let exp = expectation(description: "Fetch language should return one language.")
-//        manager.fetchCurrentLanguage { (response) in
-//            if case let .success(lang) = response.result {
-//                XCTAssertEqual(lang.name, self.mockLanguage.name)
-//            } else {
-//                XCTAssert(false)
-//            }
-//
-//            exp.fulfill()
-//        }
-//        waitForExpectations(timeout: 5, handler: nil)
-//    }
-//
-//    func testFetchCurrentLanguageFailure() {
-//        repositoryMock.currentLanguage = nil
-//        let exp = expectation(description: "Fetch language should fail without language.")
-//        manager.fetchCurrentLanguage { (response) in
-//            if case .success(_) = response.result {
-//                XCTAssert(false)
-//            }
-//            exp.fulfill()
-//        }
-//        waitForExpectations(timeout: 5, handler: nil)
-//    }
-//
-//    func testFetchAvailableLanguagesSuccess() {
-//        repositoryMock.availableLanguages = [
-//            Language(id: 0, name: "English", locale: "en-GB",
-//                     direction: "LRM", acceptLanguage: "en-GB",
-//                     isDefault: false, isBestFit: false),
-//            Language(id: 1, name: "Danish", locale: "da-DK",
-//                     direction: "LRM", acceptLanguage: "da-DK",
-//                     isDefault: false, isBestFit: false)
-//        ]
-//
-//        let exp = expectation(description: "Fetch available should return two languages.")
-//        manager.fetchAvailableLanguages { (response) in
-//            if case .failure(_) = response.result {
-//                XCTAssert(false)
-//            }
-//            exp.fulfill()
-//        }
-//        waitForExpectations(timeout: 5, handler: nil)
-//    }
-//
-//    func testFetchAvailableLanguagesFailure() {
-//        repositoryMock.availableLanguages = nil
-//        let exp = expectation(description: "Fetch available should fail without languages.")
-//        manager.fetchAvailableLanguages { (response) in
-//            if case .success(_) = response.result {
-//                XCTAssert(false)
-//            }
-//            exp.fulfill()
-//        }
-//        waitForExpectations(timeout: 5, handler: nil)
-//    }
-//
-//    // MARK: - Accept -
-//
-//    func testAcceptLanguage() {
-//        // Test simple language
-//        repositoryMock.preferredLanguages = ["en"]
-//        XCTAssertEqual(manager.acceptLanguage, "en;q=1.0")
-//
-//        // Test two languages with locale
-//        repositoryMock.preferredLanguages = ["da-DK", "en-GB"]
-//        XCTAssertEqual(manager.acceptLanguage, "da-DK;q=1.0,en-GB;q=0.9")
-//
-//        // Test max lang limit
-//        repositoryMock.preferredLanguages = ["da-DK", "en-GB", "en", "cs-CZ", "sk-SK", "no-NO"]
-//        XCTAssertEqual(manager.acceptLanguage,
-//                       "da-DK;q=1.0,en-GB;q=0.9,en;q=0.8,cs-CZ;q=0.7,sk-SK;q=0.6",
-//                       "There should be maximum 5 accept languages.")
-//
-//        // Test fallback
-//        repositoryMock.preferredLanguages = []
-//        XCTAssertEqual(manager.acceptLanguage, "en;q=1.0",
-//                       "If no accept language there should be fallback to english.")
-//    }
-//
-//    func testLastAcceptHeader() {
-//        XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
-//        manager.lastAcceptHeader = "da-DK;q=1.0,en;q=1.0"
-//        XCTAssertEqual(manager.lastAcceptHeader, "da-DK;q=1.0,en;q=1.0")
-//        manager.lastAcceptHeader = nil
-//        XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil.")
-//    }
-//
-//    // MARK: - Language Override -
-//
-//    func testLanguageOverride() {
-//        XCTAssertEqual(testTranslations.defaultSection.successKey, "Success")
-//        manager.languageOverride = mockLanguage
-//        XCTAssertEqual(testTranslations.defaultSection.successKey, "Fedt")
-//    }
-//
-//    func testLanguageOverrideStore() {
-//        XCTAssertNil(manager.languageOverride, "Language override should be nil at start.")
-//        manager.languageOverride = mockLanguage
-//        XCTAssertNotNil(manager.languageOverride)
-//        manager.languageOverride = nil
-//        XCTAssertNil(manager.languageOverride, "Language override should be nil.")
-//    }
-//
-//    func testLanguageOverrideClearTranslations() {
-//        // Load translations
-//        manager.loadTranslations()
-//        XCTAssertNotNil(manager.translationsObject,
-//                        "Translations shouldn't be nil after loading.")
-//
-//        // Override lang, should clear all loaded
-//        manager.languageOverride = mockLanguage
-//        XCTAssertNil(manager.translationsObject,
-//                     "Translations should be cleared if language is overriden.")
-//
-//        // Accessing again should load with override lang
-//        _ = manager.translations() as Translations
-//        XCTAssertNotNil(manager.translationsObject,
-//                        "Translations should load with language override.")
-//    }
-//
-//    func testBackendLanguagePriority() {
-//        // We request da-DK as preferred language, which is not a part of the translations we get.
-//        // The manager then should prioritise falling back to the language that the backend provided.
-//        // Instead of falling to any type of english or first in the array.
-//        //
-//        // In the JSON backends return US english as most appropriate.
-//        manager.clearTranslations(includingPersisted: true)
-//        repositoryMock.preferredLanguages = ["da-DK"]
-//        mockBundle.resourcePathOverride = backendSelectedTranslationsJSONPath
-//        repositoryMock.customBundles = [mockBundle]
-//        XCTAssertEqual(testTranslations.defaultSection.successKey, "Whatever")
-//    }
-//
-//    // MARK: - Translations -
-//
-//    func testTranslationsMemoryCache() {
-//        XCTAssertNil(manager.translationsObject)
-//        XCTAssertEqual(testTranslations.defaultSection.successKey, "Success")
-//        XCTAssertNotNil(manager.translationsObject)
-//        XCTAssertEqual(testTranslations.defaultSection.successKey, "Success")
-//    }
-//
-//    // MARK: - Translation Dictionaries -
-//
-//    func testPersistedTranslations() {
-//        XCTAssertNil(manager.persistedTranslations, "Persisted translations should be nil at start.")
-//        manager.persistedTranslations = mockTranslations.translations
-//        XCTAssertNotNil(manager.persistedTranslations)
-//        manager.persistedTranslations = nil
-//        XCTAssertNil(manager.persistedTranslations, "Persisted translations should be nil.")
-//    }
-//
-//    func testPersistedTranslationsSaveFailure() {
-//        fileManagerMock.searchPathUrlsOverride = []
-//        XCTAssertNil(manager.persistedTranslations, "Persisted translations should be nil at start.")
-//        manager.persistedTranslations = mockTranslations.translations
-//        XCTAssertNil(manager.persistedTranslations, "There shouldn't be any saved translations.")
-//    }
-//
-//    func testPersistedTranslationsSaveFailureBadUrl() {
-//        fileManagerMock.searchPathUrlsOverride = [URL(string: "test://")!]
-//        XCTAssertNil(manager.persistedTranslations, "Persisted translations should be nil at start.")
-//        manager.persistedTranslations = mockTranslations.translations
-//        XCTAssertNil(manager.persistedTranslations, "There shouldn't be any saved translations.")
-//    }
-//
-//    func testPersistedTranslationsOnUpdate() {
-//        repositoryMock.translationsResponse = mockWrappedTranslations
-//        XCTAssertNil(manager.synchronousUpdateTranslations(), "No error should happen on update.")
-//        XCTAssertNotNil(manager.persistedTranslations, "Persisted translations should be available.")
-//    }
-//
-//    func testFallbackTranslations() {
-//        XCTAssertNotNil(manager.fallbackTranslations, "Fallback translations should be available.")
-//    }
-//
-//    func testFallbackTranslationsInvalidPath() {
-//        let bundle = mockBundle
-//        bundle.resourcePathOverride = "file://BlaBlaBla.json" // invalid path
-//        repositoryMock.customBundles = [bundle]
-//        XCTAssertNotNil(manager.fallbackTranslations, "Fallback translations should fail with invalid path.")
-//    }
-//
-//    func testFallbackTranslationsInvalidJSON() {
-//        let bundle = mockBundle
-//        bundle.resourcePathOverride = invalidTranslationsJSONPath // invalid json file
-//        repositoryMock.customBundles = [bundle]
-//        XCTAssertNotNil(manager.fallbackTranslations, "Fallback translations should fail with invalid JSON.")
-//    }
-//
-//    func testFallbackTranslationsEmptyJSON() {
-//        let bundle = mockBundle
-//        bundle.resourcePathOverride = emptyTranslationsJSONPath // empty json file
-//        repositoryMock.customBundles = [bundle]
-//        XCTAssertNotNil(manager.loadTranslations(), "Fallback translations should fail with invalid JSON.")
-//    }
-//
-//    func testFallbackTranslationsEmptyLanguageJSON() {
-//        let bundle = mockBundle
-//        bundle.resourcePathOverride = emptyLanguageMetaTranslationsJSONPath// empty meta laguage file
-//        repositoryMock.customBundles = [bundle]
-//        XCTAssertNotNil(manager.loadTranslations(), "Fallback translations should fail with empty language meta JSON.")
-//    }
-//
-//    func testFallbackTranslationsWrongFormatJSON() {
-//        let bundle = mockBundle
-//        bundle.resourcePathOverride = wrongFormatJSONPath // wrong format json file
-//        repositoryMock.customBundles = [bundle]
-//        XCTAssertNotNil(manager.fallbackTranslations, "Fallback translations should fail with wrong format JSON.")
-//    }
-//
-//    // MARK: - Unwrap & Parse -
-//
-//    func testUnwrapAndParse() {
-//        repositoryMock.preferredLanguages = ["en"]
-//        let final = manager.processAllTranslations(mockWrappedTranslations.translations!)
-//        XCTAssertNotNil(final, "Unwrap and parse should succeed.")
-//        XCTAssertEqual(final?.value(forKeyPath: "default.successKey") as? String, Optional("SuccessUpdated"))
-//    }
-//
-//    // MARK: - Extraction -
-//
-//    func testExtractWithFullLocale() {
-//        repositoryMock.preferredLanguages = ["en-GB", "da-DK"]
-//        let lang: NSDictionary = ["en-GB" : ["correct" : "yes"],
-//                                  "da-DK" : ["correct" : "no"]]
-//        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-//        XCTAssertNotNil(dict)
-//        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-//    }
-//
-//    func testExtractWithShortLocale() {
-//        repositoryMock.preferredLanguages = ["da"]
-//        let lang: NSDictionary = ["da-DK" : ["correct" : "yes"],
-//                                  "en-GB" : ["correct" : "no"]]
-//        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-//        XCTAssertNotNil(dict)
-//        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-//    }
-//
-//    func testExtractWithLanguageOverride() {
-//        repositoryMock.preferredLanguages = ["en-GB", "en"]
-//        manager.languageOverride = mockLanguage
-//        let lang: NSDictionary = ["en-GB" : ["correct" : "no"],
-//                                  "da-DK" : ["correct" : "yes"]]
-//        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-//        XCTAssertNotNil(dict)
-//        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-//    }
-//
-//    func testExtractWithWrongLanguageOverride() {
-//        repositoryMock.preferredLanguages = ["en-GB", "en"]
-//        manager.languageOverride = mockLanguage
-//        let lang: NSDictionary = ["en" : ["correct" : "yes"]]
-//        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-//        XCTAssertNotNil(dict)
-//        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-//    }
-//
-//    func testExtractWithSameRegionsWithCurrentLanguage() {
-//        repositoryMock.preferredLanguages = ["da-DK", "en-DK"]
-//        manager.languageOverride = Language(id: 0, name: "English", locale: "en-UK",
-//                                            direction: "lrm", acceptLanguage: "en-UK",
-//                                            isDefault: false, isBestFit: false)
-//        let lang: NSDictionary = ["en-AU" : ["correct" : "no"],
-//                                  "en-UK" : ["correct" : "yes"]]
-//        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-//        XCTAssertNotNil(dict)
-//        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-//    }
-//
-//    func testExtractWithNoLocaleButWithCurrentLanguage() {
-//        repositoryMock.preferredLanguages = []
-//        manager.languageOverride = mockLanguage
-//        let lang: NSDictionary = ["en-GB" : ["correct" : "no"],
-//                                  "da-DK" : ["correct" : "yes"]]
-//        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-//        XCTAssertNotNil(dict)
-//        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-//    }
 
-    //    func testExtractWithNoLocaleAndNoCurrentLanguage() {
-    //        repositoryMock.preferredLanguages = []
-    //        let lang: NSDictionary = ["en-GB" : ["correct" : "yes"],
-    //                                  "da-DK" : ["correct" : "no"]]
-    //        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-    //        XCTAssertNotNil(dict)
-    //        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-    //    }
-    //
-    //    func testExtractWithNoLocaleAndNoEnglish() {
-    //        repositoryMock.preferredLanguages = []
-    //        let lang: NSDictionary = ["es" : ["correct" : "no"],
-    //                                  "da-DK" : ["correct" : "yes"]]
-    //        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-    //        XCTAssertNotNil(dict)
-    //        XCTAssertEqual(dict.value(forKey: "correct") as? String, Optional("yes"))
-    //    }
+    func testFallbackTranslationsInvalidLocale() {
+        let locale = Locale(identifier: "da-DK")
+        XCTAssertNotNil(locale)
+        
+        manager.currentLanguage = nil
+        manager.fallbackLocale = locale
+        XCTAssertNil(manager.currentLanguage)
+        
+        do {
+            try manager.clearTranslations(includingPersisted: true)
+            XCTAssertThrowsError(try manager.translation(for: "other.otherKey"))
+        }
+        catch {
+            XCTFail()
+        }
+    }
+    
+    
+    func testFallbackTranslationsInvalidJSON() {
+        let locale = Locale(identifier: "fr-FR")
+        XCTAssertNotNil(locale)
+        
+        manager.currentLanguage = nil
+        manager.fallbackLocale = locale
+        XCTAssertNil(manager.currentLanguage)
+        do {
+            try manager.clearTranslations(includingPersisted: true)
+            XCTAssertThrowsError(try manager.translation(for: "other.otherKey"))
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+    
+    // MARK: - Accept -
 
-//    func testExtractFailure() {
-//        repositoryMock.preferredLanguages = ["da-DK"]
-//        let lang: NSDictionary = [:]
-//        let dict = manager.extractLanguageDictionary(fromDictionary: lang)
-//        XCTAssertNotNil(dict)
-//        XCTAssertEqual(dict.allKeys.count, 0, "Extracted dictionary should not be empty.")
-//    }
+    func testAcceptLanguage() {
+        // Test simple language
+        repositoryMock.preferredLanguages = ["en"]
+        XCTAssertEqual(manager.acceptLanguage, "en;q=1.0")
+
+        // Test two languages with locale
+        repositoryMock.preferredLanguages = ["da-DK", "en-GB"]
+        XCTAssertEqual(manager.acceptLanguage, "da-DK;q=1.0,en-GB;q=0.9")
+
+        // Test max lang limit
+        repositoryMock.preferredLanguages = ["da-DK", "en-GB", "en", "cs-CZ", "sk-SK", "no-NO"]
+        XCTAssertEqual(manager.acceptLanguage,
+                       "da-DK;q=1.0,en-GB;q=0.9,en;q=0.8,cs-CZ;q=0.7,sk-SK;q=0.6",
+                       "There should be maximum 5 accept languages.")
+
+        // Test fallback
+        repositoryMock.preferredLanguages = []
+        XCTAssertEqual(manager.acceptLanguage, "en;q=1.0",
+                       "If no accept language there should be fallback to english.")
+    }
+
+    func testLastAcceptHeader() {
+        manager.lastAcceptHeader = nil
+        XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
+        manager.lastAcceptHeader = "da-DK;q=1.0,en;q=1.0"
+        XCTAssertEqual(manager.lastAcceptHeader, "da-DK;q=1.0,en;q=1.0")
+        manager.lastAcceptHeader = nil
+        XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil.")
+    }
+
+    // MARK: - Language Override -
+
+    func testLanguageOverride() {
+        repositoryMock.availableLocalizations = [mockLocalizationConfigWithUpdate]
+        manager.lastAcceptHeader = nil
+        XCTAssertEqual(manager.updateMode, UpdateMode.automatic)
+        XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
+        
+        manager.languageOverride = Locale(identifier: "ja-JP")
+        XCTAssertEqual(manager.lastAcceptHeader, "ja-JP")
+    }
+
+    func testRemovingLanguageOverride() {
+        repositoryMock.availableLocalizations = [mockLocalizationConfigWithUpdate]
+        manager.lastAcceptHeader = nil
+        XCTAssertEqual(manager.updateMode, UpdateMode.automatic)
+        XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
+        
+        manager.languageOverride = Locale(identifier: "ja-JP")
+        XCTAssertEqual(manager.lastAcceptHeader, "ja-JP")
+        
+        manager.lastAcceptHeader = nil
+        XCTAssertEqual(manager.updateMode, UpdateMode.automatic)
+        XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
+    }
 }
-
-// MARK: - Helpers -
-
-//extension TranslationManager {
-//    fileprivate func synchronousUpdateTranslations() -> NStackError.Translations? {
-//        let semaphore = DispatchSemaphore(value: 0)
-//        var error: NStackError.Translations?
-//
-//        updateTranslations { e in
-//            error = e
-//            semaphore.signal()
-//        }
-//        semaphore.wait()
-//
-//        return error
-//    }
-//}
-

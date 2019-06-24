@@ -10,6 +10,8 @@ import Foundation
 
 /// The TranslatableManager handles everything related to translations.
 public class TranslatableManager<T: Translatable, L: LanguageModel, C: LocalizationModel>: TranslatableManagerType {
+    
+    
     // MARK: - Properties -
     // MARK: Public
     
@@ -64,7 +66,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         
         // If we should have language override, then append custom language code
         if let languageOverride = languageOverride {
-            components.append(languageOverride.locale.identifier + ";q=1.0")
+            components.append(languageOverride.identifier + ";q=1.0")
         }
         
         // Get all languages and calculate lowest quality
@@ -121,19 +123,38 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
             }
             // Last accept header set to: \(newValue).
             userDefaults.set(newValue, forKey: Constants.Keys.previousAcceptLanguage)
+        }
+    }
+    
+    /// This locale will be used instead of the phones' language when it is not `nil`. Remember
+    /// to call `updateTranslations()` after changing the value.
+    /// Otherwise, the effect will not be seen.
+    public var languageOverride: Locale? {
+        get {
+            guard let id = userDefaults.string(forKey: Constants.Keys.languageOverride) else { return nil }
+            return Locale(identifier: id)
+        }
+        set {
+            guard let newValue = newValue else {
+                // Last accept header deleted
+                userDefaults.removeObject(forKey: Constants.Keys.languageOverride)
+                
+                //if update mode is automatic update translations, to get new best fit language
+                if updateMode == .automatic {
+                    updateTranslations()
+                }
+                return
+            }
+            // Last accept header set to: \(newValue).
+            let id = newValue.identifier
+            userDefaults.set(id, forKey: Constants.Keys.languageOverride)
             
             //if update mode is automatic update translations, to get new best fit language
             if updateMode == .automatic {
                 updateTranslations()
             }
         }
-    }
-    
-    /// This language will be used instead of the phones' language when it is not `nil`. Remember
-    /// to call `updateTranslations()` after changing the value.
-    /// Otherwise, the effect will not be seen.
-    internal var languageOverride: L? {
-        return userDefaults.codable(forKey: Constants.Keys.languageOverride)
+        
     }
     
     /// This language will be used when there is no current language set.
@@ -237,24 +258,15 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     public func updateTranslations(_ completion: ((_ error: Error?) -> Void)? = nil) {
 
         //check if we've got an override, if not, use default accept language
-        let languageAcceptHeader = languageOverride?.locale.identifier ?? acceptLanguage
+        let languageAcceptHeader = languageOverride?.identifier ?? acceptLanguage
         repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader) { (response: Result<[LocalizationModel]>) in
             switch response {
             case .success(let configs):
                 
                 //if accept header has changed, update it
-                if let lastAcceptHeader = self.lastAcceptHeader,
-                    lastAcceptHeader != self.acceptLanguage {
+                if self.lastAcceptHeader != languageAcceptHeader {
                     //update what the last accept header was that was used
-                    self.lastAcceptHeader = self.acceptLanguage
-                    
-                    do {
-                        // Language changed from last time, clearing first
-                        try self.clearTranslations(includingPersisted: true)
-                    } catch {
-                        completion?(error)
-                        return
-                    }
+                    self.lastAcceptHeader = languageAcceptHeader
                 }
                 
                 do {
@@ -282,7 +294,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     ///                         object is nil to determine whether the operation was a succes.
     func updateLocaleTranslations(_ localization: LocalizationModel, completion: ((_ error: Error?) -> Void)? = nil) {
         //check if we've got an override, if not, use default accept language
-        let languageAcceptHeader = languageOverride?.locale.identifier ?? acceptLanguage
+        let languageAcceptHeader = languageOverride?.identifier ?? acceptLanguage
         
         repository.getTranslations(localization: localization,
                                    acceptLanguage: languageAcceptHeader) { (result: Result<TranslationResponse<Language>>, type: PersistedTranslationType) in
@@ -292,8 +304,8 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
                                         // New translations downloaded
                                         
                                         //cache current best fit language
-                                        if let lang = translationsData.language {
-                                            if lang.isBestFit {
+                                        if let lang = translationsData.meta?.language {
+                                            if lang.isBestFit ?? false {
                                                 if self.currentLanguage?.acceptLanguage != lang.acceptLanguage {
                                                     // Running language changed action, if best fit language is now different
                                                     self.delegate?.translationManager(languageUpdated: self.currentLanguage)
@@ -375,15 +387,15 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     /// Loads and initializes the translations object from either persisted or fallback dictionary.
     func createTranslatableObject<T>(_ localeId: String, type: T.Type) throws where T: Translatable {
         let translations: TranslationResponse<Language>
-        var shouldUnwrapTranslation = true
+        var shouldUnwrapTranslation = false
         
         if let persisted = try persistedTranslations(localeId: localeId),
             let typeString = userDefaults.string(forKey: Constants.Keys.persistedTranslationType),
             let translationType = PersistedTranslationType(rawValue: typeString) {
             
             // Make sure the persisted translations have correct language
-            if let override = languageOverride, persisted.language?.locale.identifier != override.locale.identifier {
-                translations = try fallbackTranslations(localeId: override.locale.identifier)
+            if let override = languageOverride, persisted.meta?.language?.locale.identifier != override.identifier {
+                translations = try fallbackTranslations(localeId: override.identifier)
             } else {
                 // Otherwise use the persisted language
                 translations = persisted
@@ -400,9 +412,6 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         }
 
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
-        
-        //not sure how to get this to parse as dont know how to make a model that conforms to translatable
-        //let dictionary = try decoder.decode(Dictionary<String, [String : String]>.self, from: data)
         translatableObjectDictonary[localeId] = try decoder.decode(T.self, from: data)
     }
     
@@ -442,7 +451,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     ///
     /// - Parameter translations: The new translations.
     public func set<L>(response: TranslationResponse<L>, type: PersistedTranslationType) throws where L : LanguageModel {
-        guard let locale = response.language?.locale.identifier else {
+        guard let locale = response.meta?.language?.locale.identifier else {
             throw TranslationError.translationsFileUrlUnavailable
         }
         
@@ -519,7 +528,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
             
             let fileUrl = URL(fileURLWithPath: filePath)
             let data = try Data(contentsOf: fileUrl)
-            return try decoder.decode(TranslationResponse.self, from: data)
+            return try decoder.decode(TranslationResponse<Language>.self, from: data)
         }
         
         // Failed to load fallback translations, file non-existent
@@ -564,7 +573,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         
         // First try overriden language
         if let languageOverride = languageOverride,
-            let dictionary = translationsMatching(language: languageOverride, inDictionary: dictionary) {
+            let dictionary = translationsMatching(localeId: languageOverride.identifier, inDictionary: dictionary) {
             return dictionary
         }
         
@@ -617,8 +626,8 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     ///   - language: The desired language. If `nil`, first language will be used.
     ///   - json: The dictionary containing translations for all languages.
     /// - Returns: Translations dictionary for the given language.
-    internal func translationsMatching(language: L, inDictionary dictionary: [String: Any]) -> [String: Any]? {
-        return translationsMatching(locale: language.locale.identifier, inDictionary: dictionary)
+    internal func translationsMatching(localeId: String, inDictionary dictionary: [String: Any]) -> [String: Any]? {
+        return translationsMatching(locale: localeId, inDictionary: dictionary)
     }
     
     /// Searches the translation file for a key matching the provided language code.

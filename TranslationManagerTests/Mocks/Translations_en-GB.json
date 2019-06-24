@@ -4,13 +4,8 @@
             "successKey": "Success",
             "keyys": "ffw"
         },
-        "otherSection": {
-            "anotherKey": "FallbackValue"
-        },
-        "oneMoreSection": {
-            "soManyKeys": "AndValues",
-            "test1": "<p>test</p>\r\n",
-            "test2": "__test2"
+        "other": {
+            "otherKey": "FallbackValue"
         }
     },
     "meta": {

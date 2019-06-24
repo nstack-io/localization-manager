@@ -10,35 +10,33 @@ import Foundation
 
 public struct TranslationResponse<L: LanguageModel>: Codable {
     public internal(set) var translations: [String: Any]
-    public let language: L?
+    public let meta: TranslationMeta<L>?
     
     enum CodingKeys: String, CodingKey {
         case translations = "data"
-        case languageData = "meta"
+        case meta
     }
     
     enum LanguageCodingKeys: String, CodingKey {
         case language
     }
     
-    public init(translations: [String: Any] = [:], language: L? = nil) {
+    public init(translations: [String: Any] = [:], meta: TranslationMeta<L>? = nil) {
         self.translations = translations
-        self.language = language
+        self.meta = meta
     }
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         translations = try values.decodeIfPresent([String: Any].self, forKey: .translations) ?? [:]
-        
-        let languageData = try values.nestedContainer(keyedBy: LanguageCodingKeys.self, forKey: .languageData)
-        language = try languageData.decodeIfPresent(L.self, forKey: .language)
+
+        let metaData = try decoder.container(keyedBy: CodingKeys.self)
+        meta = try metaData.decodeIfPresent(TranslationMeta<L>.self, forKey: .meta)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(translations, forKey: .translations)
-        
-        var languageData = container.nestedContainer(keyedBy: LanguageCodingKeys.self, forKey: .languageData)
-        try languageData.encode(language, forKey: .language)
+        try container.encode(meta, forKey: .meta)
     }
 }

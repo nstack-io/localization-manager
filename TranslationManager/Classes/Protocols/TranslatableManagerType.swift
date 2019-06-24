@@ -9,8 +9,6 @@
 import Foundation
 
 public protocol TranslatableManagerType: class {
-//    associatedtype L: LanguageModel
-    
     var updateMode: UpdateMode { get }
     
     var decoder: JSONDecoder { get }
@@ -18,6 +16,7 @@ public protocol TranslatableManagerType: class {
     
     var currentLanguage: Language? { get }
     var acceptLanguage: String { get }
+    var languageOverride: Locale? { get set }
     
     func translation(for keyPath: String) throws -> String?
     func translations<T: Translatable>(localeId: String) throws -> T?
