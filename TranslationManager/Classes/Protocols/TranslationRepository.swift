@@ -9,12 +9,14 @@
 import Foundation
 
 public protocol TranslationRepository {
+    typealias SwiftResult<T> = Swift.Result<T, Error>
+    
     func getLocalizationConfig(acceptLanguage: String,
-                               completion: @escaping (Swift.Result<[LocalizationModel], Error>) -> Void)
+                               completion: @escaping (SwiftResult<[LocalizationModel]>) -> Void)
     func getTranslations(localization: LocalizationModel,
                          acceptLanguage: String,
-                         completion: @escaping (Swift.Result<TranslationResponse<Language>, Error>) -> Void)
-    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Swift.Result<[L], Error>) -> Void)
+                         completion: @escaping (SwiftResult<TranslationResponse<Language>>) -> Void)
+    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (SwiftResult<[L]>) -> Void)
     func fetchPreferredLanguages() -> [String]
     func fetchBundles() -> [Bundle]
 }
