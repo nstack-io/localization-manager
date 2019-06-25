@@ -49,8 +49,10 @@ class TranslationManagerTests: XCTestCase {
 
         repositoryMock = TranslationsRepositoryMock()
         fileManagerMock = FileManagerMock()
-        manager = TranslatableManager.init(repository: repositoryMock, fallbackLocale: Locale.current)
+        manager = TranslatableManager.init(repository: repositoryMock)
         manager.languageOverride = nil
+        manager.bestFitLanguage = nil
+        manager.fallbackLocale = nil
     }
 
     override func tearDown() {
@@ -91,10 +93,12 @@ class TranslationManagerTests: XCTestCase {
     }
     
     func testLoadLocalizationsFail() {
-        XCTAssertTrue(manager.translatableObjectDictonary.isEmpty)
+        //make sure the count of translations objects available (fallbacks) doesnt change when update failed
+        let countBefore = manager.translatableObjectDictonary.count
 
         manager.updateTranslations { (error) in
             XCTAssertNotNil(error)
+            XCTAssertEqual(self.manager.translatableObjectDictonary.count, countBefore)
         }
     }
     
@@ -143,7 +147,7 @@ class TranslationManagerTests: XCTestCase {
                                                         direction: "LRM", acceptLanguage: "da-DK",
                                                         isDefault: true, isBestFit: true)))
         manager.updateTranslations()
-        XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
+        XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
     }
     
     func testDoNotUpdateCurrentLanguageWithBestFit() {
@@ -159,7 +163,7 @@ class TranslationManagerTests: XCTestCase {
         manager.updateTranslations()
         
         //current language should be Danish
-        XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
+        XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
         
         repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true)]
         repositoryMock.translationsResponse = TranslationResponse(translations: [
@@ -172,7 +176,7 @@ class TranslationManagerTests: XCTestCase {
         manager.updateTranslations()
         
         //current language should still be Danish as English is not 'best fit'
-        XCTAssertEqual(manager.currentLanguage?.acceptLanguage, "da-DK")
+        XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
     }
     
     // MARK: - Test Clear
@@ -220,7 +224,7 @@ class TranslationManagerTests: XCTestCase {
 
     // MARK: - Translation for key
     
-    func testTranslationForKeySuccess() {
+    func testTranslationForKeySuccessWithCurrentLanguage() {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
@@ -259,13 +263,21 @@ class TranslationManagerTests: XCTestCase {
     
     //MARK: - Fallback
     
-    func testFallbackToJSONLocale() {        
-        let locale = Locale(identifier: "en-GB")
+    func testFallbackToDefaultLocale() {
+        do {
+            let str = try manager.translation(for: "other.otherKey")
+            XCTAssertEqual(str, "FallbackValue")
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+    
+    func testFallbackToSetFallbackLocale() {
+        manager.bestFitLanguage = nil
+        let locale = Locale(identifier: "da-DK")
         XCTAssertNotNil(locale)
         
-        manager.currentLanguage = nil
-        manager.fallbackLocale = locale
-        XCTAssertNil(manager.currentLanguage)
         do {
             try manager.clearTranslations(includingPersisted: true)
             let str = try manager.translation(for: "other.otherKey")
@@ -274,19 +286,39 @@ class TranslationManagerTests: XCTestCase {
         catch {
             XCTFail(error.localizedDescription)
         }
+        
+        manager.fallbackLocale = locale
+        do {
+            try manager.clearTranslations(includingPersisted: true)
+            let str = try manager.translation(for: "other.otherKey")
+            XCTAssertEqual(str, "DenmarkFallbackValue")
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+    
+    func testFallbackToFirstLocaleAvailableIfWeHaveNotSetFallbackLocale() {
+        manager.defaultLanguage = nil
+        XCTAssertNil(manager.bestFitLanguage)
+        do {
+            let str = try manager.translation(for: "other.otherKey")
+            XCTAssertNotNil(str)
+        }
+        catch {
+            XCTFail(error.localizedDescription)
+        }
     }
 
     func testFallbackTranslationsInvalidLocale() {
-        let locale = Locale(identifier: "da-DK")
+        let locale = Locale(identifier: "ja-JP")
         XCTAssertNotNil(locale)
-        
-        manager.currentLanguage = nil
         manager.fallbackLocale = locale
-        XCTAssertNil(manager.currentLanguage)
+        XCTAssertNil(manager.bestFitLanguage)
         
         do {
-            try manager.clearTranslations(includingPersisted: true)
-            XCTAssertThrowsError(try manager.translation(for: "other.otherKey"))
+            let str = try manager.translation(for: "other.otherKey")
+            XCTAssertEqual(str, "FallbackValue") //sets to default language as fallback is not found
         }
         catch {
             XCTFail()
@@ -298,12 +330,12 @@ class TranslationManagerTests: XCTestCase {
         let locale = Locale(identifier: "fr-FR")
         XCTAssertNotNil(locale)
         
-        manager.currentLanguage = nil
+        manager.bestFitLanguage = nil
         manager.fallbackLocale = locale
-        XCTAssertNil(manager.currentLanguage)
+        XCTAssertNil(manager.bestFitLanguage)
         do {
-            try manager.clearTranslations(includingPersisted: true)
-            XCTAssertThrowsError(try manager.translation(for: "other.otherKey"))
+            let str = try manager.translation(for: "other.otherKey")
+            XCTAssertEqual(str, "FallbackValue") //sets to default language as fallback is not found
         }
         catch {
             XCTFail(error.localizedDescription)

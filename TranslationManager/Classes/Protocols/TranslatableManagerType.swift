@@ -14,7 +14,7 @@ public protocol TranslatableManagerType: class {
     var decoder: JSONDecoder { get }
     var encoder: JSONEncoder { get }
     
-    var currentLanguage: Language? { get }
+    var bestFitLanguage: Language? { get }
     var acceptLanguage: String { get }
     var languageOverride: Locale? { get set }
     

@@ -12,6 +12,7 @@
 		2376952C22C0C00E00D40DC1 /* TranslationMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376952B22C0C00E00D40DC1 /* TranslationMeta.swift */; };
 		2376952E22C0D4AD00D40DC1 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376952D22C0D4AD00D40DC1 /* Platform.swift */; };
 		2376953022C0E70F00D40DC1 /* Translations_fr-FR.json in Resources */ = {isa = PBXBuildFile; fileRef = 2376952F22C0E70E00D40DC1 /* Translations_fr-FR.json */; };
+		2376953822C233B800D40DC1 /* Translations_da-DK.json in Resources */ = {isa = PBXBuildFile; fileRef = 2376953722C233B800D40DC1 /* Translations_da-DK.json */; };
 		23A4296A22BA2AA400D09EA1 /* TranslationsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296722BA2AA400D09EA1 /* TranslationsRepositoryMock.swift */; };
 		23A4296B22BA2AA400D09EA1 /* BundleMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296822BA2AA400D09EA1 /* BundleMock.swift */; };
 		23A4296C22BA2AA400D09EA1 /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */; };
@@ -58,6 +59,7 @@
 		2376952B22C0C00E00D40DC1 /* TranslationMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationMeta.swift; sourceTree = "<group>"; };
 		2376952D22C0D4AD00D40DC1 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		2376952F22C0E70E00D40DC1 /* Translations_fr-FR.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Translations_fr-FR.json"; sourceTree = "<group>"; };
+		2376953722C233B800D40DC1 /* Translations_da-DK.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Translations_da-DK.json"; sourceTree = "<group>"; };
 		23A4296722BA2AA400D09EA1 /* TranslationsRepositoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationsRepositoryMock.swift; sourceTree = "<group>"; };
 		23A4296822BA2AA400D09EA1 /* BundleMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleMock.swift; sourceTree = "<group>"; };
 		23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerMock.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */,
 				23A4296722BA2AA400D09EA1 /* TranslationsRepositoryMock.swift */,
 				2376952722BD3DE800D40DC1 /* Translations_en-GB.json */,
+				2376953722C233B800D40DC1 /* Translations_da-DK.json */,
 				2376952F22C0E70E00D40DC1 /* Translations_fr-FR.json */,
 			);
 			path = Mocks;
@@ -340,6 +343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2376953822C233B800D40DC1 /* Translations_da-DK.json in Resources */,
 				2376952822BD3DE800D40DC1 /* Translations_en-GB.json in Resources */,
 				2376953022C0E70F00D40DC1 /* Translations_fr-FR.json in Resources */,
 			);
