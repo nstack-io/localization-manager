@@ -12,8 +12,7 @@ public struct Platform: Codable {
     public let id: Int
     public let slug: String
     
-    public init( id: Int,
-                 slug: String) {
+    public init(id: Int, slug: String) {
         self.id = id
         self.slug = slug
     }

@@ -137,6 +137,19 @@
 			path = "Application State Observer";
 			sourceTree = "<group>";
 		};
+		B4020B9622C3CAC4007EC5DD /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				C01D69E0217891DF00A1B354 /* TranslationResponse.swift */,
+				2376952B22C0C00E00D40DC1 /* TranslationMeta.swift */,
+				C01D69E22178923B00A1B354 /* Language.swift */,
+				2376952D22C0D4AD00D40DC1 /* Platform.swift */,
+				23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */,
+				2376952022BB7FF800D40DC1 /* ConfigWrapper.swift */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		C01D69D22178909300A1B354 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,9 +164,9 @@
 			children = (
 				C01D69F02178968700A1B354 /* Constants.swift */,
 				C01D69D4217890D500A1B354 /* Models */,
+				C01D69D5217890EC00A1B354 /* Protocols */,
 				C01D69E6217893BE00A1B354 /* Extensions */,
 				C01D69E9217894C800A1B354 /* Manager */,
-				C01D69D5217890EC00A1B354 /* Protocols */,
 				B4020B9022C3C74A007EC5DD /* Application State Observer */,
 			);
 			path = Classes;
@@ -162,13 +175,9 @@
 		C01D69D4217890D500A1B354 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C01D69E0217891DF00A1B354 /* TranslationResponse.swift */,
-				2376952B22C0C00E00D40DC1 /* TranslationMeta.swift */,
-				C01D69E22178923B00A1B354 /* Language.swift */,
-				2376952D22C0D4AD00D40DC1 /* Platform.swift */,
+				B4020B9622C3CAC4007EC5DD /* Localization */,
 				C04AFBF82179E2C7002CB099 /* UpdateMode.swift */,
 				C0537374219C0A170022368E /* PersistedTranslationType.swift */,
-				23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */,
 				C01D69EC217894FC00A1B354 /* TranslationError.swift */,
 			);
 			path = Models;
