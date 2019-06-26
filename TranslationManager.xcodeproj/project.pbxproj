@@ -65,6 +65,9 @@
 		23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerMock.swift; sourceTree = "<group>"; };
 		23A4296D22BA37C800D09EA1 /* LocalizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationModel.swift; sourceTree = "<group>"; };
 		23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfig.swift; sourceTree = "<group>"; };
+		B4020B9122C3C82F007EC5DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B4020B9222C3C851007EC5DD /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		B4020B9422C3C851007EC5DD /* TranslationManager.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = TranslationManager.podspec; sourceTree = "<group>"; };
 		B4E63B2822BD2CC7003A1245 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		C00F5EE12178FAE600066823 /* TranslatableManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatableManagerDelegate.swift; sourceTree = "<group>"; };
 		C01D69D02178904400A1B354 /* TranslationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationManagerTests.swift; sourceTree = "<group>"; };
@@ -208,6 +211,9 @@
 		C061C1E7217889E400449A14 = {
 			isa = PBXGroup;
 			children = (
+				B4020B9122C3C82F007EC5DD /* README.md */,
+				B4020B9222C3C851007EC5DD /* CHANGELOG.md */,
+				B4020B9422C3C851007EC5DD /* TranslationManager.podspec */,
 				C061C1F3217889E400449A14 /* TranslationManager */,
 				C061C1FE217889E400449A14 /* TranslationManagerTests */,
 				C061C1F2217889E400449A14 /* Products */,
@@ -319,6 +325,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = C061C1E7217889E400449A14;
 			productRefGroup = C061C1F2217889E400449A14 /* Products */;
