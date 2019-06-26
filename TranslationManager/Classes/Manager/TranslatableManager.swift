@@ -550,10 +550,9 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
             let config = LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: localize.localeIdentifier, shouldUpdate: localize.shouldUpdate)
             configModels.append(config)
         }
-        let configWrapper = ConfigWrapper(data: configModels)
         
         // Get encoded data
-        let data = try encoder.encode(configWrapper)
+        let data = try encoder.encode(configModels)
         createDirIfNeeded(dirName: "Localization")
         
         try data.write(to: configFileUrl, options: [.atomic])

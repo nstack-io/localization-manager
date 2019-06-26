@@ -84,8 +84,8 @@ class TranslationManagerTests: XCTestCase {
         let fileURL = manager.localizationConfigFileURL()
         do {
             let data = try Data(contentsOf: fileURL!)
-            let wrapper = try manager.decoder.decode(ConfigWrapper.self, from: data)
-            XCTAssertEqual(wrapper.data.count, 3)
+            let arrayOfConfigs = try manager.decoder.decode([LocalizationConfig].self, from: data)
+            XCTAssertEqual(arrayOfConfigs.count, 3)
         }
         catch {
             XCTFail()
