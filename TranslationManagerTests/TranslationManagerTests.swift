@@ -325,6 +325,19 @@ class TranslationManagerTests: XCTestCase {
         }
     }
     
+    func testFallbackToPreferredLanguages() {
+        manager.defaultLanguage = nil
+        XCTAssertNil(manager.bestFitLanguage)
+        repositoryMock.preferredLanguages = ["en", "da-DK"]
+        do {
+            let str = try manager.translation(for: "other.otherKey")
+            XCTAssertEqual(str, "DenmarkFallbackValue") //sets to denmark as we dont have a best fit language or an override
+        }
+        catch {
+            XCTFail()
+        }
+    }
+    
     
     func testFallbackTranslationsInvalidJSON() {
         let locale = Locale(identifier: "fr-FR")
