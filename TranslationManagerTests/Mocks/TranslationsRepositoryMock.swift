@@ -20,7 +20,7 @@ class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
     var customBundles: [Bundle]?
 
     func getLocalizationConfig(acceptLanguage: String,
-                               completion: @escaping (Swift.Result<[LocalizationModel], Error>) -> Void) {
+                               completion: @escaping (Result<[LocalizationModel], Error>) -> Void) {
         let error = NSError(domain: "", code: 100, userInfo: nil) as Error
         let result: Result = availableLocalizations != nil ? .success(availableLocalizations!) : .failure(error)
         completion(result)
@@ -28,14 +28,14 @@ class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
     
     func getTranslations(localization: LocalizationModel,
                          acceptLanguage: String,
-                         completion: @escaping (Swift.Result<TranslationResponse<Language>, Error>) -> Void) {
+                         completion: @escaping (Result<TranslationResponse<Language>, Error>) -> Void) {
         
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
         let result: Result = translationsResponse != nil ? .success(translationsResponse!) : .failure(error)
         completion(result)
     }
     
-    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Swift.Result<[L], Error>) -> Void) {
+    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L], Error>) -> Void) {
 //        let error = NSError(domain: "", code: 0, userInfo: nil)
 //        let result: Result = availableLanguages != nil ? .success(availableLanguages!) : .failure(error)
 //        completion(result)
