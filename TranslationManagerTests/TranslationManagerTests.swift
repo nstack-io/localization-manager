@@ -215,7 +215,7 @@ class TranslationManagerTests: XCTestCase {
             try manager.clearTranslations()
             XCTAssertTrue(manager.translatableObjectDictonary.isEmpty)
             let newFilePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
-            XCTAssertFalse(filePaths.isEmpty)
+            XCTAssertFalse(newFilePaths.isEmpty)
         }
         catch {
             XCTFail()
