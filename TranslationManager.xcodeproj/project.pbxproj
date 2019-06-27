@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		23A4296C22BA2AA400D09EA1 /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */; };
 		23A4296E22BA37C800D09EA1 /* LocalizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296D22BA37C800D09EA1 /* LocalizationModel.swift */; };
 		23A4297022BA44B000D09EA1 /* LocalizationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */; };
+		6D6EF3DE2C52A97D9E0493BF /* Pods_TranslationManagerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC5EAB06726B4ABE9FD4C97 /* Pods_TranslationManagerTests.framework */; };
 		B4E63B2922BD2CC7003A1245 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E63B2822BD2CC7003A1245 /* Localization.swift */; };
 		C00F5EE22178FAE600066823 /* TranslatableManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F5EE12178FAE600066823 /* TranslatableManagerDelegate.swift */; };
 		C01D69D12178904400A1B354 /* TranslationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D02178904400A1B354 /* TranslationManagerTests.swift */; };
@@ -63,6 +64,8 @@
 		23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerMock.swift; sourceTree = "<group>"; };
 		23A4296D22BA37C800D09EA1 /* LocalizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationModel.swift; sourceTree = "<group>"; };
 		23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfig.swift; sourceTree = "<group>"; };
+		2EC5EAB06726B4ABE9FD4C97 /* Pods_TranslationManagerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TranslationManagerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		56F0D717D5949FB7DFAD0E56 /* Pods-TranslationManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TranslationManagerTests.debug.xcconfig"; path = "Target Support Files/Pods-TranslationManagerTests/Pods-TranslationManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B4020B9122C3C82F007EC5DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B4020B9222C3C851007EC5DD /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		B4020B9422C3C851007EC5DD /* TranslationManager.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; path = TranslationManager.podspec; sourceTree = "<group>"; };
@@ -92,6 +95,7 @@
 		C061C1F5217889E400449A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C061C1FA217889E400449A14 /* TranslationManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranslationManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C061C201217889E400449A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA22358B03AB06F7F8AF67C9 /* Pods-TranslationManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TranslationManagerTests.release.xcconfig"; path = "Target Support Files/Pods-TranslationManagerTests/Pods-TranslationManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,12 +111,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				C061C1FB217889E400449A14 /* TranslationManager.framework in Frameworks */,
+				6D6EF3DE2C52A97D9E0493BF /* Pods_TranslationManagerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10D8845F42D7F1B8E954D182 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EC5EAB06726B4ABE9FD4C97 /* Pods_TranslationManagerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1BAB6801309902854006428F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				56F0D717D5949FB7DFAD0E56 /* Pods-TranslationManagerTests.debug.xcconfig */,
+				CA22358B03AB06F7F8AF67C9 /* Pods-TranslationManagerTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		23A4296622BA2A7700D09EA1 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +167,6 @@
 				C01D69E22178923B00A1B354 /* Language.swift */,
 				2376952D22C0D4AD00D40DC1 /* Platform.swift */,
 				23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */,
-				2376952022BB7FF800D40DC1 /* ConfigWrapper.swift */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -223,6 +244,8 @@
 				C061C1F3217889E400449A14 /* TranslationManager */,
 				C061C1FE217889E400449A14 /* TranslationManagerTests */,
 				C061C1F2217889E400449A14 /* Products */,
+				1BAB6801309902854006428F /* Pods */,
+				10D8845F42D7F1B8E954D182 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -273,6 +296,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C061C205217889E400449A14 /* Build configuration list for PBXNativeTarget "TranslationManager" */;
 			buildPhases = (
+				B4020BA222C519FA007EC5DD /* SwiftLint */,
 				C061C1EC217889E400449A14 /* Headers */,
 				C061C1ED217889E400449A14 /* Sources */,
 				C061C1EE217889E400449A14 /* Frameworks */,
@@ -291,9 +315,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C061C208217889E400449A14 /* Build configuration list for PBXNativeTarget "TranslationManagerTests" */;
 			buildPhases = (
+				C9424D908B947525507B2FA9 /* [CP] Check Pods Manifest.lock */,
 				C061C1F6217889E400449A14 /* Sources */,
 				C061C1F7217889E400449A14 /* Frameworks */,
 				C061C1F8217889E400449A14 /* Resources */,
+				EF6973162F624D5385C678DC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -363,6 +389,66 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B4020BA222C519FA007EC5DD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e ${SRCROOT}/Pods/SwiftLint/swiftlint ]; then\n    ${SRCROOT}/Pods/SwiftLint/swiftlint --config \"${SRCROOT}/.swiftlint.yml\"\nfi\n";
+		};
+		C9424D908B947525507B2FA9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TranslationManagerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF6973162F624D5385C678DC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TranslationManagerTests/Pods-TranslationManagerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TranslationManagerTests/Pods-TranslationManagerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TranslationManagerTests/Pods-TranslationManagerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C061C1ED217889E400449A14 /* Sources */ = {
@@ -595,8 +681,9 @@
 		};
 		C061C209217889E400449A14 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56F0D717D5949FB7DFAD0E56 /* Pods-TranslationManagerTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TranslationManagerTests/Info.plist;
@@ -616,8 +703,9 @@
 		};
 		C061C20A217889E400449A14 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA22358B03AB06F7F8AF67C9 /* Pods-TranslationManagerTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TranslationManagerTests/Info.plist;
