@@ -124,6 +124,27 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     /// In memory cache of translations objects mapped with their locale id.
     internal var translatableObjectDictonary: [String : Translatable] = [:]
     
+    /// The previous date the localizations were updated
+    internal var lastUpdatedDate: Date? {
+        get {
+            let timeInterval = userDefaults.double(forKey: Constants.Keys.lastUpdatedDate)
+            if timeInterval == 0 {
+                return nil
+            }
+            return Date(timeIntervalSince1970: TimeInterval(timeInterval))
+        }
+        set {
+            guard let newValue = newValue else {
+                // Last accept header deleted
+                userDefaults.removeObject(forKey: Constants.Keys.lastUpdatedDate)
+                return
+            }
+            // Last accept header set to: \(newValue).
+            let timeInterval = newValue.timeIntervalSince1970
+            userDefaults.set(timeInterval, forKey: Constants.Keys.lastUpdatedDate)
+        }
+    }
+    
     /// The previous accept header string that was used.
     internal var lastAcceptHeader: String? {
         get {
@@ -375,9 +396,10 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
 
         //check if we've got an override, if not, use default accept language
         let languageAcceptHeader = languageOverride?.identifier ?? acceptLanguage
-        repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader) { (response: Result<[LocalizationModel], Error>) in
+        repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader, lastUpdated: lastUpdatedDate) { (response: Result<[LocalizationModel], Error>) in
             switch response {
             case .success(let configs):
+                self.lastUpdatedDate = Date()
                 
                 //if accept header has changed, update it
                 if self.lastAcceptHeader != languageAcceptHeader {

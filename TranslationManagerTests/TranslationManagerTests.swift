@@ -53,6 +53,7 @@ class TranslationManagerTests: XCTestCase {
         manager.languageOverride = nil
         manager.bestFitLanguage = nil
         manager.fallbackLocale = nil
+        manager.lastUpdatedDate = nil
     }
 
     override func tearDown() {
@@ -100,6 +101,16 @@ class TranslationManagerTests: XCTestCase {
             XCTAssertNotNil(error)
             XCTAssertEqual(self.manager.translatableObjectDictonary.count, countBefore)
         }
+    }
+    
+    func testLastUpdatedDateIsSet() {
+        let dateAtStartOfTest = Date()
+        XCTAssertNil(manager.lastUpdatedDate)
+        let localizations: [LocalizationConfig] = [mockLocalizationConfigWithUpdate, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        manager.updateTranslations()
+        XCTAssertNotNil(manager.lastUpdatedDate)
+        XCTAssertTrue(dateAtStartOfTest < manager.lastUpdatedDate ?? dateAtStartOfTest)
     }
     
     func testUpdateTranslations() {

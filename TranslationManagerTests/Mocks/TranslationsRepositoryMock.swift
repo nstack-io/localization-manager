@@ -20,6 +20,7 @@ class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
     var customBundles: [Bundle]?
 
     func getLocalizationConfig(acceptLanguage: String,
+                               lastUpdated: Date?,
                                completion: @escaping (Result<[LocalizationModel], Error>) -> Void) {
         let error = NSError(domain: "", code: 100, userInfo: nil) as Error
         let result: Result = availableLocalizations != nil ? .success(availableLocalizations!) : .failure(error)

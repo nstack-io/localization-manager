@@ -10,6 +10,7 @@ import Foundation
 
 public protocol TranslationRepository {
     func getLocalizationConfig(acceptLanguage: String,
+                               lastUpdated: Date?,
                                completion: @escaping (Result<[LocalizationModel], Error>) -> Void)
     func getTranslations(localization: LocalizationModel,
                          acceptLanguage: String,
