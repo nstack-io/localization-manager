@@ -100,7 +100,7 @@ class TranslationManagerTests: XCTestCase {
             XCTAssertEqual(self.manager.translatableObjectDictonary.count, countBefore)
         }
     }
-    
+
     func testLastUpdatedDateIsSet() {
         let dateAtStartOfTest = Date()
         XCTAssertNil(manager.lastUpdatedDate)

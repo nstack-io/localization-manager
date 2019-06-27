@@ -14,10 +14,15 @@ public protocol TranslationRepository {
     func getLocalizationConfig(acceptLanguage: String,
                                lastUpdated: Date?,
                                completion: @escaping (Result<[LocalizationModel]>) -> Void)
-    func getTranslations(localization: LocalizationModel,
-                         acceptLanguage: String,
-                         completion: @escaping (Result<TranslationResponse<Language>>) -> Void)
+    func getTranslations<L>(localization: LocalizationModel,
+                            acceptLanguage: String,
+                            completion: @escaping (Result<TranslationResponse<L>>) -> Void) where L: LanguageModel
     func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
     func fetchPreferredLanguages() -> [String]
     func fetchBundles() -> [Bundle]
+}
+
+public protocol LocalizationContextRepository {
+    func fetchPreferredLanguages() -> [String]
+    func getLocalizationBundles() -> [Bundle]
 }
