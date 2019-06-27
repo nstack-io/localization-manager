@@ -21,7 +21,6 @@ struct Localization: Translatable {
         other = try container.decodeIfPresent(Other.self, forKey: .other) ?? other
     }
 
-
     enum CodingKeys: String, CodingKey {
         case other
         case defaultSection = "default"
@@ -62,7 +61,6 @@ struct Localization: Translatable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             otherKey = try container.decodeIfPresent(String.self, forKey: .otherKey) ?? "__otherKey"
         }
-
 
         subscript(key: String) -> String? {
             switch key {

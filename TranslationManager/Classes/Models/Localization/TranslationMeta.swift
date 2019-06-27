@@ -11,7 +11,7 @@ import Foundation
 public struct TranslationMeta<L: LanguageModel>: Codable {
     public let language: L?
     public let platform: Platform?
-    
+
     public init( language: L? = nil,
                  platform: Platform? = nil ) {
         self.language = language

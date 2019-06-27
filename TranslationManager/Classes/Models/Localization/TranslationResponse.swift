@@ -11,21 +11,21 @@ import Foundation
 public struct TranslationResponse<L: LanguageModel>: Codable {
     public internal(set) var translations: [String: Any]
     public let meta: TranslationMeta<L>?
-    
+
     enum CodingKeys: String, CodingKey {
         case translations = "data"
         case meta
     }
-    
+
     enum LanguageCodingKeys: String, CodingKey {
         case language
     }
-    
+
     public init(translations: [String: Any] = [:], meta: TranslationMeta<L>? = nil) {
         self.translations = translations
         self.meta = meta
     }
-    
+
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         translations = try values.decodeIfPresent([String: Any].self, forKey: .translations) ?? [:]

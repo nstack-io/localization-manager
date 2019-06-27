@@ -26,16 +26,16 @@ class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
         let result: Result = availableLocalizations != nil ? .success(availableLocalizations!) : .failure(error)
         completion(result)
     }
-    
+
     func getTranslations(localization: LocalizationModel,
                          acceptLanguage: String,
                          completion: @escaping (Result<TranslationResponse<Language>, Error>) -> Void) {
-        
+
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
         let result: Result = translationsResponse != nil ? .success(translationsResponse!) : .failure(error)
         completion(result)
     }
-    
+
     func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L], Error>) -> Void) {
 //        let error = NSError(domain: "", code: 0, userInfo: nil)
 //        let result: Result = availableLanguages != nil ? .success(availableLanguages!) : .failure(error)
@@ -49,7 +49,7 @@ class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
     func fetchBundles() -> [Bundle] {
         return customBundles ?? Bundle.allBundles
     }
-    
+
     func fetchCurrentPhoneLanguage() -> String? {
         return preferredLanguages.first
     }

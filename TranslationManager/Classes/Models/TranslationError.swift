@@ -17,7 +17,7 @@ public enum TranslationError: Error {
     case noTranslationsFound
     case loadingFallbackTranslationsFailed
     case unknown
-    
+
     public var localizedDescription: String {
         switch self {
         case .invalidKeyPath: return "Key path should only consist of section and key components."

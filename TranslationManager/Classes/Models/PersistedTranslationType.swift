@@ -12,7 +12,7 @@ public enum PersistedTranslationType: String, Codable {
     /// If all languages are in peristed, typically nested under locale identifier.
     /// For exeample: "ar-AR" : { ... }, "en" : { .. }
     case all
-    
+
     /// If only a single language is in the persisted file at the root level of the data structure.
     case single
 }

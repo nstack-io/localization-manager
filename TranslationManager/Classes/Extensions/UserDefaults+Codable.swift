@@ -14,16 +14,16 @@ public extension UserDefaults {
             set(data, forKey: key)
         }
     }
-    
+
     func codable<T: Codable>(forKey key: String) -> T? {
         guard let data = object(forKey: key) as? Data else {
             return nil
         }
-        
+
         guard let model: T = try? JSONDecoder().decode(T.self, from: data) else {
             return nil
         }
-        
+
         return model
     }
 }

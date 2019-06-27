@@ -13,7 +13,7 @@ public struct LocalizationConfig: LocalizationModel {
     public var lastUpdatedAt = Date()
     public var shouldUpdate: Bool = false
     public var localeIdentifier: String
-    
+
     public init(lastUpdatedAt: Date = Date(),
                 localeIdentifier: String,
                 shouldUpdate: Bool = false
