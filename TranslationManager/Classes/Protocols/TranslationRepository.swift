@@ -8,14 +8,16 @@
 
 import Foundation
 
+public typealias Result<T> = Swift.Result<T, Error>
+
 public protocol TranslationRepository {
     func getLocalizationConfig(acceptLanguage: String,
                                lastUpdated: Date?,
-                               completion: @escaping (Result<[LocalizationModel], Error>) -> Void)
+                               completion: @escaping (Result<[LocalizationModel]>) -> Void)
     func getTranslations(localization: LocalizationModel,
                          acceptLanguage: String,
-                         completion: @escaping (Result<TranslationResponse<Language>, Error>) -> Void)
-    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L], Error>) -> Void)
+                         completion: @escaping (Result<TranslationResponse<Language>>) -> Void)
+    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
     func fetchPreferredLanguages() -> [String]
     func fetchBundles() -> [Bundle]
 }

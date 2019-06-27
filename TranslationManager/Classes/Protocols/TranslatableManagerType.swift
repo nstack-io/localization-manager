@@ -22,7 +22,7 @@ public protocol TranslatableManagerType: class {
     func translations<T: Translatable>(localeId: String) throws -> T?
 
     func updateTranslations(_ completion: ((_ error: Error?) -> Void)?)
-    func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L], Error>) -> Void) where L: LanguageModel
+    func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel
 
     func set<L>(response: TranslationResponse<L>, type: PersistedTranslationType) throws where L: LanguageModel
     func set<L>(languageOverride language: L?) throws where L: LanguageModel

@@ -394,7 +394,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         let languageAcceptHeader = languageOverride?.identifier ?? acceptLanguage
         repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader,
                                          lastUpdated: lastUpdatedDate)
-        { (response: Result<[LocalizationModel], Error>) in
+        { (response: Result<[LocalizationModel]>) in
             switch response {
             case .success(let configs):
                 self.lastUpdatedDate = Date()
@@ -433,7 +433,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
         let languageAcceptHeader = languageOverride?.identifier ?? acceptLanguage
 
         repository.getTranslations(localization: localization,
-                                   acceptLanguage: languageAcceptHeader) { (result: Result<TranslationResponse<Language>, Error>) in
+                                   acceptLanguage: languageAcceptHeader) { (result: Result<TranslationResponse<Language>>) in
 
                                     switch result {
                                     case .success(let translationsData):
@@ -480,7 +480,7 @@ public class TranslatableManager<T: Translatable, L: LanguageModel, C: Localizat
     /// Gets the languages for which translations are available.
     ///
     /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
-    public func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L], Error>) -> Void) where L: LanguageModel {
+    public func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel {
         // Fetching available language asynchronously
         repository.getAvailableLanguages(completion: completion)
     }
