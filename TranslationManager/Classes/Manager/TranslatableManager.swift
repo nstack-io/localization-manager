@@ -530,7 +530,10 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         }
         var configModels: [LocalizationConfig] = []
         for localize in localizations {
-            let config = LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: localize.localeIdentifier, shouldUpdate: localize.shouldUpdate)
+            let config = LocalizationConfig(lastUpdatedAt: Date(),
+                                            localeIdentifier: localize.localeIdentifier,
+                                            shouldUpdate: localize.shouldUpdate,
+                                            url: localize.url)
             configModels.append(config)
         }
 

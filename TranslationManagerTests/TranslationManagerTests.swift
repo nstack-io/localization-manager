@@ -32,11 +32,11 @@ class TranslationManagerTests: XCTestCase {
     }
 
     var mockLocalizationConfigWithUpdate: LocalizationConfig {
-        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "da-DK", shouldUpdate: true)
+        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "da-DK", shouldUpdate: true, url: "")
     }
 
     var mockLocalizationConfigWithoutUpdate: LocalizationConfig {
-        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false)
+        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false, url: "")
     }
 
 //    // MARK: - Test Case Lifecycle -
@@ -174,7 +174,7 @@ class TranslationManagerTests: XCTestCase {
         //current language should be Danish
         XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
 
-        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true)]
+        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url:  "")]
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
