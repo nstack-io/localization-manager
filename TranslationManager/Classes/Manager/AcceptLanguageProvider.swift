@@ -62,11 +62,13 @@ internal final class AcceptLanguageProvider: AcceptLanguageProviderType {
         // Calculate the end value, by taking the quality and subtracting 0.1 as many times
         // as there is languages. Then the maximum value is taken between the calculated
         // and 0.5, resulting in maximum 5 languages in the header string.
-        let endValue = max(0.5, quality - (0.1 * Double(languages.count)))
-
+        let startValue = 1.0 - (0.1 * Double(components.count))
+        let endValue = startValue - (0.1 * Double(languages.count))
+        
         // Goes through max quality to the lowest (or 0.5, whichever is higher) by 0.1 decrease
-        // and appends a component with the language code and quality, like this: en-gb;q=1.0
-        for quality in stride(from: 1.0, to: max(endValue, 0.5), by: -0.1) {
+        // and appends a component with the language code and quality, like this:
+        // en-gb;q=1.0
+        for quality in stride(from: startValue, to: max(endValue, 0.5), by: -0.1) {
             components.append("\(languages.removeFirst());q=\(quality)")
         }
 

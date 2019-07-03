@@ -273,7 +273,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         }
 
         //no override, try to see if any preferred languages are available
-        for lang in repository.fetchPreferredLanguages() {
+        for lang in contextRepository.fetchPreferredLanguages() {
 
             if translatableObjectDictonary[lang] == nil {
                 do {
@@ -300,7 +300,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         }
 
         //try default language set, from backend/JSON Configs
-        if let defaultLanguage = defaultLanguage?.locale.languageCode {
+        if let defaultLanguage = defaultLanguage?.locale.identifier {
             //we have a current language
             // Try to load if we don't have any translations
             if translatableObjectDictonary[defaultLanguage] == nil {
@@ -326,7 +326,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     public func parseFallbackJSONTranslations(_ completion: ((_ error: Error?) -> Void)? = nil) {
 
         var allJsonURLS: [URL] = []
-        for bundle in repository.fetchBundles() {
+        for bundle in contextRepository.getLocalizationBundles() {
             if let jsonURLS = bundle.urls(forResourcesWithExtension: ".json", subdirectory: nil) {
                 allJsonURLS.append(contentsOf: jsonURLS)
             }
@@ -419,32 +419,29 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
 
     func handleTranslationsResponse(translationsData: TranslationResponse<L>,
                                     completion: ((_ error: Error?) -> Void)? = nil) {
-        // FIXME: Fix this
-//        //cache current best fit language
-//        if let lang = translationsData.meta?.language {
-//
-//            //if language is best fit
-//            if lang.isBestFit {
-//                if self.bestFitLanguage?.locale.languageCode != lang.locale.languageCode {
-//                    // Running language changed action, if best fit language is now different
-//                    self.delegate?.translationManager(languageUpdated: self.bestFitLanguage)
-//                }
-//                self.bestFitLanguage = lang
-//            }
-//
-//            if lang.isDefault {
-//                self.defaultLanguage = lang
-//            }
-//        }
-//
-//        do {
-//            try self.set(response: translationsData, type: .single)
-//        } catch {
-//            completion?(error)
-//            return
-//        }
-//
-//        completion?(nil)
+        //cache current best fit language
+        if let lang = translationsData.meta?.language {
+
+            //if language is best fit
+            if lang.isBestFit {
+                if self.bestFitLanguage?.locale.languageCode != lang.locale.languageCode {
+                    // Running language changed action, if best fit language is now different
+                    self.delegate?.translationManager(languageUpdated: self.bestFitLanguage)
+                }
+                self.bestFitLanguage = lang
+            }
+
+            if lang.isDefault {
+                self.defaultLanguage = lang
+            }
+        }
+
+        do {
+            try self.set(response: translationsData, type: .single)
+        } catch {
+            completion?(error)
+            return
+        }
     }
 
     /// Gets the languages for which translations are available.
@@ -618,7 +615,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     /// - Returns: A dictionary representation of the selected local translations set.
     internal func fallbackTranslations(localeId: String) throws -> TranslationResponse<Language> {
         // Iterate through bundle until we find the translations file
-        for bundle in repository.fetchBundles() {
+        for bundle in contextRepository.getLocalizationBundles() {
             // Check if bundle contains translations file, otheriwse continue with next bundle
             guard let filePath = bundle.path(forResource: "Translations_\(localeId)", ofType: "json") else {
                 continue
@@ -676,7 +673,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
             return dictionary
         }
 
-        let languages = repository.fetchPreferredLanguages()
+        let languages = contextRepository.fetchPreferredLanguages()
         // Finding language for matching preferred languages
 
         // Find matching language and region

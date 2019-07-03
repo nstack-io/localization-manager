@@ -18,11 +18,10 @@ public protocol TranslationRepository {
                             acceptLanguage: String,
                             completion: @escaping (Result<TranslationResponse<L>>) -> Void) where L: LanguageModel
     func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
-    func fetchPreferredLanguages() -> [String]
-    func fetchBundles() -> [Bundle]
 }
 
 public protocol LocalizationContextRepository {
     func fetchPreferredLanguages() -> [String]
     func getLocalizationBundles() -> [Bundle]
+    func fetchCurrentPhoneLanguage() -> String?
 }
