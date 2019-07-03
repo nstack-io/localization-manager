@@ -365,29 +365,37 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         { (response: Result<[LocalizationModel]>) in
             switch response {
             case .success(let configs):
-                self.lastUpdatedDate = Date()
-
-                //if accept header has changed, update it
-                if self.lastAcceptHeader != languageAcceptHeader {
-                    //update what the last accept header was that was used
-                    self.lastAcceptHeader = languageAcceptHeader
-                }
-
-                do {
-                    try self.saveLocalizations(localizations: configs)
-                } catch {
-                    completion?(error)
-                    return
-                }
-
-                let localizationsThatRequireUpdate = configs.filter({ $0.shouldUpdate == true })
-                for localization in localizationsThatRequireUpdate {
-                    self.updateLocaleTranslations(localization, completion: completion)
-                }
+                self.handleLocalizationModels(localizations: configs,
+                                         acceptHeaderUsed: languageAcceptHeader,
+                                         completion: completion)
             case .failure(let error):
                 //error fetching configs
                 completion?(error)
             }
+        }
+    }
+
+    public func handleLocalizationModels(localizations: [LocalizationModel],
+                                         acceptHeaderUsed: String?,
+                                         completion: ((_ error: Error?) -> Void)? = nil) {
+        self.lastUpdatedDate = Date()
+
+        //if accept header has changed, update it
+        if self.lastAcceptHeader != acceptHeaderUsed {
+            //update what the last accept header was that was used
+            self.lastAcceptHeader = acceptHeaderUsed
+        }
+
+        do {
+            try self.saveLocalizations(localizations: localizations)
+        } catch {
+            completion?(error)
+            return
+        }
+
+        let localizationsThatRequireUpdate = localizations.filter({ $0.shouldUpdate == true })
+        for localization in localizationsThatRequireUpdate {
+            self.updateLocaleTranslations(localization, completion: completion)
         }
     }
 
