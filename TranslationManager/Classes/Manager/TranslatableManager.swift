@@ -254,6 +254,8 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
                 } catch {} //continue
             }
             if let translations = translatableObjectDictonary[currentLangCode] {
+                //TODO: REMOVE, for testing
+                print(translations)
                 return translations[section]?[key]
             }
         }
