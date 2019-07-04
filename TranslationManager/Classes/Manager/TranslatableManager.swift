@@ -362,7 +362,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         let languageAcceptHeader = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
         repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader,
                                          lastUpdated: lastUpdatedDate)
-        { (response: Result<[LocalizationModel]>) in
+        { (response: Result<[C]>) in
             switch response {
             case .success(let configs):
                 self.handleLocalizationModels(localizations: configs,
