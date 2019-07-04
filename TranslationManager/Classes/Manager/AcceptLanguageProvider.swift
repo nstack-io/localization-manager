@@ -37,11 +37,11 @@ public final class AcceptLanguageProvider: AcceptLanguageProviderType {
     ///
     /// - Parameter repository: A localization context repository,
     ///                         where preferred languages are fetched from.
-    init(repository: LocalizationContextRepository) {
+    public init(repository: LocalizationContextRepository) {
         self.repository = repository
     }
 
-    func createHeaderString(languageOverride: LanguageModel? = nil) -> String {
+    public func createHeaderString(languageOverride: LanguageModel? = nil) -> String {
         var components: [String] = []
         var quality = 1.0
 
