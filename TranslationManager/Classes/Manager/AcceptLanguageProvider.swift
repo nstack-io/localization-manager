@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal protocol AcceptLanguageProviderType: class {
+public protocol AcceptLanguageProviderType: class {
 
     /// Creates the accept language provider.
     ///
@@ -28,7 +28,7 @@ internal protocol AcceptLanguageProviderType: class {
 }
 
 /// Provider used to generate the accept language header string for network requests.
-internal final class AcceptLanguageProvider: AcceptLanguageProviderType {
+public final class AcceptLanguageProvider: AcceptLanguageProviderType {
 
     /// The context repository to get preferred languages from.
     private let repository: LocalizationContextRepository
