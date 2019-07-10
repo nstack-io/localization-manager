@@ -12,7 +12,7 @@ import Foundation
 // swiftlint:disable file_length
 
 /// The TranslatableManager handles everything related to translations.
-public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: LocalizationModel>/*: TranslatableManagerType*/ {
+public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: LocalizationModel>{
 
     // MARK: - Properties -
 
@@ -254,8 +254,6 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
                 } catch {} //continue
             }
             if let translations = translatableObjectDictonary[currentLangCode] {
-                //TODO: REMOVE, for testing
-                print(translations)
                 return translations[section]?[key]
             }
         }
@@ -468,17 +466,25 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A translations object.
-    public func translations<T: LocalizableModel>(localeId: String) throws -> T? {
+    public func translations<T: LocalizableModel>(localeId: String?) throws -> T? {
+        guard let locale = localeId ?? bestFitLanguage?.locale.identifier
+            ?? languageOverride?.locale.identifier
+            ?? fallbackLocale?.identifier
+            ?? defaultLanguage?.locale.identifier
+        else {
+            let translatableObjectArray = Array(translatableObjectDictonary.values)
+            return translatableObjectArray.first as? T
+        }
         // Check object in memory
-        if let cachedObject = translatableObjectDictonary[localeId] as? T {
+        if let cachedObject = translatableObjectDictonary[locale] as? T {
             return cachedObject
         }
 
         // Load persisted or fallback translations
-        try createTranslatableObject(localeId, type: T.self)
+        try createTranslatableObject(locale, type: T.self)
 
         // Now we must have correct translations, so return it
-        return translatableObjectDictonary[localeId] as? T
+        return translatableObjectDictonary[locale] as? T
     }
 
     /// Clears both the memory and persistent cache. Used for debugging purposes.
