@@ -466,7 +466,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A translations object.
-    public func translations<T: LocalizableModel>(localeId: String?) throws -> T? {
+    public func translations<T: LocalizableModel>(localeId: String? = nil) throws -> T? {
         guard let locale = localeId ?? bestFitLanguage?.locale.identifier
             ?? languageOverride?.locale.identifier
             ?? fallbackLocale?.identifier
