@@ -11,7 +11,7 @@ import Foundation
 /// A delegate protocol for application state observer which you should implement if you
 /// want to listen to application state changes.
 internal protocol ApplicationStateObserverDelegate: class {
-    
+
     /// A function called whenever an application state changes.
     ///
     /// - Parameter state: The new application state.

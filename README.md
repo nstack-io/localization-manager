@@ -2,8 +2,7 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nodes-ios/NStackSDK/blob/master/LICENSE)
 
-Translation Manager is a tool for handling bundled and 
-on-the-fly translations in your iOS application.
+Translation Manager is a tool for handling bundled and on-the-fly translations in your iOS application.
 
 ## How does it work?
 
