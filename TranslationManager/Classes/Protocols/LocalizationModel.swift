@@ -12,4 +12,5 @@ public protocol LocalizationModel: Codable {
     var shouldUpdate: Bool { get }
     var localeIdentifier: String { get }
     var url: String { get }
+    var language: Language { get }
 }

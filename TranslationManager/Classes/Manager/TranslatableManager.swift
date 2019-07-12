@@ -393,6 +393,14 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
             return
         }
 
+        if let bestFit = localizations.filter ({ $0.language.isBestFit }).first {
+            self.bestFitLanguage = bestFit.language as? L
+        }
+
+        if let defaultLang = localizations.filter ({ $0.language.isDefault }).first {
+            self.defaultLanguage = defaultLang.language as? L
+        }
+
         let localizationsThatRequireUpdate = localizations.filter({ $0.shouldUpdate == true })
         for localization in localizationsThatRequireUpdate {
             self.updateLocaleTranslations(localization, completion: completion)
@@ -540,7 +548,8 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
             let config = LocalizationConfig(lastUpdatedAt: Date(),
                                             localeIdentifier: localize.localeIdentifier,
                                             shouldUpdate: localize.shouldUpdate,
-                                            url: localize.url)
+                                            url: localize.url,
+                                            language: localize.language)
             configModels.append(config)
         }
 

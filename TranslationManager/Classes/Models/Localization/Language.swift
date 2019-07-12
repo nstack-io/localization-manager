@@ -25,4 +25,18 @@ public struct Language: LanguageModel {
         case id, name, direction, isDefault, isBestFit
         case acceptLanguage = "locale"
     }
+
+    public init(id: Int,
+                name: String,
+                direction: String,
+                acceptLanguage: String,
+                isDefault: Bool,
+                isBestFit: Bool) {
+        self.id = id
+        self.name = name
+        self.direction = direction
+        self.acceptLanguage = acceptLanguage
+        self.isDefault = isDefault
+        self.isBestFit = isBestFit
+    }
 }
