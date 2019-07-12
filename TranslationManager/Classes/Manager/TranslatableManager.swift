@@ -10,9 +10,10 @@ import Foundation
 
 // FIXME: Remove Swiftlint disable
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 
 /// The TranslatableManager handles everything related to translations.
-public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: LocalizationModel>{
+public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: LocalizationModel> {
 
     // MARK: - Properties -
 
@@ -361,8 +362,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         //check if we've got an override, if not, use default accept language
         let languageAcceptHeader = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
         repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader,
-                                         lastUpdated: lastUpdatedDate)
-        { (response: Result<[C]>) in
+                                         lastUpdated: lastUpdatedDate) { (response: Result<[C]>) in
             switch response {
             case .success(let configs):
                 self.handleLocalizationModels(localizations: configs,
@@ -408,8 +408,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         //check if we've got an override, if not, use default accept language
         let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
         repository.getTranslations(localization: localization,
-                                   acceptLanguage: acceptLanguage)
-        { (result: Result<TranslationResponse<L>>) in
+                                   acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
 
             switch result {
             case .success(let translationsData):

@@ -7,7 +7,7 @@
 
 import XCTest
 @testable import TranslationManager
-
+//swiftlint:disable file_length
 class TranslationManagerTests: XCTestCase {
 
     typealias LanguageType = Language
@@ -174,7 +174,7 @@ class TranslationManagerTests: XCTestCase {
         //current language should be Danish
         XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
 
-        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url:  "")]
+        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url: "")]
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]

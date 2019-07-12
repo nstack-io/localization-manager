@@ -104,7 +104,7 @@ public extension KeyedEncodingContainerProtocol where Key == JSONCodingKeys {
                 try encode(value, forKey: key)
             case let value as [Any]:
                 try encode(value, forKey: key)
-            case Optional<Any>.none:
+            case nil:
                 try encodeNil(forKey: key)
             default:
                 let context = EncodingError.Context(codingPath: codingPath + [key],
@@ -147,7 +147,7 @@ public extension UnkeyedEncodingContainer {
                 try encode(value)
             case let value as [Any]:
                 try encode(value)
-            case Optional<Any>.none:
+            case nil:
                 try encodeNil()
             default:
                 let keys = JSONCodingKeys(intValue: index).map({ [ $0 ] }) ?? []

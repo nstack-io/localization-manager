@@ -64,7 +64,7 @@ public final class AcceptLanguageProvider: AcceptLanguageProviderType {
         // and 0.5, resulting in maximum 5 languages in the header string.
         let startValue = 1.0 - (0.1 * Double(components.count))
         let endValue = startValue - (0.1 * Double(languages.count))
-        
+
         // Goes through max quality to the lowest (or 0.5, whichever is higher) by 0.1 decrease
         // and appends a component with the language code and quality, like this:
         // en-gb;q=1.0
