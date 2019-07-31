@@ -8,10 +8,16 @@
 
 import Foundation
 
-public protocol LocalizableModel: Codable {
-    subscript(key: String) -> LocalizableSection? { get }
+open class LocalizableModel: Codable {
+    public init() {}
+    open subscript(key: String) -> LocalizableSection? {
+        return nil
+    }
 }
 
-public protocol LocalizableSection: Codable {
-    subscript(key: String) -> String? { get }
+open class LocalizableSection: Codable {
+     public init() {}
+    open subscript(key: String) -> String? {
+        return nil
+    }
 }
