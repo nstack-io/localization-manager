@@ -13,10 +13,12 @@ import Foundation
 // swiftlint:disable type_body_length
 
 /// The TranslatableManager handles everything related to translations.
-public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: LocalizationModel> {
+public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
 
-    var localizableModel: LocalizableModel.Type
     // MARK: - Properties -
+    /// The Type of Localizable model that is used to decode translations
+    /// This should be the generated LocalizableModel class from the TranslationsGenerator
+    var localizableModel: LocalizableModel.Type
 
     /// The update mode used to determine how translations should update.
     public var updateMode: UpdateMode
@@ -254,7 +256,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
             // Try to load if we don't have any translations
             if translatableObjectDictonary[currentLangCode] == nil {
                 do {
-                    try createTranslatableObject(currentLangCode)//, type: localizableModel)
+                    try createTranslatableObject(currentLangCode)
                 } catch {} //continue
             }
             if let translations = translatableObjectDictonary[currentLangCode] {
@@ -268,7 +270,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
             // Try to load if we don't have any translations
             if translatableObjectDictonary[override] == nil {
                 do {
-                    try createTranslatableObject(override)//, type: localizableModel.self)
+                    try createTranslatableObject(override)
                 } catch {} //continue
             }
             if let translations = translatableObjectDictonary[override] {
@@ -281,7 +283,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
 
             if translatableObjectDictonary[lang] == nil {
                 do {
-                    try createTranslatableObject(lang)//, type: T.self)
+                    try createTranslatableObject(lang)
                 } catch {
                     continue
                 }
@@ -295,7 +297,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
         if let fallback = fallbackLocale?.identifier {
             if translatableObjectDictonary[fallback] == nil {
                 do {
-                    try createTranslatableObject(fallback)//, type: T.self)
+                    try createTranslatableObject(fallback)
                 } catch {} //continue
             }
             if let translations = translatableObjectDictonary[fallback] {
@@ -309,7 +311,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
             // Try to load if we don't have any translations
             if translatableObjectDictonary[defaultLanguage] == nil {
                 do {
-                    try createTranslatableObject(defaultLanguage)//, type: T.self)
+                    try createTranslatableObject(defaultLanguage)
                 } catch {} //continue
             }
             if let translations = translatableObjectDictonary[defaultLanguage] {
@@ -491,7 +493,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
         }
 
         // Load persisted or fallback translations
-        try createTranslatableObject(locale)//, type: localizableModel.self)
+        try createTranslatableObject(locale)
 
         // Now we must have correct translations, so return it
         return translatableObjectDictonary[locale] as? T
@@ -511,7 +513,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
     }
 
     /// Loads and initializes the translations object from either persisted or fallback dictionary.
-    func createTranslatableObject/*<T>*/(_ localeId: String/*, type: T.Type*/) throws /*where T: LocalizableModel*/ {
+    func createTranslatableObject(_ localeId: String) throws {
         let translations: TranslationResponse<Language>
         var shouldUnwrapTranslation = false
 
@@ -601,7 +603,7 @@ public class TranslatableManager</*T: LocalizableModel,*/ L: LanguageModel, C: L
         userDefaults.set(type.rawValue, forKey: Constants.Keys.persistedTranslationType)
 
         // Reload the translations
-        try createTranslatableObject(locale)//, type: T.self)
+        try createTranslatableObject(locale)
     }
 
     internal func deletePersistedTranslations() throws {
