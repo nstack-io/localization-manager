@@ -16,7 +16,7 @@ open class LocalizableModel: Codable {
 }
 
 open class LocalizableSection: Codable {
-     public init() {}
+    public init() {}
     open subscript(key: String) -> String? {
         return nil
     }
