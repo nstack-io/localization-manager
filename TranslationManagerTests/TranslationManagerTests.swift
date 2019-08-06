@@ -11,12 +11,11 @@ import XCTest
 class TranslationManagerTests: XCTestCase {
 
     typealias LanguageType = Language
-    typealias LocalizationType = Localization
     typealias LocalizationConfigType = LocalizationConfig
 
     var repositoryMock: TranslationsRepositoryMock<LanguageType>!
     var fileManagerMock: FileManagerMock!
-    var manager: TranslatableManager<LocalizationType, LanguageType, LocalizationConfigType>!
+    var manager: TranslatableManager<LanguageType, LocalizationConfigType>!
 
     let mockLanguage = Language(id: 0, name: "Danish",
                                 direction: "lrm", acceptLanguage: "da-DK",
@@ -32,11 +31,15 @@ class TranslationManagerTests: XCTestCase {
     }
 
     var mockLocalizationConfigWithUpdate: LocalizationConfig {
-        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "da-DK", shouldUpdate: true, url: "")
+        return LocalizationConfig(lastUpdatedAt: Date(),
+                                  localeIdentifier: "da-DK",
+                                  shouldUpdate: true,
+                                  url: "",
+                                  language: mockLanguage)
     }
 
     var mockLocalizationConfigWithoutUpdate: LocalizationConfig {
-        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false, url: "")
+        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false, url: "", language: mockLanguage)
     }
 
 //    // MARK: - Test Case Lifecycle -
@@ -47,7 +50,7 @@ class TranslationManagerTests: XCTestCase {
 
         repositoryMock = TranslationsRepositoryMock()
         fileManagerMock = FileManagerMock()
-        manager = TranslatableManager.init(repository: repositoryMock, contextRepository: repositoryMock)
+        manager = TranslatableManager.init(repository: repositoryMock, contextRepository: repositoryMock, localizableModel: Translations.self)
         manager.languageOverride = nil
         manager.bestFitLanguage = nil
         manager.fallbackLocale = nil
@@ -174,7 +177,7 @@ class TranslationManagerTests: XCTestCase {
         //current language should be Danish
         XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
 
-        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url: "")]
+        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url: "", language: mockLanguage)]
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]

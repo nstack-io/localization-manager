@@ -9,62 +9,69 @@
 import Foundation
 import TranslationManager
 
-struct Localization: LocalizableModel {
-    var defaultSection: DefaultSection = DefaultSection()
-    var other: Other = Other()
-
-    init() { }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        defaultSection = try container.decodeIfPresent(DefaultSection.self, forKey: .defaultSection) ?? defaultSection
-        other = try container.decodeIfPresent(Other.self, forKey: .other) ?? other
-    }
+public final class Translations: LocalizableModel {
+    public var otherSection = OtherSection()
+    public var defaultSection = DefaultSection()
 
     enum CodingKeys: String, CodingKey {
-        case other
+        case otherSection = "other"
         case defaultSection = "default"
     }
+    public override init() {
+        super.init()
+    }
 
-    public subscript(key: String) -> LocalizableSection? {
+    public required init(from decoder: Decoder) throws {
+        super.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        otherSection = try container.decodeIfPresent(OtherSection.self, forKey: .otherSection) ?? otherSection
+        defaultSection = try container.decodeIfPresent(DefaultSection.self, forKey: .defaultSection) ?? defaultSection
+    }
+    public override subscript(key: String) -> LocalizableSection? {
         switch key {
-        case CodingKeys.other.stringValue: return other
+        case CodingKeys.otherSection.stringValue: return otherSection
         case CodingKeys.defaultSection.stringValue: return defaultSection
         default: return nil
         }
     }
 
-    struct DefaultSection: LocalizableSection {
-        var successKey: String = ""
-
-        init() { }
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            successKey = try container.decodeIfPresent(String.self, forKey: .successKey) ?? "__successKey"
+    public final class OtherSection: LocalizableSection {
+        public var otherKey = ""
+        public override init() { super.init() }
+        enum CodingKeys: String, CodingKey {
+            case otherKey
         }
-
-        subscript(key: String) -> String? {
+        public required init(from decoder: Decoder) throws {
+            super.init()
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            otherKey = try container.decodeIfPresent(String.self, forKey: .otherKey) ?? "__otherKey"
+        }
+        public override subscript(key: String) -> String? {
             switch key {
-            case CodingKeys.successKey.stringValue: return successKey
+            case CodingKeys.otherKey.stringValue: return otherKey
             default: return nil
             }
         }
     }
 
-    struct Other: LocalizableSection {
-        var otherKey: String = ""
-
-        init() { }
-
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            otherKey = try container.decodeIfPresent(String.self, forKey: .otherKey) ?? "__otherKey"
+    public final class DefaultSection: LocalizableSection {
+        public var keyys = ""
+        public var successKey = ""
+        public override init() { super.init() }
+        enum CodingKeys: String, CodingKey {
+            case keyys
+            case successKey
         }
-
-        subscript(key: String) -> String? {
+        public required init(from decoder: Decoder) throws {
+            super.init()
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            keyys = try container.decodeIfPresent(String.self, forKey: .keyys) ?? "__keyys"
+            successKey = try container.decodeIfPresent(String.self, forKey: .successKey) ?? "__successKey"
+        }
+        public override subscript(key: String) -> String? {
             switch key {
-            case CodingKeys.otherKey.stringValue: return otherKey
+            case CodingKeys.keyys.stringValue: return keyys
+            case CodingKeys.successKey.stringValue: return successKey
             default: return nil
             }
         }
