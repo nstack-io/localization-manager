@@ -43,6 +43,7 @@
 		C0537375219C0A170022368E /* PersistedTranslationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0537374219C0A170022368E /* PersistedTranslationType.swift */; };
 		C061C1FB217889E400449A14 /* TranslationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C061C1F1217889E400449A14 /* TranslationManager.framework */; };
 		C061C202217889E400449A14 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C469F15222FC3F48002F9FDF /* LocalizableSection+classNameLowerCased.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469F15122FC3F48002F9FDF /* LocalizableSection+classNameLowerCased.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		C061C1F5217889E400449A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C061C1FA217889E400449A14 /* TranslationManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TranslationManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C061C201217889E400449A14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C469F15122FC3F48002F9FDF /* LocalizableSection+classNameLowerCased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizableSection+classNameLowerCased.swift"; sourceTree = "<group>"; };
 		CA22358B03AB06F7F8AF67C9 /* Pods-TranslationManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TranslationManagerTests.release.xcconfig"; path = "Target Support Files/Pods-TranslationManagerTests/Pods-TranslationManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -228,6 +230,7 @@
 				C01D69E7217893D500A1B354 /* Codable+Dictionary.swift */,
 				C01D69EE2178955100A1B354 /* UserDefaults+Codable.swift */,
 				C01D69F22178989E00A1B354 /* String+Substring.swift */,
+				C469F15122FC3F48002F9FDF /* LocalizableSection+classNameLowerCased.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				C01D69E52178925900A1B354 /* LanguageModel.swift in Sources */,
 				2376952E22C0D4AD00D40DC1 /* Platform.swift in Sources */,
 				C01D69DC2178916B00A1B354 /* TranslationRepository.swift in Sources */,
+				C469F15222FC3F48002F9FDF /* LocalizableSection+classNameLowerCased.swift in Sources */,
 				B4020B9C22C5171C007EC5DD /* Store.swift in Sources */,
 				B4020BA022C517B7007EC5DD /* AcceptLanguageProvider.swift in Sources */,
 				C01D69ED217894FC00A1B354 /* TranslationError.swift in Sources */,
