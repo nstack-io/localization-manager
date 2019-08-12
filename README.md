@@ -36,7 +36,7 @@ let manager = TranslatableManager<Language, Localization>(repository: repository
 ~~~~
 
 The `Language` class needs to conform to the `LanguageModel` protocol. This assures the model has a locale and flags that tell the language if it should be the default 
-language used or the best fit language for for the user.
+language used or the best fit language for the user.
 
 The `Localization` class conforms to the `LocalizationModel` protocol. You can think of this as a configuration type object that contains a `Language` object, whether
 the localization needs to be updated and the url that the translations are available from. 
@@ -57,8 +57,8 @@ It can then override the class and subscript functions defined in this sdk and s
 - Once it has those, it will cache any localizations and whether they should be the required `BestFit` or `Default` languages. These are determind by what is set as the `acceptLanguageHeader`,
   this will either use any language override that is set or preferred languages set on the device.
 - For any localizations that have `requireUpdate` set to true, the manager will then fetch those from its set repository and cache them, writing them to a backup file for later use.
-- Then when a translation is required, you can fetch a single translation or all transaltions using the section & key names. These functions will then use the translations in memory or the persisted
-transations wrote to the translation file when downloaded.
+- Then when a translation is required, you can fetch a single translation using the section & key names or all transaltions, either specifying a locale or just using the preferred option set by the configurations. 
+  These functions will then return the translations in memory or the persisted transations wrote to file when downloaded.
 
 ## Features
 
