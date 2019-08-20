@@ -7,7 +7,11 @@
 //
 
 import Foundation
+#if IOSTESTS
 @testable import TranslationManager
+#elseif TVOSTESTS
+@testable import TranslationManager_tvOS
+#endif
 
 class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
 
