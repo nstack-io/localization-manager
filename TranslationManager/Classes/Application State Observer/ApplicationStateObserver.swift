@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// An application state observe class that listens to different application states (fx. foreground/background).
 @objc internal class ApplicationStateObserver: NSObject, ApplicationStateObserverType {
@@ -41,10 +42,17 @@ import Foundation
 
     /// Starts observing application state
     internal func startObserving() {
+        #if os(iOS) || os(tvOS)
         notificationCenter.addObserver(self, selector: #selector(observeStateChange(_:)),
                                        name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(observeStateChange(_:)),
                                        name: UIApplication.didEnterBackgroundNotification, object: nil)
+        #elseif os(watchOS)
+        notificationCenter.addObserver(self, selector: #selector(observeStateChange(_:)),
+                                       name: Notification.Name.NSExtensionHostDidBecomeActive, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(observeStateChange(_:)),
+                                       name: Notification.Name.NSExtensionHostDidEnterBackground, object: nil)
+        #endif
     }
 
     /// Stops observing application state
@@ -56,6 +64,15 @@ import Foundation
     ///
     /// - Parameter notification: The notification that triggered state change.
     @objc private func observeStateChange(_ notification: Notification) {
+        #if os(iOS) || os(tvOS)
+        observeStateChangeIOS(notification)
+        #elseif os(watchOS)
+        observeStateChangeWatchOS(notification)
+        #endif
+    }
+
+    private func observeStateChangeIOS(_ notification: Notification) {
+        #if os(iOS) || os(tvOS)
         switch notification.name {
         case UIApplication.didBecomeActiveNotification:
             state = .foreground
@@ -66,5 +83,21 @@ import Foundation
         default:
             return
         }
+        #endif
+    }
+
+    private func observeStateChangeWatchOS(_ notification: Notification) {
+        #if os(watchOS)
+        switch notification.name {
+        case .NSExtensionHostDidBecomeActive:
+            state = .foreground
+
+        case .NSExtensionHostDidEnterBackground:
+            state = .background
+
+        default:
+            return
+        }
+        #endif
     }
 }
