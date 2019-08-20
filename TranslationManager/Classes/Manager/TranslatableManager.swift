@@ -478,14 +478,19 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A translations object.
-    public func translations<T: LocalizableModel>(localeId: String? = nil) throws -> T? {
+    public func translations<T: LocalizableModel>(localeId: String? = nil) throws -> T {
         guard let locale = localeId ?? bestFitLanguage?.locale.identifier
             ?? languageOverride?.locale.identifier
             ?? fallbackLocale?.identifier
             ?? defaultLanguage?.locale.identifier
         else {
             let translatableObjectArray = Array(translatableObjectDictonary.values)
-            return translatableObjectArray.first as? T
+            if let to = translatableObjectArray.first as? T {
+                return to
+            } else {
+                //no locales known, no translatableObjectDictonaries decodable to defined LocalizbleModel type
+                throw TranslationError.noLocaleFound
+            }
         }
         // Check object in memory
         if let cachedObject = translatableObjectDictonary[locale] as? T {
@@ -496,7 +501,12 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
         try createTranslatableObject(locale)
 
         // Now we must have correct translations, so return it
-        return translatableObjectDictonary[locale] as? T
+        if let to = translatableObjectDictonary[locale] as? T {
+            return to
+        } else {
+            //no translatableObjectDictonaries decodable to defined LocalizbleModel type
+            throw TranslationError.noTranslationsFound
+        }
     }
 
     /// Clears both the memory and persistent cache. Used for debugging purposes.
