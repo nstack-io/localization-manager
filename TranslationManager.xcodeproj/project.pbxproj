@@ -46,7 +46,7 @@
 		8C50885B230D1DA200FB80CD /* ApplicationStateObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */; };
 		8C50885C230D1DA200FB80CD /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF02179DB79002CB099 /* ApplicationStateObserver.swift */; };
 		8C50885D230D1DA200FB80CD /* ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF42179DE04002CB099 /* ApplicationState.swift */; };
-		8C50885E230D1DA700FB80CD /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; };
+		8C50885E230D1DA700FB80CD /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8C50885F230D1E9B00FB80CD /* SharedTranslationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA9F21C230BCF8200CF8065 /* SharedTranslationManagerTests.swift */; };
 		8C508860230D1EA900FB80CD /* TranslationsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296722BA2AA400D09EA1 /* TranslationsRepositoryMock.swift */; };
 		8C508861230D1EB400FB80CD /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296922BA2AA400D09EA1 /* FileManagerMock.swift */; };
@@ -88,7 +88,7 @@
 		8CA9F254230BE20100CF8065 /* ApplicationStateObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */; };
 		8CA9F255230BE20100CF8065 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF02179DB79002CB099 /* ApplicationStateObserver.swift */; };
 		8CA9F256230BE20100CF8065 /* ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF42179DE04002CB099 /* ApplicationState.swift */; };
-		8CA9F257230BE20800CF8065 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; };
+		8CA9F257230BE20800CF8065 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8CBF580B230BCA6C00C60FF7 /* TranslationManager_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBF5802230BCA6B00C60FF7 /* TranslationManager_tvOS.framework */; };
 		8CBF5810230BCA6C00C60FF7 /* TranslationManager_tvOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBF580F230BCA6C00C60FF7 /* TranslationManager_tvOSTests.swift */; };
 		8CBF5812230BCA6C00C60FF7 /* TranslationManager_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CBF5804230BCA6C00C60FF7 /* TranslationManager_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -117,7 +117,7 @@
 		8CBF582F230BCAC600C60FF7 /* ApplicationStateObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */; };
 		8CBF5830230BCAC800C60FF7 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF02179DB79002CB099 /* ApplicationStateObserver.swift */; };
 		8CBF5831230BCACB00C60FF7 /* ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF42179DE04002CB099 /* ApplicationState.swift */; };
-		8CBF5832230BCAD300C60FF7 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; };
+		8CBF5832230BCAD300C60FF7 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4020B9C22C5171C007EC5DD /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4020B9B22C5171C007EC5DD /* Store.swift */; };
 		B4020BA022C517B7007EC5DD /* AcceptLanguageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4020B9F22C517B7007EC5DD /* AcceptLanguageProvider.swift */; };
 		B4E63B2922BD2CC7003A1245 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E63B2822BD2CC7003A1245 /* Localization.swift */; };
@@ -142,7 +142,7 @@
 		C04AFBF92179E2C7002CB099 /* UpdateMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF82179E2C7002CB099 /* UpdateMode.swift */; };
 		C0537375219C0A170022368E /* PersistedTranslationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0537374219C0A170022368E /* PersistedTranslationType.swift */; };
 		C061C1FB217889E400449A14 /* TranslationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C061C1F1217889E400449A14 /* TranslationManager.framework */; };
-		C061C202217889E400449A14 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; };
+		C061C202217889E400449A14 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
