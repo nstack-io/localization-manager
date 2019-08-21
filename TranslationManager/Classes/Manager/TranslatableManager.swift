@@ -481,6 +481,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     public func translations<T: LocalizableModel>(localeId: String? = nil) throws -> T {
         guard let locale = localeId ?? bestFitLanguage?.locale.identifier
             ?? languageOverride?.locale.identifier
+            ?? getAvailablePreferredLanguageLocale()
             ?? fallbackLocale?.identifier
             ?? defaultLanguage?.locale.identifier
         else {
@@ -507,6 +508,17 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
             //no translatableObjectDictonaries decodable to defined LocalizbleModel type
             throw TranslationError.noTranslationsFound
         }
+    }
+
+    private func getAvailablePreferredLanguageLocale() -> String? {
+        for lang in contextRepository.fetchPreferredLanguages() {
+            for key in translatableObjectDictonary.keys {
+                if key.contains(lang) {
+                    return key
+                }
+            }
+        }
+        return nil
     }
 
     /// Clears both the memory and persistent cache. Used for debugging purposes.
