@@ -7,7 +7,11 @@
 //
 
 import Foundation
+#if os(macOS)
+import AppKit
+#else
 import UIKit
+#endif
 
 /// An application state observe class that listens to different application states (fx. foreground/background).
 @objc internal class ApplicationStateObserver: NSObject, ApplicationStateObserverType {

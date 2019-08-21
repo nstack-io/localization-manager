@@ -11,6 +11,8 @@ import Foundation
 @testable import TranslationManager
 #elseif TVOSTESTS
 @testable import TranslationManager_tvOS
+#elseif MACOSTESTS
+@testable import TranslationManager_macOS
 #endif
 
 class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {

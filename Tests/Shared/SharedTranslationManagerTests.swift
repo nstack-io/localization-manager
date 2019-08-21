@@ -11,6 +11,8 @@ import XCTest
 @testable import TranslationManager
 #elseif TVOSTESTS
 @testable import TranslationManager_tvOS
+#elseif MACOSTESTS
+@testable import TranslationManager_macOS
 #endif
 
 //swiftlint:disable file_length
