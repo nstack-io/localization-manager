@@ -6,10 +6,17 @@
 //  Copyright © 2018 Nodes. All rights reserved.
 
 import XCTest
-@testable import TranslationManager
-//swiftlint:disable file_length
-class TranslationManagerTests: XCTestCase {
 
+#if IOSTESTS
+@testable import TranslationManager
+#elseif TVOSTESTS
+@testable import TranslationManager_tvOS
+#elseif MACOSTESTS
+@testable import TranslationManager_macOS
+#endif
+
+//swiftlint:disable file_length
+class SharedTranslationManagerTests: XCTestCase {
     typealias LanguageType = Language
     typealias LocalizationConfigType = LocalizationConfig
 
@@ -42,7 +49,7 @@ class TranslationManagerTests: XCTestCase {
         return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false, url: "", language: mockLanguage)
     }
 
-//    // MARK: - Test Case Lifecycle -
+    //    // MARK: - Test Case Lifecycle -
 
     override func setUp() {
         super.setUp()

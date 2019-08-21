@@ -7,7 +7,13 @@
 //
 
 import Foundation
-import TranslationManager
+#if IOSTESTS
+@testable import TranslationManager
+#elseif TVOSTESTS
+@testable import TranslationManager_tvOS
+#elseif MACOSTESTS
+@testable import TranslationManager_macOS
+#endif
 
 public final class Translations: LocalizableModel {
     public var otherSection = OtherSection()

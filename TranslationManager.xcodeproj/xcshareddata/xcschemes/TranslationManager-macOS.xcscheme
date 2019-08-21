@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1030"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C061C1F0217889E400449A14"
-               BuildableName = "TranslationManager.framework"
-               BlueprintName = "TranslationManager"
+               BlueprintIdentifier = "8C50882D230D1D0A00FB80CD"
+               BuildableName = "TranslationManager_macOS.framework"
+               BlueprintName = "TranslationManager-macOS"
                ReferencedContainer = "container:TranslationManager.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C061C1F9217889E400449A14"
-               BuildableName = "TranslationManagerTests.xctest"
-               BlueprintName = "TranslationManagerTests"
+               BlueprintIdentifier = "8C508835230D1D0A00FB80CD"
+               BuildableName = "TranslationManager-macOSTests.xctest"
+               BlueprintName = "TranslationManager-macOSTests"
                ReferencedContainer = "container:TranslationManager.xcodeproj">
             </BuildableReference>
             <SkippedTests>
@@ -47,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C061C1F0217889E400449A14"
-            BuildableName = "TranslationManager.framework"
-            BlueprintName = "TranslationManager"
+            BlueprintIdentifier = "8C50882D230D1D0A00FB80CD"
+            BuildableName = "TranslationManager_macOS.framework"
+            BlueprintName = "TranslationManager-macOS"
             ReferencedContainer = "container:TranslationManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -69,9 +69,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C061C1F0217889E400449A14"
-            BuildableName = "TranslationManager.framework"
-            BlueprintName = "TranslationManager"
+            BlueprintIdentifier = "8C50882D230D1D0A00FB80CD"
+            BuildableName = "TranslationManager_macOS.framework"
+            BlueprintName = "TranslationManager-macOS"
             ReferencedContainer = "container:TranslationManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -87,9 +87,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C061C1F0217889E400449A14"
-            BuildableName = "TranslationManager.framework"
-            BlueprintName = "TranslationManager"
+            BlueprintIdentifier = "8C50882D230D1D0A00FB80CD"
+            BuildableName = "TranslationManager_macOS.framework"
+            BlueprintName = "TranslationManager-macOS"
             ReferencedContainer = "container:TranslationManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
