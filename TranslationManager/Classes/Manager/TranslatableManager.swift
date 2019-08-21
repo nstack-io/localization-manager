@@ -350,6 +350,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
                 let data = try Data(contentsOf: url)
                 let translationsData = try decoder.decode(TranslationResponse<L>.self, from: data)
                 self.handleTranslationsResponse(translationsData: translationsData,
+                                                handleMeta: true,
                                                 completion: completion)
             } catch {
                 completion?(error)
@@ -438,21 +439,25 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     }
 
     func handleTranslationsResponse(translationsData: TranslationResponse<L>,
+                                    handleMeta: Bool = false,
                                     completion: ((_ error: Error?) -> Void)? = nil) {
+
         //cache current best fit language
-        if let lang = translationsData.meta?.language {
+        if handleMeta {
+            if let lang = translationsData.meta?.language {
 
-            //if language is best fit
-            if lang.isBestFit {
-                if self.bestFitLanguage?.locale.languageCode != lang.locale.languageCode {
-                    // Running language changed action, if best fit language is now different
-                    self.delegate?.translationManager(languageUpdated: self.bestFitLanguage)
+                //if language is best fit
+                if lang.isBestFit {
+                    if self.bestFitLanguage?.locale.languageCode != lang.locale.languageCode {
+                        // Running language changed action, if best fit language is now different
+                        self.delegate?.translationManager(languageUpdated: self.bestFitLanguage)
+                    }
+                    self.bestFitLanguage = lang
                 }
-                self.bestFitLanguage = lang
-            }
 
-            if lang.isDefault {
-                self.defaultLanguage = lang
+                if lang.isDefault {
+                    self.defaultLanguage = lang
+                }
             }
         }
 
