@@ -293,8 +293,18 @@ class SharedTranslationManagerTests: XCTestCase {
         }
     }
 
+    func testFallbackToDefaultLocaleForTranslations() {
+        do {
+            let tr = try manager.translations() as? Translations
+            XCTAssertEqual(tr?.otherSection.otherKey, "FallbackValue")
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+
     func testFallbackToSetFallbackLocale() {
         manager.bestFitLanguage = nil
+        repositoryMock.preferredLanguages = ["ja-JP"]
         let locale = Locale(identifier: "da-DK")
         XCTAssertNotNil(locale)
 
