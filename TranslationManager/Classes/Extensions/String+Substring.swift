@@ -17,4 +17,8 @@ extension String {
         let toIndex = index(from: to)
         return String(self[..<toIndex])
     }
+
+    func lowerCaseFirstLetter() -> String {
+        return prefix(1).lowercased() + dropFirst()
+    }
 }
