@@ -400,6 +400,10 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
         }
 
         if let bestFit = localizations.filter ({ $0.language.isBestFit }).first {
+            if self.bestFitLanguage?.locale.identifier != bestFit.localeIdentifier {
+                // Running language changed action, if best fit language is now different
+                self.delegate?.translationManager(languageUpdated: bestFit.language as? L)
+            }
             self.bestFitLanguage = bestFit.language as? L
         }
 
@@ -448,9 +452,9 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
 
                 //if language is best fit
                 if lang.isBestFit {
-                    if self.bestFitLanguage?.locale.languageCode != lang.locale.languageCode {
+                    if self.bestFitLanguage?.locale.identifier != lang.locale.identifier {
                         // Running language changed action, if best fit language is now different
-                        self.delegate?.translationManager(languageUpdated: self.bestFitLanguage)
+                        self.delegate?.translationManager(languageUpdated: lang)
                     }
                     self.bestFitLanguage = lang
                 }
