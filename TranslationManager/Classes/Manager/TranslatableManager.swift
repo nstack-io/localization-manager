@@ -145,21 +145,13 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
             guard let newValue = newValue else {
                 // Last accept header deleted
                 userDefaults.removeObject(forKey: Constants.Keys.languageOverride)
-
-                //if update mode is automatic update translations, to get new best fit language
-                if updateMode == .automatic {
-                    updateTranslations()
-                }
+                updateTranslations()
                 return
             }
             userDefaults.setCodable(newValue, forKey: Constants.Keys.languageOverride)
 
-            //if update mode is automatic update translations, to get new best fit language
-            if updateMode == .automatic {
-                //clear best fit as it may no longer be best fit with new override
-                bestFitLanguage = nil
-                updateTranslations()
-            }
+            bestFitLanguage = nil
+            updateTranslations()
         }
     }
 
