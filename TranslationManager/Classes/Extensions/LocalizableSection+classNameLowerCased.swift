@@ -9,7 +9,7 @@
 import Foundation
 
 extension LocalizableSection {
-    func classNameLowerCased() -> String {
+    open func classNameLowerCased() -> String {
         return String(describing: type(of: self)).lowerCaseFirstLetter()
     }
 }
