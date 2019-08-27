@@ -670,7 +670,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// - Returns: A dictionary representation of the selected local translations set.
     internal func fallbackTranslations(localeId: String) throws -> TranslationResponse<Language> {
         // Iterate through bundle until we find the translations file
-        for bundle in contextRepository.getLocalizationBundles() {
+         for bundle: Bundle in [Bundle(for: localizableModel.self)] + contextRepository.getLocalizationBundles() {
             // Check if bundle contains translations file, otheriwse continue with next bundle
             guard let filePath = bundle.path(forResource: "Translations_\(localeId)", ofType: "json") else {
                 continue
