@@ -404,8 +404,16 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
         }
 
         let localizationsThatRequireUpdate = localizations.filter({ $0.shouldUpdate == true })
+        
+        //Once all localizations has been updated, we're safe to call the completion
+        //so we use a DispatchGroup for this and then call `leave` where adequate
+        let group = DispatchGroup()
         for localization in localizationsThatRequireUpdate {
-            self.updateLocaleTranslations(localization, completion: completion)
+            group.enter()
+            self.updateLocaleTranslations(localization, in: group, completion: completion)
+        }
+        group.notify(queue: .main) {
+            completion?(nil)
         }
     }
 
@@ -414,7 +422,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// - Parameter localization: The locale required to request translations for
     /// - Parameter completion: Called when translation fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
-    func updateLocaleTranslations(_ localization: LocalizationModel, completion: ((_ error: Error?) -> Void)? = nil) {
+    func updateLocaleTranslations(_ localization: LocalizationModel, in group: DispatchGroup, completion: ((_ error: Error?) -> Void)? = nil) {
         //check if we've got an override, if not, use default accept language
         let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
         repository.getTranslations(localization: localization,
@@ -424,18 +432,20 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
             case .success(let translationsData):
                 // New translations downloaded
                 self.handleTranslationsResponse(translationsData: translationsData,
+                                                in: group,
                                                 completion: completion)
 
             case .failure(let error):
                 // Error downloading translations data
+                group.leave()
                 completion?(error)
-
             }
         }
     }
 
     func handleTranslationsResponse(translationsData: TranslationResponse<L>,
                                     handleMeta: Bool = false,
+                                    in group: DispatchGroup? = nil,
                                     completion: ((_ error: Error?) -> Void)? = nil) {
 
         //cache current best fit language
@@ -456,6 +466,9 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
                 }
             }
         }
+
+        //we're done with this async call, so lets leave
+        group?.leave()
 
         do {
             try self.set(response: translationsData, type: .single)
