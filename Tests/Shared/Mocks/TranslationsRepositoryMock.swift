@@ -8,16 +8,16 @@
 
 import Foundation
 #if IOSTESTS
-@testable import TranslationManager
+@testable import LocalizationManager
 #elseif TVOSTESTS
-@testable import TranslationManager_tvOS
+@testable import LocalizationManager_tvOS
 #elseif MACOSTESTS
-@testable import TranslationManager_macOS
+@testable import LocalizationManager_macOS
 #endif
 
-class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
+class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
 
-    var translationsResponse: TranslationResponse<Language>?
+    var localizationsResponse: LocalizationResponse<Language>?
     var availableLocalizations: [LocalizationConfig]?
     var availableLanguages: [L]?
     var currentLanguage: Language?
@@ -33,15 +33,15 @@ class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
         completion(result as! Result<[C]>)
     }
 
-    func getTranslations<L>(localization: LocalizationModel,
+    func getLocalizations<L>(localization: LocalizationModel,
                             acceptLanguage: String,
-                            completion: @escaping (Result<TranslationResponse<L>>) -> Void) where L: LanguageModel {
+                            completion: @escaping (Result<LocalizationResponse<L>>) -> Void) where L: LanguageModel {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
-        let result: Result = translationsResponse != nil ? .success(translationsResponse!) : .failure(error)
-        completion(result as! Result<TranslationResponse<L>>)
+        let result: Result = localizationsResponse != nil ? .success(translationsResponse!) : .failure(error)
+        completion(result as! Result<LocalizationResponse<L>>)
     }
 
-    func getTranslations<L>(localization: LocalizationModel,
+    func getLocalizations<L>(localization: LocalizationModel,
                             acceptLanguage: String,
                             completion: @escaping (Result<L>) -> Void) where L: LanguageModel {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
@@ -57,7 +57,7 @@ class TranslationsRepositoryMock<L: LanguageModel>: TranslationRepository {
     }
 }
 
-extension TranslationsRepositoryMock: LocalizationContextRepository {
+extension LocalizationsRepositoryMock: LocalizationContextRepository {
 
     func fetchPreferredLanguages() -> [String] {
         return preferredLanguages
