@@ -404,7 +404,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
         }
 
         let localizationsThatRequireUpdate = localizations.filter({ $0.shouldUpdate == true })
-        
+
         //Once all localizations has been updated, we're safe to call the completion
         //so we use a DispatchGroup for this and then call `leave` where adequate
         let group = DispatchGroup()
@@ -448,6 +448,11 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
                                     in group: DispatchGroup? = nil,
                                     completion: ((_ error: Error?) -> Void)? = nil) {
 
+        defer {
+            //we're done with this async call, so lets leave
+            group?.leave()
+        }
+
         //cache current best fit language
         if handleMeta {
             if let lang = translationsData.meta?.language {
@@ -466,9 +471,6 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
                 }
             }
         }
-
-        //we're done with this async call, so lets leave
-        group?.leave()
 
         do {
             try self.set(response: translationsData, type: .single)
