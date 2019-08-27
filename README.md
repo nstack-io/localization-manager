@@ -56,4 +56,4 @@ $ make release '0.0.7: Update mode feature'
 Made with ❤️ at [Nodes](http://nodesagency.com).
 
 ## 📄 License
-**TranslationManager** is available under the MIT license. See the [LICENSE](https://github.com/nodes-ios/TranslationManager/blob/master/LICENSE) file for more info.
+**LocalizationManager** is available under the MIT license. See the [LICENSE](https://github.com/nodes-ios/LocalizationManager/blob/master/LICENSE) file for more info.
