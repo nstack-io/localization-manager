@@ -1,5 +1,5 @@
 //
-//  TranslatableManager.swift
+//  LocalizationManager.swift
 //  LocalizationManager
 //
 //  Created by Dominik Hadl on 18/10/2018.
@@ -12,7 +12,7 @@ import Foundation
 // swiftlint:disable file_length
 // swiftlint:disable type_body_length
 
-/// The TranslatableManager handles everything related to localizations.
+/// The LocalizationManager handles everything related to localizations.
 public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
 
     // MARK: - Properties -
@@ -95,7 +95,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     }()
 
     /// In memory cache of localizations objects mapped with their locale id.
-    internal var translatableObjectDictonary: [String: LocalizableModel] = [:]
+    internal var localizationObjectDictonary: [String: LocalizableModel] = [:]
 
     /// The previous date the localizations were updated
     internal var lastUpdatedDate: Date? {
@@ -246,12 +246,12 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
         if let currentLangCode = bestFitLanguage?.locale.identifier {
             //we have a current language
             // Try to load if we don't have any localizations
-            if translatableObjectDictonary[currentLangCode] == nil {
+            if localizationObjectDictonary[currentLangCode] == nil {
                 do {
-                    try createTranslatableObject(currentLangCode)
+                    try createLocalizationObject(currentLangCode)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[currentLangCode] {
+            if let localizations = localizationObjectDictonary[currentLangCode] {
                 return localizations[section]?[key]
             }
         }
@@ -260,12 +260,12 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
         if let override = languageOverride?.locale.identifier {
             //we have a current language
             // Try to load if we don't have any localizations
-            if translatableObjectDictonary[override] == nil {
+            if localizationObjectDictonary[override] == nil {
                 do {
-                    try createTranslatableObject(override)
+                    try createLocalizationObject(override)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[override] {
+            if let localizations = localizationObjectDictonary[override] {
                 return localizations[section]?[key]
             }
         }
@@ -273,26 +273,26 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
         //no override, try to see if any preferred languages are available
         for lang in contextRepository.fetchPreferredLanguages() {
 
-            if translatableObjectDictonary[lang] == nil {
+            if localizationObjectDictonary[lang] == nil {
                 do {
-                    try createTranslatableObject(lang)
+                    try createLocalizationObject(lang)
                 } catch {
                     continue
                 }
             }
-            if let localizations = translatableObjectDictonary[lang] {
+            if let localizations = localizationObjectDictonary[lang] {
                 return localizations[section]?[key]
             }
         }
 
         //if not, try fallback locale
         if let fallback = fallbackLocale?.identifier {
-            if translatableObjectDictonary[fallback] == nil {
+            if localizationObjectDictonary[fallback] == nil {
                 do {
-                    try createTranslatableObject(fallback)
+                    try createLocalizationObject(fallback)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[fallback] {
+            if let localizations = localizationObjectDictonary[fallback] {
                 return localizations[section]?[key]
             }
         }
@@ -301,23 +301,23 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
         if let defaultLanguage = defaultLanguage?.locale.identifier {
             //we have a current language
             // Try to load if we don't have any localizations
-            if translatableObjectDictonary[defaultLanguage] == nil {
+            if localizationObjectDictonary[defaultLanguage] == nil {
                 do {
-                    try createTranslatableObject(defaultLanguage)
+                    try createLocalizationObject(defaultLanguage)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[defaultLanguage] {
+            if let localizations = localizationObjectDictonary[defaultLanguage] {
                 return localizations[section]?[key]
             }
         }
 
         //if all above failed, just use first value in localizations
-        return translatableObjectDictonary.first?.value[section]?[key]
+        return localizationObjectDictonary.first?.value[section]?[key]
     }
 
     // MARK: Update & Fetch
 
-    /// Parse the fallback JSON versions of the localizations and cache them as Translatable objects
+    /// Parse the fallback JSON versions of the localizations and cache them as Localization objects
     ///
     /// - Parameter completion: Called when localization fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
@@ -486,34 +486,34 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
             ?? fallbackLocale?.identifier
             ?? defaultLanguage?.locale.identifier
         else {
-            let translatableObjectArray = Array(translatableObjectDictonary.values)
-            if let to = translatableObjectArray.first as? T {
+            let localizationObjectArray = Array(localizationObjectDictonary.values)
+            if let to = localizationObjectArray.first as? T {
                 return to
             } else {
-                //no locales known, no translatableObjectDictonaries decodable to defined LocalizbleModel type
+                //no locales known, no localizationObjectDictonaries decodable to defined LocalizbleModel type
                 throw LocalizationError.noLocaleFound
             }
         }
         // Check object in memory
-        if let cachedObject = translatableObjectDictonary[locale] as? T {
+        if let cachedObject = localizationObjectDictonary[locale] as? T {
             return cachedObject
         }
 
         // Load persisted or fallback localizations
-        try createTranslatableObject(locale)
+        try createLocalizationObject(locale)
 
         // Now we must have correct localizations, so return it
-        if let to = translatableObjectDictonary[locale] as? T {
+        if let to = localizationObjectDictonary[locale] as? T {
             return to
         } else {
-            //no translatableObjectDictonaries decodable to defined LocalizbleModel type
+            //no localizationObjectDictonaries decodable to defined LocalizbleModel type
             throw LocalizationError.noLocalizationsFound
         }
     }
 
     private func getAvailablePreferredLanguageLocale() -> String? {
         for lang in contextRepository.fetchPreferredLanguages() {
-            for key in translatableObjectDictonary.keys {
+            for key in localizationObjectDictonary.keys {
                 if key.contains(lang) {
                     return key
                 }
@@ -528,7 +528,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     ///                                 file will be deleted.
     public func clearLocalizations(includingPersisted: Bool = false) throws {
         // In memory localizations cleared
-        translatableObjectDictonary.removeAll()
+        localizationObjectDictonary.removeAll()
 
         if includingPersisted {
             try deletePersistedLocalizations()
@@ -536,7 +536,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     }
 
     /// Loads and initializes the localizations object from either persisted or fallback dictionary.
-    func createTranslatableObject(_ localeId: String) throws {
+    func createLocalizationObject(_ localeId: String) throws {
         let localizations: LocalizationResponse<Language>
         var shouldUnwrapLocalization = false
 
@@ -554,12 +554,12 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
 
         // Figure out and set localizations
         guard let parsed = try processAllLocalizations(localizations, shouldUnwrap: shouldUnwrapLocalization)  else {
-            translatableObjectDictonary.removeValue(forKey: localeId)
+            localizationObjectDictonary.removeValue(forKey: localeId)
             return
         }
 
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
-        translatableObjectDictonary[localeId] = try decoder.decode(localizableModel, from: data)
+        localizationObjectDictonary[localeId] = try decoder.decode(localizableModel, from: data)
     }
 
     // MARK: Dictionaries
@@ -626,7 +626,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
         userDefaults.set(type.rawValue, forKey: Constants.Keys.persistedLocalizationType)
 
         // Reload the localizations
-        try createTranslatableObject(locale)
+        try createLocalizationObject(locale)
     }
 
     internal func deletePersistedLocalizations() throws {
@@ -670,7 +670,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// - Returns: A dictionary representation of the selected local localizations set.
     internal func fallbackLocalizations(localeId: String) throws -> LocalizationResponse<Language> {
         // Iterate through bundle until we find the localizations file
-        for bundle in contextRepository.getLocalizationBundles() {
+        for bundle: Bundle in [Bundle(for: localizableModel.self)] + contextRepository.getLocalizationBundles() {
             // Check if bundle contains localizations file, otheriwse continue with next bundle
             guard let filePath = bundle.path(forResource: "Localizations_\(localeId)", ofType: "json") else {
                 continue

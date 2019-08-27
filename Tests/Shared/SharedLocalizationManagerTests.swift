@@ -103,11 +103,11 @@ class SharedLocalizationManagerTests: XCTestCase {
 
     func testLoadLocalizationsFail() {
         //make sure the count of localizations objects available (fallbacks) doesnt change when update failed
-        let countBefore = manager.translatableObjectDictonary.count
+        let countBefore = manager.localizationObjectDictonary.count
 
         manager.updateLocalizations { (error) in
             XCTAssertNotNil(error)
-            XCTAssertEqual(self.manager.translatableObjectDictonary.count, countBefore)
+            XCTAssertEqual(self.manager.localizationObjectDictonary.count, countBefore)
         }
     }
 
@@ -202,7 +202,7 @@ class SharedLocalizationManagerTests: XCTestCase {
             let filePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
             XCTAssertFalse(filePaths.isEmpty)
             try manager.clearLocalizations()
-            XCTAssertTrue(manager.translatableObjectDictonary.isEmpty)
+            XCTAssertTrue(manager.localizationObjectDictonary.isEmpty)
             let newFilePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
             XCTAssertFalse(newFilePaths.isEmpty)
         } catch {
@@ -251,6 +251,22 @@ class SharedLocalizationManagerTests: XCTestCase {
     }
 
     // MARK: - Fallback
+
+    func testFallbackToJsonInNonMainBundle() throws {
+
+        try manager.clearLocalizations(includingPersisted: true)
+        repositoryMock.customBundles = []
+
+        do {
+            guard let str = try manager.localization(for: "other.otherKey") else {
+                XCTFail("String doesnt exist")
+                return
+            }
+            XCTAssertEqual(str, "FallbackValue")
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
 
     func testFallbackToDefaultLocale() {
         do {
