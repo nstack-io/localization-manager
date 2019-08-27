@@ -58,7 +58,7 @@ class SharedLocalizationManagerTests: XCTestCase {
 
         repositoryMock = LocalizationsRepositoryMock()
         fileManagerMock = FileManagerMock()
-        manager = TranslatableManager.init(repository: repositoryMock, contextRepository: repositoryMock, localizableModel: Localizations.self)
+        manager = LocalizationManager.init(repository: repositoryMock, contextRepository: repositoryMock, localizableModel: Localizations.self, updateMode: .manual)
         manager.languageOverride = nil
         manager.bestFitLanguage = nil
         manager.fallbackLocale = nil
@@ -289,11 +289,11 @@ class SharedLocalizationManagerTests: XCTestCase {
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
-            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "default": ["successKey": "Success", "successKey2": "SuccessUpdated2"],
             "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
-                                                        direction: "LRM", acceptLanguage: "da-DK",
-                                                        isDefault: true, isBestFit: true)))
+            ], meta: LocalizationMeta(language: Language(id: 1, name: "English",
+                                                        direction: "LRM", acceptLanguage: "en-GB",
+                                                        isDefault: false, isBestFit: false)))
         manager.updateLocalizations()
 
         do {
@@ -537,7 +537,6 @@ class SharedLocalizationManagerTests: XCTestCase {
     func testLanguageOverride() {
         repositoryMock.availableLocalizations = [mockLocalizationConfigWithUpdate]
         manager.lastAcceptHeader = nil
-        XCTAssertEqual(manager.updateMode, UpdateMode.automatic)
         XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
 
         manager.languageOverride = Language(id: 1, name: "Japanese",
@@ -554,7 +553,6 @@ class SharedLocalizationManagerTests: XCTestCase {
     func testRemovingLanguageOverride() {
         repositoryMock.availableLocalizations = [mockLocalizationConfigWithUpdate]
         manager.lastAcceptHeader = nil
-        XCTAssertEqual(manager.updateMode, UpdateMode.automatic)
         XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
 
         manager.languageOverride = Language(id: 1, name: "Japanese",
@@ -567,7 +565,6 @@ class SharedLocalizationManagerTests: XCTestCase {
         XCTAssertTrue(acceptHeader.hasPrefix("ja-JP"))
 
         manager.lastAcceptHeader = nil
-        XCTAssertEqual(manager.updateMode, UpdateMode.automatic)
         XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
     }
 
