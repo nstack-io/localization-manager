@@ -1,6 +1,6 @@
 //
 //  TranslatableManagerType.swift
-//  TranslationManager
+//  LocalizationManager
 //
 //  Created by Dominik Hadl on 18/10/2018.
 //  Copyright © 2018 Nodes. All rights reserved.
@@ -18,13 +18,13 @@ public protocol TranslatableManagerType: class {
     var acceptLanguage: String { get }
     var languageOverride: Locale? { get set }
 
-    func translation(for keyPath: String) throws -> String?
-    func translations<T: LocalizableModel>(localeId: String) throws -> T?
-    func updateTranslations(_ completion: ((_ error: Error?) -> Void)?)
+    func localization(for keyPath: String) throws -> String?
+    func localizations<T: LocalizableModel>(localeId: String) throws -> T?
+    func updateLocalizations(_ completion: ((_ error: Error?) -> Void)?)
     func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel
 
-    func set<L>(response: TranslationResponse<L>, type: PersistedTranslationType) throws where L: LanguageModel
+    func set<L>(response: LocalizationResponse<L>, type: PersistedLocalizationType) throws where L: LanguageModel
     func set<L>(languageOverride language: L?) throws where L: LanguageModel
-    func clearTranslations(includingPersisted: Bool) throws
+    func clearLocalizations(includingPersisted: Bool) throws
 }
 */

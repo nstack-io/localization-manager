@@ -1,5 +1,5 @@
 //
-//  TranslationsRepositoryMock.swift
+//  LocalizationsRepositoryMock.swift
 //  NStackSDK
 //
 //  Created by Dominik Hádl on 05/12/2016.
@@ -37,7 +37,7 @@ class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
                             acceptLanguage: String,
                             completion: @escaping (Result<LocalizationResponse<L>>) -> Void) where L: LanguageModel {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
-        let result: Result = localizationsResponse != nil ? .success(translationsResponse!) : .failure(error)
+        let result: Result = localizationsResponse != nil ? .success(localizationsResponse!) : .failure(error)
         completion(result as! Result<LocalizationResponse<L>>)
     }
 
@@ -45,7 +45,7 @@ class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
                             acceptLanguage: String,
                             completion: @escaping (Result<L>) -> Void) where L: LanguageModel {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
-        //let result: Result = translationsResponse != nil ? .success(translationsResponse!) : .failure(error)
+        //let result: Result = localizationsResponse != nil ? .success(localizationsResponse!) : .failure(error)
         let result: Result = .success(currentLanguage!)
         completion(result as! Result<L>)
     }

@@ -1,6 +1,6 @@
 //
 //  Localization.swift
-//  TranslationManagerTests
+//  LocalizationManagerTests
 //
 //  Created by Dominik Hádl on 21/06/2019.
 //  Copyright © 2019 Nodes. All rights reserved.
@@ -8,14 +8,14 @@
 
 import Foundation
 #if IOSTESTS
-@testable import TranslationManager
+@testable import LocalizationManager
 #elseif TVOSTESTS
-@testable import TranslationManager_tvOS
+@testable import LocalizationManager_tvOS
 #elseif MACOSTESTS
-@testable import TranslationManager_macOS
+@testable import LocalizationManager_macOS
 #endif
 
-public final class Translations: LocalizableModel {
+public final class Localizations: LocalizableModel {
     public var otherSection = OtherSection()
     public var defaultSection = DefaultSection()
 
