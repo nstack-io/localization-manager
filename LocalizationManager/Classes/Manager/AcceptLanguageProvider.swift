@@ -1,6 +1,6 @@
 //
 //  AcceptLanguageProvider.swift
-//  TranslationManager
+//  LocalizationManager
 //
 //  Created by Dominik Hádl on 27/06/2019.
 //  Copyright © 2019 Nodes. All rights reserved.

@@ -1,6 +1,6 @@
 //
-//  PersistedTranslationType.swift
-//  TranslationManager
+//  PersistedLocalizationType.swift
+//  LocalizationManager
 //
 //  Created by Dominik Hadl on 14/11/2018.
 //  Copyright © 2018 Nodes. All rights reserved.

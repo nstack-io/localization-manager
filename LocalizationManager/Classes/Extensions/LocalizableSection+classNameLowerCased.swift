@@ -1,6 +1,6 @@
 //
 //  LocalizableSection+classNameLowerCased.swift
-//  TranslationManager
+//  LocalizationManager
 //
 //  Created by Bob De Kort on 08/08/2019.
 //  Copyright © 2019 Nodes. All rights reserved.
