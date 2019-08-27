@@ -409,7 +409,6 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
         //so we use a DispatchGroup for this and then call `leave` where adequate
         let group = DispatchGroup()
         for localization in localizationsThatRequireUpdate {
-            group.enter()
             self.updateLocaleTranslations(localization, in: group, completion: completion)
         }
         group.notify(queue: .main) {
@@ -423,6 +422,13 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// - Parameter completion: Called when translation fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
     func updateLocaleTranslations(_ localization: LocalizationModel, in group: DispatchGroup, completion: ((_ error: Error?) -> Void)? = nil) {
+        
+        group.enter()
+        
+        defer {
+            group.leave()
+        }
+        
         //check if we've got an override, if not, use default accept language
         let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
         repository.getTranslations(localization: localization,
@@ -437,7 +443,6 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
 
             case .failure(let error):
                 // Error downloading translations data
-                group.leave()
                 completion?(error)
             }
         }
@@ -448,6 +453,8 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
                                     in group: DispatchGroup? = nil,
                                     completion: ((_ error: Error?) -> Void)? = nil) {
 
+        group?.enter()
+        
         defer {
             //we're done with this async call, so lets leave
             group?.leave()
