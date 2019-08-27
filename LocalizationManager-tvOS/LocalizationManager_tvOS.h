@@ -1,6 +1,6 @@
 //
-//  TranslationManager_tvOS.h
-//  TranslationManager-tvOS
+//  LocalizationManager_tvOS.h
+//  LocalizationManager-tvOS
 //
 //  Created by Peter Bødskov on 20/08/2019.
 //  Copyright © 2019 Nodes. All rights reserved.
