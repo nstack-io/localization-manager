@@ -45,7 +45,7 @@ class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
                             acceptLanguage: String,
                             completion: @escaping (Result<L>) -> Void) where L: LanguageModel {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
-        //let result: Result = localizationsResponse != nil ? .success(localizationsResponse!) : .failure(error)
+        //let result: Result = localizationsResponse != nil ? .success(localizationsResponse!) : .failure(error)
         let result: Result = .success(currentLanguage!)
         completion(result as! Result<L>)
     }
