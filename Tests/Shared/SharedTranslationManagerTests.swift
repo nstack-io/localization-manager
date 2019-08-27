@@ -281,6 +281,22 @@ class SharedTranslationManagerTests: XCTestCase {
 
     // MARK: - Fallback
 
+    func testFallbackToJsonInNonMainBundle() throws {
+
+        try manager.clearTranslations(includingPersisted: true)
+        repositoryMock.customBundles = []
+
+        do {
+            guard let str = try manager.translation(for: "other.otherKey") else {
+                XCTFail("String doesnt exist")
+                return
+            }
+            XCTAssertEqual(str, "FallbackValue")
+        } catch {
+            XCTFail(error.localizedDescription)
+        }
+    }
+
     func testFallbackToDefaultLocale() {
         do {
             guard let str = try manager.translation(for: "other.otherKey") else {
