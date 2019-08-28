@@ -422,17 +422,16 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// - Parameter completion: Called when translation fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
     func updateLocaleTranslations(_ localization: LocalizationModel, in group: DispatchGroup, completion: ((_ error: Error?) -> Void)? = nil) {
-        
+
         group.enter()
-        
-        defer {
-            group.leave()
-        }
-        
+
         //check if we've got an override, if not, use default accept language
         let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
         repository.getTranslations(localization: localization,
                                    acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
+            defer {
+                group.leave()
+            }
 
             switch result {
             case .success(let translationsData):
@@ -445,7 +444,9 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
                 // Error downloading translations data
                 completion?(error)
             }
+
         }
+
     }
 
     func handleTranslationsResponse(translationsData: TranslationResponse<L>,
@@ -454,7 +455,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
                                     completion: ((_ error: Error?) -> Void)? = nil) {
 
         group?.enter()
-        
+
         defer {
             //we're done with this async call, so lets leave
             group?.leave()
