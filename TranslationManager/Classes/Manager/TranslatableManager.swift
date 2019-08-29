@@ -97,6 +97,9 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// In memory cache of translations objects mapped with their locale id.
     internal var translatableObjectDictonary: [String: LocalizableModel] = [:]
 
+    /// In memory cache of langauge objects
+    internal var availableLanguages: [L] = []
+
     /// The previous date the localizations were updated
     internal var lastUpdatedDate: Date? {
         get {
@@ -403,6 +406,8 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
             self.defaultLanguage = defaultLang.language as? L
         }
 
+        self.availableLanguages = localizations.map({ $0.language as! L })
+
         let localizationsThatRequireUpdate = localizations.filter({ $0.shouldUpdate == true })
 
         //Once all localizations has been updated, we're safe to call the completion
@@ -491,9 +496,16 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// Gets the languages for which translations are available.
     ///
     /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
-    public func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel {
+    public func fetchAvailableLanguages(completion: @escaping (([L]) -> Void)) {
         // Fetching available language asynchronously
-        repository.getAvailableLanguages(completion: completion)
+        repository.getAvailableLanguages { (result: Result<[L]>) in
+          switch result {
+          case .success(let languages):
+            completion(languages)
+          case .failure:
+            completion(self.availableLanguages)
+          }
+        }
     }
 
     // MARK: Translations
