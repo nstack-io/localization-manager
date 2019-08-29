@@ -495,17 +495,35 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
 
     /// Gets the languages for which translations are available.
     ///
-    /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
+    /// - Parameter completion: An completion object containing the array or languages either fetched or cached.
     public func fetchAvailableLanguages(completion: @escaping (([L]) -> Void)) {
         // Fetching available language asynchronously
         repository.getAvailableLanguages { (result: Result<[L]>) in
           switch result {
           case .success(let languages):
-            completion(languages)
+            self.updateAvailableLanguages(languages: languages)
+
+            //we can return self.available languages here as they will have been updated by the previous function if all were available
+            //if not we only return what we know we have
+            completion(self.availableLanguages)
           case .failure:
             completion(self.availableLanguages)
           }
         }
+    }
+
+    //if languages have been fetched and do not align with the current translations available, update translations again
+    private func updateAvailableLanguages(languages: [L]) {
+        for lang in languages {
+            //we dont have translations for a particular fetched langauge, update to fetch what we need
+            if !translatableObjectDictonary.keys.contains(lang.locale.identifier) {
+                self.updateTranslations()
+                return
+            }
+        }
+
+        //we've made it here so we have translations for all available languages
+        self.availableLanguages = languages
     }
 
     // MARK: Translations
