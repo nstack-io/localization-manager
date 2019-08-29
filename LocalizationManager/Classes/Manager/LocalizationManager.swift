@@ -97,6 +97,9 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// In memory cache of localizations objects mapped with their locale id.
     internal var localizationObjectDictonary: [String: LocalizableModel] = [:]
 
+    /// In memory cache of langauge objects
+    internal var availableLanguages: [L] = []
+
     /// The previous date the localizations were updated
     internal var lastUpdatedDate: Date? {
         get {
@@ -403,9 +406,18 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
             self.defaultLanguage = defaultLang.language as? L
         }
 
+        self.availableLanguages = localizations.map({ $0.language as! L })
+
         let localizationsThatRequireUpdate = localizations.filter({ $0.shouldUpdate == true })
+
+        //Once all localizations has been updated, we're safe to call the completion
+        //so we use a DispatchGroup for this and then call `leave` where adequate
+        let group = DispatchGroup()
         for localization in localizationsThatRequireUpdate {
-            self.updateLocaleLocalizations(localization, completion: completion)
+            self.updateLocaleLocalizations(localization, in: group, completion: completion)
+        }
+        group.notify(queue: .main) {
+            completion?(nil)
         }
     }
 
@@ -414,29 +426,45 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// - Parameter localization: The locale required to request localizations for
     /// - Parameter completion: Called when localization fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
-    func updateLocaleLocalizations(_ localization: LocalizationModel, completion: ((_ error: Error?) -> Void)? = nil) {
+    func updateLocaleLocalizations(_ localization: LocalizationModel, in group: DispatchGroup, completion: ((_ error: Error?) -> Void)? = nil) {
+
+        group.enter()
+
         //check if we've got an override, if not, use default accept language
         let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
         repository.getLocalizations(localization: localization,
                                    acceptLanguage: acceptLanguage) { (result: Result<LocalizationResponse<L>>) in
+            defer {
+                group.leave()
+            }
 
             switch result {
             case .success(let localizationsData):
                 // New localizations downloaded
                 self.handleLocalizationsResponse(localizationsData: localizationsData,
+                                                in: group,
                                                 completion: completion)
 
             case .failure(let error):
                 // Error downloading localizations data
                 completion?(error)
-
             }
+
         }
+
     }
 
     func handleLocalizationsResponse(localizationsData: LocalizationResponse<L>,
                                     handleMeta: Bool = false,
+                                    in group: DispatchGroup? = nil,
                                     completion: ((_ error: Error?) -> Void)? = nil) {
+
+        group?.enter()
+
+        defer {
+            //we're done with this async call, so lets leave
+            group?.leave()
+        }
 
         //cache current best fit language
         if handleMeta {
@@ -467,10 +495,35 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
 
     /// Gets the languages for which localizations are available.
     ///
-    /// - Parameter completion: An Alamofire DataResponse object containing the array or languages on success.
-    public func fetchAvailableLanguages<L>(_ completion: @escaping (Result<[L]>) -> Void) where L: LanguageModel {
+    /// - Parameter completion: An completion object containing the array or languages either fetched or cached.
+    public func fetchAvailableLanguages(completion: @escaping (([L]) -> Void)) {
         // Fetching available language asynchronously
-        repository.getAvailableLanguages(completion: completion)
+        repository.getAvailableLanguages { (result: Result<[L]>) in
+          switch result {
+          case .success(let languages):
+            self.updateAvailableLanguages(languages: languages)
+
+            //we can return self.available languages here as they will have been updated by the previous function if all were available
+            //if not we only return what we know we have
+            completion(self.availableLanguages)
+          case .failure:
+            completion(self.availableLanguages)
+          }
+        }
+    }
+
+    //if languages have been fetched and do not align with the current translations available, update translations again
+    private func updateAvailableLanguages(languages: [L]) {
+        for lang in languages {
+            //we dont have localizations for a particular fetched langauge, update to fetch what we need
+            if !localizationObjectDictonary.keys.contains(lang.locale.identifier) {
+                self.updateLocalizations()
+                return
+            }
+        }
+
+        //we've made it here so we have translations for all available languages
+        self.availableLanguages = languages
     }
 
     // MARK: Localizations
