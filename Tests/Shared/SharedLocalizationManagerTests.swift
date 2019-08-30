@@ -136,7 +136,7 @@ class SharedLocalizationManagerTests: XCTestCase {
             return
         }
 
-        let fileURL = manager.localizationsFileUrl(localeId: localeId)
+        let fileURL = manager.localizationFileUrl(localeId: localeId)
         do {
             let data = try Data(contentsOf: fileURL!)
             let localizations = try manager.decoder.decode(LocalizationResponse<Language>.self, from: data)
@@ -422,7 +422,7 @@ class SharedLocalizationManagerTests: XCTestCase {
 
     func testFallbackToDefaultLocaleForLocalizations() {
         do {
-            let tr = try manager.localizations() as? Localizations
+            let tr = try manager.localization() as? Localizations
             XCTAssertEqual(tr?.otherSection.otherKey, "FallbackValue")
         } catch {
             XCTFail(error.localizedDescription)
