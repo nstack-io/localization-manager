@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LocalizationConfig: LocalizationModel {
+public struct LocalizationConfig: LocalizationDescriptor {
 
     public var language: Language
     public var lastUpdatedAt = Date()

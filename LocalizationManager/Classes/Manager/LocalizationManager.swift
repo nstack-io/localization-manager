@@ -13,7 +13,7 @@ import Foundation
 // swiftlint:disable type_body_length
 
 /// The LocalizationManager handles everything related to localizations.
-public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
+public class LocalizationManager<L: LanguageModel, D: LocalizationDescriptor> {
 
     // MARK: - Properties -
     /// The Type of Localizable model that is used to decode localizations
@@ -170,7 +170,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     }
 
     /// The URL used to persist downloaded localizations.
-    internal func localizationsFileUrl(localeId: String) -> URL? {
+    internal func localizationFileUrl(localeId: String) -> URL? {
         var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
         url = url?.appendingPathComponent("Localization", isDirectory: true)
         url = url?.appendingPathComponent("Locales", isDirectory: true)
@@ -362,11 +362,13 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
 
         //check if we've got an override, if not, use default accept language
         let languageAcceptHeader = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
-        repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader,
-                                         lastUpdated: lastUpdatedDate) { (response: Result<[C]>) in
+        repository.getLocalizationDescriptors(
+            acceptLanguage: languageAcceptHeader,
+            lastUpdated: lastUpdatedDate
+        ) { (response: Result<[D]>) in
             switch response {
             case .success(let configs):
-                self.handleLocalizationModels(localizations: configs,
+                self.handleLocalizationModels(descriptors: configs,
                                          acceptHeaderUsed: languageAcceptHeader,
                                          completion: completion)
             case .failure(let error):
@@ -376,9 +378,11 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
         }
     }
 
-    public func handleLocalizationModels(localizations: [LocalizationModel],
-                                         acceptHeaderUsed: String?,
-                                         completion: ((_ error: Error?) -> Void)? = nil) {
+    public func handleLocalizationModels<D: LocalizationDescriptor>(
+        descriptors: [D],
+        acceptHeaderUsed: String?,
+        completion: ((_ error: Error?) -> Void)? = nil
+        ) {
         self.lastUpdatedDate = Date()
 
         //if accept header has changed, update it
@@ -388,13 +392,13 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
         }
 
         do {
-            try self.saveLocalizations(localizations: localizations)
+            try self.saveLocalizationDescriptors(descriptors)
         } catch {
             completion?(error)
             return
         }
 
-        if let bestFit = localizations.filter ({ $0.language.isBestFit }).first {
+        if let bestFit = descriptors.filter ({ $0.language.isBestFit }).first {
             if self.bestFitLanguage?.locale.identifier != bestFit.localeIdentifier {
                 // Running language changed action, if best fit language is now different
                 self.delegate?.localizationManager(languageUpdated: bestFit.language as? L)
@@ -402,19 +406,23 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
             self.bestFitLanguage = bestFit.language as? L
         }
 
-        if let defaultLang = localizations.filter ({ $0.language.isDefault }).first {
+        if let defaultLang = descriptors.filter ({ $0.language.isDefault }).first {
             self.defaultLanguage = defaultLang.language as? L
         }
 
-        self.availableLanguages = localizations.map({ $0.language as! L })
+        self.availableLanguages = descriptors.map({ $0.language as! L })
 
-        let localizationsThatRequireUpdate = localizations.filter({ $0.shouldUpdate == true })
+        let descriptorsThatRequireUpdate = descriptors.filter({ $0.shouldUpdate == true })
 
         //Once all localizations has been updated, we're safe to call the completion
         //so we use a DispatchGroup for this and then call `leave` where adequate
         let group = DispatchGroup()
-        for localization in localizationsThatRequireUpdate {
-            self.updateLocaleLocalizations(localization, in: group, completion: completion)
+        for descriptor in descriptorsThatRequireUpdate {
+            updateLocaleLocalization(
+                descriptor: descriptor,
+                in: group,
+                completion: completion
+            )
         }
         group.notify(queue: .main) {
             completion?(nil)
@@ -426,13 +434,13 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// - Parameter localization: The locale required to request localizations for
     /// - Parameter completion: Called when localization fetching has finished. Check if the error
     ///                         object is nil to determine whether the operation was a succes.
-    func updateLocaleLocalizations(_ localization: LocalizationModel, in group: DispatchGroup, completion: ((_ error: Error?) -> Void)? = nil) {
+    func updateLocaleLocalization<D: LocalizationDescriptor>(descriptor: D, in group: DispatchGroup, completion: ((_ error: Error?) -> Void)? = nil) {
 
         group.enter()
 
         //check if we've got an override, if not, use default accept language
         let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
-        repository.getLocalizations(localization: localization,
+        repository.getLocalization(descriptor: descriptor,
                                    acceptLanguage: acceptLanguage) { (result: Result<LocalizationResponse<L>>) in
             defer {
                 group.leave()
@@ -532,7 +540,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A localizations object.
-    public func localizations<T: LocalizableModel>(localeId: String? = nil) throws -> T {
+    public func localization<T: LocalizableModel>(localeId: String? = nil) throws -> T {
         guard let locale = localeId ?? bestFitLanguage?.locale.identifier
             ?? languageOverride?.locale.identifier
             ?? getAvailablePreferredLanguageLocale()
@@ -620,17 +628,18 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// Saves the localization config set.
     ///
     /// - Parameter [Localizations]: The current Localizations available.
-    public func saveLocalizations(localizations: [LocalizationModel]) throws {
+    public func saveLocalizationDescriptors<D: LocalizationDescriptor>(_ descriptors: [D]) throws {
         guard let configFileUrl = localizationConfigFileURL() else {
             throw LocalizationError.localizationsConfigFileUrlUnavailable
         }
+
         var configModels: [LocalizationConfig] = []
-        for localize in localizations {
+        for descriptor in descriptors {
             let config = LocalizationConfig(lastUpdatedAt: Date(),
-                                            localeIdentifier: localize.localeIdentifier,
-                                            shouldUpdate: localize.shouldUpdate,
-                                            url: localize.url,
-                                            language: localize.language)
+                                            localeIdentifier: descriptor.localeIdentifier,
+                                            shouldUpdate: descriptor.shouldUpdate,
+                                            url: descriptor.url,
+                                            language: descriptor.language)
             configModels.append(config)
         }
 
@@ -658,7 +667,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
             throw LocalizationError.localizationFileUrlUnavailable
         }
 
-        guard let localizationsFileUrl = localizationsFileUrl(localeId: locale) else {
+        guard let localizationsFileUrl = localizationFileUrl(localeId: locale) else {
             throw LocalizationError.localizationFileUrlUnavailable
         }
 
@@ -697,7 +706,7 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// Localizations that were downloaded and persisted on disk.
     internal func persistedLocalizations(localeId: String) throws -> LocalizationResponse<Language>? {
         // Getting persisted traslations
-        guard let url = localizationsFileUrl(localeId: localeId) else {
+        guard let url = localizationFileUrl(localeId: localeId) else {
             throw LocalizationError.localizationFileUrlUnavailable
         }
 
@@ -754,15 +763,15 @@ public class LocalizationManager<L: LanguageModel, C: LocalizationModel> {
     /// - Returns: Returns extracted language dictioanry for current accept language.
     internal func processAllLocalizations(_ object: LocalizationResponse<Language>, shouldUnwrap: Bool) throws -> [String: Any]? {
         // Processing localizations dictionary
-        guard !object.localizations.isEmpty else {
+        guard !object.localization.isEmpty else {
             // Failed to get data from all localizations dictionary
             throw LocalizationError.noLocalizationsFound
         }
 
         if shouldUnwrap {
-            return try extractLanguageDictionary(fromDictionary: object.localizations)
+            return try extractLanguageDictionary(fromDictionary: object.localization)
         } else {
-            return object.localizations
+            return object.localization
         }
     }
 

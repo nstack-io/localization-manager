@@ -27,13 +27,13 @@ class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
 
     func getLocalizationConfig<C>(acceptLanguage: String,
                                   lastUpdated: Date?,
-                                  completion: @escaping (Result<[C]>) -> Void) where C: LocalizationModel {
+                                  completion: @escaping (Result<[C]>) -> Void) where C: LocalizationDescriptor {
         let error = NSError(domain: "", code: 100, userInfo: nil) as Error
         let result: Result = availableLocalizations != nil ? .success(availableLocalizations!) : .failure(error)
         completion(result as! Result<[C]>)
     }
 
-    func getLocalizations<L>(localization: LocalizationModel,
+    func getLocalization<L>(localization: LocalizationDescriptor,
                             acceptLanguage: String,
                             completion: @escaping (Result<LocalizationResponse<L>>) -> Void) where L: LanguageModel {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
@@ -41,7 +41,7 @@ class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
         completion(result as! Result<LocalizationResponse<L>>)
     }
 
-    func getLocalizations<L>(localization: LocalizationModel,
+    func getLocalizations<L>(localization: LocalizationDescriptor,
                             acceptLanguage: String,
                             completion: @escaping (Result<L>) -> Void) where L: LanguageModel {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error

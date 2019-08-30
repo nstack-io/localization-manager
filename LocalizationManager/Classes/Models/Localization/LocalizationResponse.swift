@@ -9,7 +9,7 @@
 import Foundation
 
 public struct LocalizationResponse<L: LanguageModel>: Codable {
-    public internal(set) var localizations: [String: Any]
+    public internal(set) var localization: [String: Any]
     public let meta: LocalizationMeta<L>?
 
     enum CodingKeys: String, CodingKey {
@@ -22,13 +22,13 @@ public struct LocalizationResponse<L: LanguageModel>: Codable {
     }
 
     public init(localizations: [String: Any] = [:], meta: LocalizationMeta<L>? = nil) {
-        self.localizations = localizations
+        self.localization = localizations
         self.meta = meta
     }
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        localizations = try values.decodeIfPresent([String: Any].self, forKey: .localizations) ?? [:]
+        localization = try values.decodeIfPresent([String: Any].self, forKey: .localizations) ?? [:]
 
         let metaData = try decoder.container(keyedBy: CodingKeys.self)
         meta = try metaData.decodeIfPresent(LocalizationMeta<L>.self, forKey: .meta)
@@ -36,7 +36,7 @@ public struct LocalizationResponse<L: LanguageModel>: Codable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(localizations, forKey: .localizations)
+        try container.encode(localization, forKey: .localizations)
         try container.encode(meta, forKey: .meta)
     }
 }
