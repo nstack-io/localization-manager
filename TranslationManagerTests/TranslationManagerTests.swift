@@ -10,7 +10,7 @@ import XCTest
 
 class TranslationManagerTests: XCTestCase {
 
-    typealias LanguageType = Language
+    typealias LanguageType = DefaultLanguage
     typealias LocalizationType = Localization
     typealias LocalizationConfigType = LocalizationConfig
 
@@ -18,15 +18,15 @@ class TranslationManagerTests: XCTestCase {
     var fileManagerMock: FileManagerMock!
     var manager: TranslatableManager<LocalizationType, LanguageType, LocalizationConfigType>!
 
-    let mockLanguage = Language(id: 0, name: "Danish",
+    let mockLanguage = DefaultLanguage(id: 0, name: "Danish",
                                 direction: "lrm", acceptLanguage: "da-DK",
                                 isDefault: false, isBestFit: false)
 
-    var mockTranslations: TranslationResponse<Language> {
+    var mockTranslations: TranslationResponse<DefaultLanguage> {
         return TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: TranslationMeta(language: Language(id: 1, name: "English",
+            ], meta: TranslationMeta(language: DefaultLanguage(id: 1, name: "English",
                                                         direction: "LRM", acceptLanguage: "en-GB",
                                                         isDefault: true, isBestFit: true)))
     }
@@ -128,7 +128,7 @@ class TranslationManagerTests: XCTestCase {
         let fileURL = manager.translationsFileUrl(localeId: localeId)
         do {
             let data = try Data(contentsOf: fileURL!)
-            let translations = try manager.decoder.decode(TranslationResponse<Language>.self, from: data)
+            let translations = try manager.decoder.decode(TranslationResponse<DefaultLanguage>.self, from: data)
             XCTAssertNotNil(translations)
         } catch {
             XCTFail("Failed to decode language")
@@ -152,7 +152,7 @@ class TranslationManagerTests: XCTestCase {
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+            ], meta: TranslationMeta(language: DefaultLanguage(id: 1, name: "Danish",
                                                         direction: "LRM", acceptLanguage: "da-DK",
                                                         isDefault: true, isBestFit: true)))
         manager.updateTranslations()
@@ -166,7 +166,7 @@ class TranslationManagerTests: XCTestCase {
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+            ], meta: TranslationMeta(language: DefaultLanguage(id: 1, name: "Danish",
                                                         direction: "LRM", acceptLanguage: "da-DK",
                                                         isDefault: true, isBestFit: true)))
         manager.updateTranslations()
@@ -178,7 +178,7 @@ class TranslationManagerTests: XCTestCase {
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: TranslationMeta(language: Language(id: 1, name: "English",
+            ], meta: TranslationMeta(language: DefaultLanguage(id: 1, name: "English",
                                                         direction: "LRM", acceptLanguage: "en-GB",
                                                         isDefault: false, isBestFit: false)))
 
@@ -238,7 +238,7 @@ class TranslationManagerTests: XCTestCase {
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
             "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+            ], meta: TranslationMeta(language: DefaultLanguage(id: 1, name: "Danish",
                                                         direction: "LRM", acceptLanguage: "da-DK",
                                                         isDefault: true, isBestFit: true)))
         manager.updateTranslations()

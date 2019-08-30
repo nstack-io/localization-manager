@@ -12,7 +12,7 @@ import Foundation
 // swiftlint:disable file_length
 
 /// The TranslatableManager handles everything related to translations.
-public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: LocalizationModel>/*: TranslatableManagerType*/ {
+public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: LocalizationConfigurationModel>/*: TranslatableManagerType*/ {
 
     // MARK: - Properties -
 
@@ -77,7 +77,10 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     fileprivate let repository: TranslationRepository
 
     /// Repository that context for localization, like preferred languages or bundles.
-    fileprivate let contextRepository: LocalizationContextRepository
+    fileprivate let contextProvider: LocalizationContextProvider
+
+    private let bundleStore: AnyStore<L, C>
+    private let downloadStore: AnyStore<L, C>
 
     /// File manager handling persisting new translation data.
     fileprivate let fileManager: FileManager
@@ -161,21 +164,13 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
 
     /// This language will be used when there is no current language set.
     /// We should assure this is always set and is always set to a Locale that the bundle has JSON fallback translations for.
-    internal var fallbackLocale: Locale?
+    internal var fallbackLanguage: L?
 
     /// The URL used to persist downloaded localizations.
     internal func localizationConfigFileURL() -> URL? {
         var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
         url = url?.appendingPathComponent("Localization", isDirectory: true)
         return url?.appendingPathComponent("LocalizationData.lclfile", isDirectory: false)
-    }
-
-    /// The URL used to persist downloaded translations.
-    internal func translationsFileUrl(localeId: String) -> URL? {
-        var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-        url = url?.appendingPathComponent("Localization", isDirectory: true)
-        url = url?.appendingPathComponent("Locales", isDirectory: true)
-        return url?.appendingPathComponent("\(localeId).tmfile", isDirectory: false)
     }
 
     // MARK: - Methods -
@@ -192,17 +187,20 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     ///   - fallbackLocale: The locale used when there is no current language set.
     ///     This should be a locale that has fallback translations in the bundle. Defaults to english
     required public init(repository: TranslationRepository,
-                         contextRepository: LocalizationContextRepository,
+                         contextProvider: LocalizationContextProvider,
                          updateMode: UpdateMode = .automatic,
                          fileManager: FileManager = .default,
                          userDefaults: UserDefaults = .standard) {
         // Set the properties
         self.updateMode = updateMode
         self.repository = repository
-        self.contextRepository = contextRepository
+        self.contextProvider = contextProvider
         self.fileManager = fileManager
         self.userDefaults = userDefaults
-        self.acceptLanguageProvider = AcceptLanguageProvider(repository: contextRepository)
+        self.acceptLanguageProvider = AcceptLanguageProvider(contextProvider: contextProvider)
+
+        self.bundleStore = BundleStore(contextProvider: contextProvider).asAnyStore()
+        self.downloadStore = BundleStore(contextProvider: contextProvider).asAnyStore()
 
         // Start observing state changes
         stateObserver.startObserving()
@@ -244,71 +242,74 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         let section = keys[0]
         let key = keys[1]
 
+        // FIXME: Reduce code duplication
+
         //first try best fit language, this is returned from backend
-        if let currentLangCode = bestFitLanguage?.locale.languageCode {
+        if let language = bestFitLanguage {
             //we have a current language
             // Try to load if we don't have any translations
-            if translatableObjectDictonary[currentLangCode] == nil {
+            if translatableObjectDictonary[language.locale.identifier] == nil {
                 do {
-                    try createTranslatableObject(currentLangCode, type: T.self)
+                    try createTranslatableObject(language, type: T.self)
                 } catch {} //continue
             }
-            if let translations = translatableObjectDictonary[currentLangCode] {
+            if let translations = translatableObjectDictonary[language.locale.identifier] {
                 return translations[section]?[key]
             }
         }
 
         //if not, try override locale, if we have this but not best fit its because update translations failed
-        if let override = languageOverride?.locale.identifier {
+        if let language = languageOverride {
             //we have a current language
             // Try to load if we don't have any translations
-            if translatableObjectDictonary[override] == nil {
+            if translatableObjectDictonary[language.locale.identifier] == nil {
                 do {
-                    try createTranslatableObject(override, type: T.self)
+                    try createTranslatableObject(language, type: T.self)
                 } catch {} //continue
             }
-            if let translations = translatableObjectDictonary[override] {
+            if let translations = translatableObjectDictonary[language.locale.identifier] {
                 return translations[section]?[key]
             }
         }
 
         //no override, try to see if any preferred languages are available
         for lang in repository.fetchPreferredLanguages() {
-
-            if translatableObjectDictonary[lang] == nil {
-                do {
-                    try createTranslatableObject(lang, type: T.self)
-                } catch {
-                    continue
-                }
-            }
-            if let translations = translatableObjectDictonary[lang] {
-                return translations[section]?[key]
-            }
+            // FIXME: Fix this
+//
+//            if translatableObjectDictonary[lang] == nil {
+//                do {
+//                    try createTranslatableObject(lang, type: T.self)
+//                } catch {
+//                    continue
+//                }
+//            }
+//            if let translations = translatableObjectDictonary[lang] {
+//                return translations[section]?[key]
+//            }
         }
 
         //if not, try fallback locale
-        if let fallback = fallbackLocale?.identifier {
-            if translatableObjectDictonary[fallback] == nil {
+        if let fallback = fallbackLanguage {
+            if translatableObjectDictonary[fallback.locale.identifier] == nil {
                 do {
                     try createTranslatableObject(fallback, type: T.self)
                 } catch {} //continue
             }
-            if let translations = translatableObjectDictonary[fallback] {
+            if let translations = translatableObjectDictonary[fallback.locale.identifier] {
                 return translations[section]?[key]
             }
         }
 
         //try default language set, from backend/JSON Configs
-        if let defaultLanguage = defaultLanguage?.locale.languageCode {
+        if let defaultLanguage = defaultLanguage {
             //we have a current language
             // Try to load if we don't have any translations
-            if translatableObjectDictonary[defaultLanguage] == nil {
+            if translatableObjectDictonary[defaultLanguage.locale.identifier] == nil {
                 do {
                     try createTranslatableObject(defaultLanguage, type: T.self)
                 } catch {} //continue
             }
-            if let translations = translatableObjectDictonary[defaultLanguage] {
+            if let translations = translatableObjectDictonary[defaultLanguage.locale.identifier] {
                 return translations[section]?[key]
             }
         }
@@ -461,17 +462,17 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A translations object.
-    public func translations<T: LocalizableModel>(localeId: String) throws -> T? {
+    public func translations<T: LocalizableModel>(for language: L) throws -> T? {
         // Check object in memory
-        if let cachedObject = translatableObjectDictonary[localeId] as? T {
+        if let cachedObject = translatableObjectDictonary[language.locale.identifier] as? T {
             return cachedObject
         }
 
         // Load persisted or fallback translations
-        try createTranslatableObject(localeId, type: T.self)
+        try createTranslatableObject(language, type: T.self)
 
         // Now we must have correct translations, so return it
-        return translatableObjectDictonary[localeId] as? T
+        return translatableObjectDictonary[language.locale.identifier] as? T
     }
 
     /// Clears both the memory and persistent cache. Used for debugging purposes.
@@ -483,17 +484,17 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
         translatableObjectDictonary.removeAll()
 
         if includingPersisted {
-            try deletePersistedTranslations()
+            try downloadStore.deleteAll()
         }
     }
 
     /// Loads and initializes the translations object from either persisted or fallback dictionary.
-    func createTranslatableObject<T>(_ localeId: String, type: T.Type) throws where T: LocalizableModel {
-        let translations: TranslationResponse<Language>
+    func createTranslatableObject<T>(_ language: L, type: T.Type) throws where T: LocalizableModel {
+        let translations: TranslationResponse<L>
         var shouldUnwrapTranslation = false
 
         //try to use persisted translations for locale
-        if let persisted = try persistedTranslations(localeId: localeId),
+        if let persisted = try persistedTranslations(for: language),
             let typeString = userDefaults.string(forKey: Constants.Keys.persistedTranslationType),
             let translationType = PersistedTranslationType(rawValue: typeString) {
             translations = persisted
@@ -501,17 +502,17 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
 
         } else {
             //otherwise search for fallback
-            translations = try fallbackTranslations(localeId: localeId)
+            translations = try fallbackTranslations(for: language)
         }
 
         // Figure out and set translations
         guard let parsed = try processAllTranslations(translations, shouldUnwrap: shouldUnwrapTranslation)  else {
-            translatableObjectDictonary.removeValue(forKey: localeId)
+            translatableObjectDictonary.removeValue(forKey: language.locale.identifier)
             return
         }
 
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
-        translatableObjectDictonary[localeId] = try decoder.decode(T.self, from: data)
+        translatableObjectDictonary[language.locale.identifier] = try decoder.decode(T.self, from: data)
     }
 
     // MARK: Dictionaries
@@ -531,83 +532,54 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
 
         // Get encoded data
         let data = try encoder.encode(configModels)
-        createDirIfNeeded(dirName: "Localization")
 
         try data.write(to: configFileUrl, options: [.atomic])
     }
 
-    func createDirIfNeeded(dirName: String) {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(dirName + "/")
-        do {
-            try FileManager.default.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
 
     /// Saves the translations set.
     ///
     /// - Parameter translations: The new translations.
     public func set<L>(response: TranslationResponse<L>, type: PersistedTranslationType) throws where L: LanguageModel {
-        guard let locale = response.meta?.language?.locale.identifier else {
-            throw TranslationError.translationsFileUrlUnavailable
-        }
-
-        guard let translationsFileUrl = translationsFileUrl(localeId: locale) else {
-            throw TranslationError.translationsFileUrlUnavailable
-        }
-
-        // Get encoded data
-        let data = try encoder.encode(response)
-
-        //create directory if needed
-        createDirIfNeeded(dirName: "Localization")
-        createDirIfNeeded(dirName: "Localization/Locales")
-
-        // Save to disk
-        try data.write(to: translationsFileUrl, options: [.atomic])
-
-        // Exclude from backup
-        try excludeUrlFromBackup(translationsFileUrl)
-
-        // Save type of persisted translations
-        userDefaults.set(type.rawValue, forKey: Constants.Keys.persistedTranslationType)
-
-        // Reload the translations
-        try createTranslatableObject(locale, type: T.self)
-    }
-
-    internal func deletePersistedTranslations() throws {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
-
-        //get all filepaths in locale directory
-        let filePaths = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
-
-        //remove all files in this directory
-        for path in filePaths {
-            try fileManager.removeItem(at: path)
-        }
+        // FIXME: Fix this
+//        guard let language = response.meta?.language else {
+//            throw TranslationError.translationsFileUrlUnavailable
+//        }
+//
+//        let locale = language.locale.identifier
+//
+//        guard let translationsFileUrl = translationsFileUrl(localeId: locale) else {
+//            throw TranslationError.translationsFileUrlUnavailable
+//        }
+//
+//        // Get encoded data
+//        let data = try encoder.encode(response)
+//
+//        //create directory if needed
+//        createDirIfNeeded(dirName: "Localization")
+//        createDirIfNeeded(dirName: "Localization/Locales")
+//
+//        // Save to disk
+//        try data.write(to: translationsFileUrl, options: [.atomic])
+//
+//        // Exclude from backup
+//        try excludeUrlFromBackup(translationsFileUrl)
+//
+//        // Save type of persisted translations
+//        userDefaults.set(type.rawValue, forKey: Constants.Keys.persistedTranslationType)
+//
+//        // Reload the translations
+//        try createTranslatableObject(language, type: T.self)
     }
 
     /// Translations that were downloaded and persisted on disk.
-    internal func persistedTranslations(localeId: String) throws -> TranslationResponse<Language>? {
-        // Getting persisted traslations
-        guard let url = translationsFileUrl(localeId: localeId) else {
-            throw TranslationError.translationsFileUrlUnavailable
-        }
+    internal func persistedTranslations(for language: L) throws -> TranslationResponse<L>? {
+        let data = try downloadStore.data(for: language)
 
-        // If file doesn't exist, return nil
-        guard fileManager.fileExists(atPath: url.path) else { return nil }
-
-        // If downloaded data is corrupted or wrong, try and delete it
         do {
-            let data = try Data(contentsOf: url)
-            return try decoder.decode(TranslationResponse<Language>.self, from: data)
-        } catch {
-            // Try deleting the file
-            if fileManager.isDeletableFile(atPath: url.path) {
-                try? fileManager.removeItem(at: url)
-            }
+            return try decoder.decode(TranslationResponse<L>.self, from: data)
+        } catch is DecodingError {
+            try downloadStore.delete(for: language)
             return nil
         }
     }
@@ -616,21 +588,13 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     /// loaded the first time they're needed.
     ///
     /// - Returns: A dictionary representation of the selected local translations set.
-    internal func fallbackTranslations(localeId: String) throws -> TranslationResponse<Language> {
-        // Iterate through bundle until we find the translations file
-        for bundle in repository.fetchBundles() {
-            // Check if bundle contains translations file, otheriwse continue with next bundle
-            guard let filePath = bundle.path(forResource: "Translations_\(localeId)", ofType: "json") else {
-                continue
-            }
-
-            let fileUrl = URL(fileURLWithPath: filePath)
-            let data = try Data(contentsOf: fileUrl)
-            return try decoder.decode(TranslationResponse<Language>.self, from: data)
+    internal func fallbackTranslations(for language: L) throws -> TranslationResponse<L> {
+        do {
+            let data = try bundleStore.data(for: language)
+            return try decoder.decode(TranslationResponse<L>.self, from: data)
+        } catch {
+            throw TranslationError.loadingFallbackTranslationsFailed
         }
-
-        // Failed to load fallback translations, file non-existent
-        throw TranslationError.loadingFallbackTranslationsFailed
     }
 
     internal func excludeUrlFromBackup(_ url: URL) throws {
@@ -647,7 +611,7 @@ public class TranslatableManager<T: LocalizableModel, L: LanguageModel, C: Local
     ///
     /// - Parameter dictionary: Dictionary containing all translations under the `data` key.
     /// - Returns: Returns extracted language dictioanry for current accept language.
-    internal func processAllTranslations(_ object: TranslationResponse<Language>, shouldUnwrap: Bool) throws -> [String: Any]? {
+    internal func processAllTranslations(_ object: TranslationResponse<L>, shouldUnwrap: Bool) throws -> [String: Any]? {
         // Processing translations dictionary
         guard !object.translations.isEmpty else {
             // Failed to get data from all translations dictionary

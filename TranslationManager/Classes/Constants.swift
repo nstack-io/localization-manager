@@ -17,4 +17,8 @@ enum Constants {
         static let languageOverride = "TranslationManager-LGO"
         static let persistedTranslationType = "TranslationManager-PTT"
     }
+
+    enum Store {
+        static let localizationDirectory = "Localization"
+    }
 }

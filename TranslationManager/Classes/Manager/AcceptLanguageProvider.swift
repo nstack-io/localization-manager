@@ -12,9 +12,9 @@ internal protocol AcceptLanguageProviderType: class {
 
     /// Creates the accept language provider.
     ///
-    /// - Parameter repository: A localization context repository,
-    ///                         where preferred languages are fetched from.
-    init(repository: LocalizationContextRepository)
+    /// - Parameter contextProvider: A localization context repository,
+    ///                              where preferred languages are fetched from.
+    init(contextProvider: LocalizationContextProvider)
 
     /// Returns a string containing the current locale's preferred languages in a prioritized
     /// manner to be used in a accept-language header. If no preferred language available,
@@ -31,14 +31,14 @@ internal protocol AcceptLanguageProviderType: class {
 internal final class AcceptLanguageProvider: AcceptLanguageProviderType {
 
     /// The context repository to get preferred languages from.
-    private let repository: LocalizationContextRepository
+    private let contextProvider: LocalizationContextProvider
 
     /// Creates the accept language provider.
     ///
     /// - Parameter repository: A localization context repository,
     ///                         where preferred languages are fetched from.
-    init(repository: LocalizationContextRepository) {
-        self.repository = repository
+    init(contextProvider: LocalizationContextProvider) {
+        self.contextProvider = contextProvider
     }
 
     func createHeaderString(languageOverride: LanguageModel? = nil) -> String {
@@ -52,7 +52,7 @@ internal final class AcceptLanguageProvider: AcceptLanguageProviderType {
         }
 
         // Get the preferred languages for the user/device
-        var languages = repository.fetchPreferredLanguages()
+        var languages = contextProvider.fetchPreferredLanguages()
 
         // Append fallback language if we don't have any provided
         if components.isEmpty && languages.isEmpty {

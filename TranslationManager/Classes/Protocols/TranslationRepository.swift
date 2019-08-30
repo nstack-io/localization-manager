@@ -22,7 +22,7 @@ public protocol TranslationRepository {
     func fetchBundles() -> [Bundle]
 }
 
-public protocol LocalizationContextRepository {
+public protocol LocalizationContextProvider {
     func fetchPreferredLanguages() -> [String]
-    func getLocalizationBundles() -> [Bundle]
+    var localizationBundle: Bundle { get }
 }

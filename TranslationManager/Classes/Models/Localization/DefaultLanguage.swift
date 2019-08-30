@@ -1,5 +1,5 @@
 //
-//  Language.swift
+//  DefaultLanguage.swift
 //  TranslationManager
 //
 //  Created by Dominik Hadl on 18/10/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Language: LanguageModel {
+public struct DefaultLanguage: LanguageModel {
     public let id: Int
     public let name: String
 
@@ -25,4 +25,5 @@ public struct Language: LanguageModel {
         case id, name, direction, isDefault, isBestFit
         case acceptLanguage = "locale"
     }
+
 }
