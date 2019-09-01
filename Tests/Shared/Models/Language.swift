@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LocalizationManager
 
 public struct Language: LanguageModel {
     public let id: Int

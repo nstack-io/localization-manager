@@ -147,12 +147,17 @@ class SharedLocalizationManagerTests: XCTestCase {
     }
 
     func testUpdateLocalizationsFail() {
+        let expect = expectation(description: "")
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = nil
         manager.updateLocalizations { (error) in
             XCTAssertNotNil(error)
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { (_) in
+            XCTFail()
         }
     }
 
