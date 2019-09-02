@@ -386,7 +386,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         }
     }
 
-    internal func handleLocalizationModels<D: LocalizationDescriptor>(
+    public func handleLocalizationModels<D: LocalizationDescriptor>(
         descriptors: [D],
         acceptHeaderUsed: String?,
         completion: ((_ error: Error?) -> Void)? = nil
