@@ -135,7 +135,7 @@ class SharedLocalizationManagerTests: XCTestCase {
             return
         }
 
-        let fileURL = manager.localizationsFileUrl(localeId: localeId)
+        let fileURL = manager.localizationFileUrl(localeId: localeId)
         do {
             let data = try Data(contentsOf: fileURL!)
             let localizations = try manager.decoder.decode(LocalizationResponse<Language>.self, from: data)
@@ -146,12 +146,17 @@ class SharedLocalizationManagerTests: XCTestCase {
     }
 
     func testUpdateLocalizationsFail() {
+        let expect = expectation(description: "")
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = nil
         manager.updateLocalizations { (error) in
             XCTAssertNotNil(error)
+            expect.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { (_) in
+            XCTFail()
         }
     }
 
@@ -282,7 +287,7 @@ class SharedLocalizationManagerTests: XCTestCase {
 
     func testFallbackToDefaultLocaleForLocalizations() {
         do {
-            let tr = try manager.localizations() as? Localizations
+            let tr = try manager.localization() as? Localizations
             XCTAssertEqual(tr?.otherSection.otherKey, "FallbackValue")
         } catch {
             XCTFail(error.localizedDescription)

@@ -1,5 +1,5 @@
 //
-//  LocalizationModel.swift
+//  LocalizationDescriptor.swift
 //  LocalizationManager
 //
 //  Created by Andrew Lloyd on 19/06/2019.
@@ -8,9 +8,11 @@
 
 import Foundation
 
-public protocol LocalizationModel: Codable {
+public protocol LocalizationDescriptor: Codable {
+    associatedtype LanguageType: LanguageModel
+
     var shouldUpdate: Bool { get }
     var localeIdentifier: String { get }
     var url: String { get }
-    var language: Language { get }
+    var language: LanguageType { get }
 }

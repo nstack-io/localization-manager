@@ -25,35 +25,30 @@ class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
     var preferredLanguages = ["en"]
     var customBundles: [Bundle]?
 
-    func getLocalizationConfig<C>(acceptLanguage: String,
-                                  lastUpdated: Date?,
-                                  completion: @escaping (Result<[C]>) -> Void) where C: LocalizationModel {
+    func getLocalizationDescriptors<D>(
+        acceptLanguage: String,
+        lastUpdated: Date?,
+        completion: @escaping (Result<[D]>) -> Void
+        ) where D: LocalizationDescriptor {
         let error = NSError(domain: "", code: 100, userInfo: nil) as Error
         let result: Result = availableLocalizations != nil ? .success(availableLocalizations!) : .failure(error)
-        completion(result as! Result<[C]>)
+        completion(result as! Result<[D]>)
     }
 
-    func getLocalizations<L>(localization: LocalizationModel,
-                            acceptLanguage: String,
-                            completion: @escaping (Result<LocalizationResponse<L>>) -> Void) where L: LanguageModel {
+    func getLocalization<L, D>(
+        descriptor: D,
+        acceptLanguage: String,
+        completion: @escaping (Result<LocalizationResponse<L>>) -> Void
+        ) where L: LanguageModel, D: LocalizationDescriptor {
         let error = NSError(domain: "", code: 0, userInfo: nil) as Error
         let result: Result = localizationsResponse != nil ? .success(localizationsResponse!) : .failure(error)
         completion(result as! Result<LocalizationResponse<L>>)
     }
 
-    func getLocalizations<L>(localization: LocalizationModel,
-                            acceptLanguage: String,
-                            completion: @escaping (Result<L>) -> Void) where L: LanguageModel {
-        let error = NSError(domain: "", code: 0, userInfo: nil) as Error
-        //let result: Result = localizationsResponse != nil ? .success(localizationsResponse!) : .failure(error)
-        let result: Result = .success(currentLanguage!)
-        completion(result as! Result<L>)
-    }
-
     func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void) {
-//        let error = NSError(domain: "", code: 0, userInfo: nil)
-//        let result: Result = availableLanguages != nil ? .success(availableLanguages!) : .failure(error)
-//        completion(result)
+        let error = NSError(domain: "", code: 0, userInfo: nil)
+        let result: Result = availableLanguages != nil ? .success(availableLanguages!) : .failure(error)
+        completion(result as! (Result<[L]>))
     }
 }
 

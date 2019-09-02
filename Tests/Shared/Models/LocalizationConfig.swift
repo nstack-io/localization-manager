@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import LocalizationManager
 
-public struct LocalizationConfig: LocalizationModel {
+public struct LocalizationConfig: LocalizationDescriptor {
 
     public var language: Language
     public var lastUpdatedAt = Date()
@@ -16,12 +17,13 @@ public struct LocalizationConfig: LocalizationModel {
     public var localeIdentifier: String
     public var url: String
 
-    public init(lastUpdatedAt: Date = Date(),
-                localeIdentifier: String,
-                shouldUpdate: Bool = false,
-                url: String,
-                language: Language
-                ) {
+    public init(
+        lastUpdatedAt: Date = Date(),
+        localeIdentifier: String,
+        shouldUpdate: Bool = false,
+        url: String,
+        language: Language
+        ) {
         self.lastUpdatedAt = lastUpdatedAt
         self.localeIdentifier = localeIdentifier
         self.shouldUpdate = shouldUpdate

@@ -11,13 +11,21 @@ import Foundation
 public typealias Result<T> = Swift.Result<T, Error>
 
 public protocol LocalizationRepository {
-    func getLocalizationConfig<C>(acceptLanguage: String,
-                                  lastUpdated: Date?,
-                                  completion: @escaping (Result<[C]>) -> Void) where C: LocalizationModel
-    func getLocalization<L>(localization: LocalizationDescriptor,
-                            acceptLanguage: String,
-                            completion: @escaping (Result<LocalizationResponse<L>>) -> Void) where L: LanguageModel
-    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
+    func getLocalizationDescriptors<D>(
+        acceptLanguage: String,
+        lastUpdated: Date?,
+        completion: @escaping (Result<[D]>) -> Void
+        ) where D: LocalizationDescriptor
+
+    func getLocalization<L, D>(
+        descriptor: D,
+        acceptLanguage: String,
+        completion: @escaping (Result<LocalizationResponse<L>>) -> Void
+        ) where L: LanguageModel, D: LocalizationDescriptor
+
+    func getAvailableLanguages<L: LanguageModel>(
+        completion:  @escaping (Result<[L]>) -> Void
+    )
 }
 
 public protocol LocalizationContextRepository {
