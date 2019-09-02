@@ -28,7 +28,6 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     /// which you can change if your API works differently.
     public let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }()
 
@@ -37,7 +36,6 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     /// which you can change if your API works differently.
     public let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         return encoder
     }()
 

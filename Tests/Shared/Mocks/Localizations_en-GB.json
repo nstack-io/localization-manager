@@ -2,7 +2,8 @@
     "data": {
         "default": {
             "successKey": "Success",
-            "keyys": "ffw"
+            "keyys": "ffw",
+            "testURL": "www.test.com"
         },
         "other": {
             "otherKey": "FallbackValue"

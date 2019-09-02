@@ -240,6 +240,74 @@ class SharedLocalizationManagerTests: XCTestCase {
         }
     }
 
+    func testFullTranslationsResponse() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.localizationsResponse = LocalizationResponse(translations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
+        manager.updateLocalizations()
+        do {
+            if let translations = try manager.translations() as? Localization {
+                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+            } else {
+                XCTFail("fail")
+            }
+        } catch {
+            XCTFail("fail")
+        }
+    }
+
+    func testFullTranslationsResponseFallbackJSON() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.localizationsResponse = LocalizationResponse(translations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
+        //manager.updateTranslations()
+        do {
+            try manager.clearLocalizations(includingPersisted: true)
+            if let translations = try manager.translations() as? Localization {
+                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+            } else {
+                XCTFail()
+            }
+        } catch {
+            XCTFail()
+        }
+    }
+
+    func testFullTranslationsResponseFallback() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.localizationsResponse = LocalizationResponse(translations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
+        do {
+            try manager.clearLocalizations(includingPersisted: false)
+            if let translations = try manager.translations() as? Localization {
+                XCTAssertEqual(translations.defaultSection.successKey, "Success")
+                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+            } else {
+                XCTFail()
+            }
+        } catch {
+            XCTFail()
+        }
+    }
+
     func testLocalizationForKeyFailure() {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
