@@ -63,21 +63,25 @@ public final class Translations: LocalizableModel {
     public final class DefaultSection: LocalizableSection {
         public var keyys = ""
         public var successKey = ""
+        public var testURL = ""
         public override init() { super.init() }
         enum CodingKeys: String, CodingKey {
             case keyys
             case successKey
+            case testURL
         }
         public required init(from decoder: Decoder) throws {
             super.init()
             let container = try decoder.container(keyedBy: CodingKeys.self)
             keyys = try container.decodeIfPresent(String.self, forKey: .keyys) ?? "__keyys"
             successKey = try container.decodeIfPresent(String.self, forKey: .successKey) ?? "__successKey"
+            testURL = try container.decodeIfPresent(String.self, forKey: .testURL) ?? "__testURL"
         }
         public override subscript(key: String) -> String? {
             switch key {
             case CodingKeys.keyys.stringValue: return keyys
             case CodingKeys.successKey.stringValue: return successKey
+                case CodingKeys.testURL.stringValue: return testURL
             default: return nil
             }
         }

@@ -258,9 +258,77 @@ class SharedTranslationManagerTests: XCTestCase {
                 XCTFail("String doesnt exist")
                 return
             }
-            XCTAssertEqual(str, "DanishSuccessUpdated")
+            XCTAssertEqual(str, "Success")
         } catch {
             XCTFail(error.localizedDescription)
+        }
+    }
+
+    func testFullTranslationsResponse() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
+        manager.updateTranslations()
+        do {
+            if let translations = try manager.translations() as? Translations {
+                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+            } else {
+                XCTFail()
+            }
+        } catch {
+            XCTFail()
+        }
+    }
+
+    func testFullTranslationsResponseFallbackJSON() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
+        //manager.updateTranslations()
+        do {
+            try manager.clearTranslations(includingPersisted: true)
+            if let translations = try manager.translations() as? Translations {
+                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+            } else {
+                XCTFail()
+            }
+        } catch {
+            XCTFail()
+        }
+    }
+
+    func testFullTranslationsResponseFallback() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
+        do {
+            try manager.clearTranslations(includingPersisted: false)
+            if let translations = try manager.translations() as? Translations {
+                XCTAssertEqual(translations.defaultSection.successKey, "Success")
+                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+            } else {
+                XCTFail()
+            }
+        } catch {
+            XCTFail()
         }
     }
 
