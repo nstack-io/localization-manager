@@ -156,33 +156,67 @@ class SharedTranslationManagerTests: XCTestCase {
     }
 
     func testUpdateCurrentLanguageWithBestFit() {
-        let config = mockLocalizationConfigWithUpdate //mock Danish config
+        let lang = Language(id: 0, name: "Danish",
+                                    direction: "lrm",
+                                    acceptLanguage: "da-DK",
+                                    isDefault: false,
+                                    isBestFit: true)
+        let config = LocalizationConfig(lastUpdatedAt: Date(),
+                                        localeIdentifier: "da-DK",
+                                        shouldUpdate: true,
+                                        url: "",
+                                        language: lang)
         let localizations: [LocalizationConfig] = [config]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
-                                                        direction: "LRM", acceptLanguage: "da-DK",
-                                                        isDefault: true, isBestFit: true)))
-        manager.updateTranslations()
-        XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
+            ], meta: TranslationMeta(language: lang))
+
+        // Create an expectation
+        let expectation = self.expectation(description: "update")
+        manager.updateTranslations { (error) in
+            if error != nil {
+                XCTFail()
+            } else {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(self.manager.bestFitLanguage?.acceptLanguage, "da-DK")
+
     }
 
     func testDoNotUpdateCurrentLanguageWithBestFit() {
-        let config = mockLocalizationConfigWithUpdate //mock Danish config
+        let lang = Language(id: 0, name: "Danish",
+                            direction: "lrm",
+                            acceptLanguage: "da-DK",
+                            isDefault: false,
+                            isBestFit: true)
+        let config = LocalizationConfig(lastUpdatedAt: Date(),
+                                        localeIdentifier: "da-DK",
+                                        shouldUpdate: true,
+                                        url: "",
+                                        language: lang)
         let localizations: [LocalizationConfig] = [config]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.translationsResponse = TranslationResponse(translations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
-                                                        direction: "LRM", acceptLanguage: "da-DK",
-                                                        isDefault: true, isBestFit: true)))
-        manager.updateTranslations()
-
-        //current language should be Danish
-        XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
+            ], meta: TranslationMeta(language: lang))
+        // Create an expectation
+        let expectation = self.expectation(description: "update")
+        manager.updateTranslations { (error) in
+            if error != nil {
+                XCTFail()
+            } else {
+                //current language should be danish
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(self.manager.bestFitLanguage?.acceptLanguage, "da-DK")
 
         repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url: "", language: mockLanguage)]
         repositoryMock.translationsResponse = TranslationResponse(translations: [
@@ -192,10 +226,17 @@ class SharedTranslationManagerTests: XCTestCase {
                                                         direction: "LRM", acceptLanguage: "en-GB",
                                                         isDefault: false, isBestFit: false)))
 
-        manager.updateTranslations()
-
-        //current language should still be Danish as English is not 'best fit'
-        XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
+        let expectationTwo = self.expectation(description: "dontUpdate")
+        manager.updateTranslations { (error) in
+            if error != nil {
+                XCTFail()
+            } else {
+                //current language should still be Danish as English is not 'best fit'
+                expectationTwo.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(self.manager.bestFitLanguage?.acceptLanguage, "da-DK")
     }
 
     // MARK: - Test Clear

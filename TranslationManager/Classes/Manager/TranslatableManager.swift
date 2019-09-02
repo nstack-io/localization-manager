@@ -28,6 +28,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     /// which you can change if your API works differently.
     public let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }()
 
