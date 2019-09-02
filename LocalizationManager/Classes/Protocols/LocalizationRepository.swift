@@ -14,7 +14,7 @@ public protocol LocalizationRepository {
     func getLocalizationConfig<C>(acceptLanguage: String,
                                   lastUpdated: Date?,
                                   completion: @escaping (Result<[C]>) -> Void) where C: LocalizationModel
-    func getLocalizations<L>(localization: LocalizationModel,
+    func getLocalization<L>(localization: LocalizationDescriptor,
                             acceptLanguage: String,
                             completion: @escaping (Result<LocalizationResponse<L>>) -> Void) where L: LanguageModel
     func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
