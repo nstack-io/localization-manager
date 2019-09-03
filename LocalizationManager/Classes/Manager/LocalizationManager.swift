@@ -16,7 +16,7 @@ import Foundation
 public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> where Descriptor.LanguageType == Language {
 
     // MARK: - Properties -
-    
+
     /// The Type of Localizable model that is used to decode localizations
     /// This should be the generated LocalizableModel class from the LocalizationsGenerator
     var localizableModel: LocalizableModel.Type
