@@ -16,6 +16,7 @@ import Foundation
 public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> where Descriptor.LanguageType == Language {
 
     // MARK: - Properties -
+    
     /// The Type of Localizable model that is used to decode localizations
     /// This should be the generated LocalizableModel class from the LocalizationsGenerator
     var localizableModel: LocalizableModel.Type
@@ -24,20 +25,11 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     public var updateMode: UpdateMode
 
     /// The decoder used to decode on-the-fly downloaded localizations into models.
-    /// By default uses a `.convertFromSnakeCase` for the `keyDecodingStrategy` property,
-    /// which you can change if your API works differently.
-    public let decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        return decoder
-    }()
+    public let decoder = JSONDecoder()
 
-    /// The encoder used to encode on-the-fly downloaded localizations into a file that can be loaded
-    /// on future starts. By default uses a `.convertToSnakeCase` for the `keyEncodingStrategy` property,
-    /// which you can change if your API works differently.
-    public let encoder: JSONEncoder = {
-        let encoder = JSONEncoder()
-        return encoder
-    }()
+    /// The encoder used to encode on-the-fly downloaded localizations into a file
+    /// that can be loaded on future starts.
+    public let encoder = JSONEncoder()
 
     /// In memory cache of the current best fit language object.
     public internal(set) var bestFitLanguage: Language? {
