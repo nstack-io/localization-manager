@@ -114,12 +114,10 @@
 		B464DB6E2319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B464DB6C2319CCAE00713265 /* LocalizationManager+ApplicationState.swift */; };
 		B464DB6F2319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B464DB6C2319CCAE00713265 /* LocalizationManager+ApplicationState.swift */; };
 		B464DB702319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B464DB6C2319CCAE00713265 /* LocalizationManager+ApplicationState.swift */; };
-		B4B6C947231BCA80001A8E5C /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C945231BCA80001A8E5C /* Language.swift */; };
-		B4B6C948231BCA80001A8E5C /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C945231BCA80001A8E5C /* Language.swift */; };
-		B4B6C949231BCA80001A8E5C /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C945231BCA80001A8E5C /* Language.swift */; };
 		B4B6C94A231BCA80001A8E5C /* LocalizationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C946231BCA80001A8E5C /* LocalizationConfig.swift */; };
 		B4B6C94B231BCA80001A8E5C /* LocalizationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C946231BCA80001A8E5C /* LocalizationConfig.swift */; };
 		B4B6C94C231BCA80001A8E5C /* LocalizationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C946231BCA80001A8E5C /* LocalizationConfig.swift */; };
+		B4B6C94F231ECB8B001A8E5C /* DefaultLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C94E231ECB8B001A8E5C /* DefaultLanguage.swift */; };
 		B4E63B2922BD2CC7003A1245 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E63B2822BD2CC7003A1245 /* Localization.swift */; };
 		C00F5EE22178FAE600066823 /* LocalizationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F5EE12178FAE600066823 /* LocalizationManagerDelegate.swift */; };
 		C01D69D12178904400A1B354 /* LocalizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D02178904400A1B354 /* LocalizationManagerTests.swift */; };
@@ -200,8 +198,8 @@
 		B4020B9B22C5171C007EC5DD /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		B4020B9F22C517B7007EC5DD /* AcceptLanguageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptLanguageProvider.swift; sourceTree = "<group>"; };
 		B464DB6C2319CCAE00713265 /* LocalizationManager+ApplicationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizationManager+ApplicationState.swift"; sourceTree = "<group>"; };
-		B4B6C945231BCA80001A8E5C /* Language.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		B4B6C946231BCA80001A8E5C /* LocalizationConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationConfig.swift; sourceTree = "<group>"; };
+		B4B6C94E231ECB8B001A8E5C /* DefaultLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLanguage.swift; sourceTree = "<group>"; };
 		B4E63B2822BD2CC7003A1245 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		BD5866AAF251C41B6BD32122 /* Pods-LocalizationManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalizationManagerTests.release.xcconfig"; path = "Target Support Files/Pods-LocalizationManagerTests/Pods-LocalizationManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 		C00F5EE12178FAE600066823 /* LocalizationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManagerDelegate.swift; sourceTree = "<group>"; };
@@ -400,10 +398,17 @@
 		B4B6C944231BC997001A8E5C /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B4B6C945231BCA80001A8E5C /* Language.swift */,
 				B4B6C946231BCA80001A8E5C /* LocalizationConfig.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		B4B6C94D231ECB65001A8E5C /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				B4B6C94E231ECB8B001A8E5C /* DefaultLanguage.swift */,
+			);
+			path = Default;
 			sourceTree = "<group>";
 		};
 		C01D69D22178909300A1B354 /* Supporting Files */ = {
@@ -431,6 +436,7 @@
 		C01D69D4217890D500A1B354 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B4B6C94D231ECB65001A8E5C /* Default */,
 				B4020B9622C3CAC4007EC5DD /* Localization */,
 				C04AFBF82179E2C7002CB099 /* UpdateMode.swift */,
 				C0537374219C0A170022368E /* PersistedLocalizationType.swift */,
@@ -919,7 +925,6 @@
 				B4B6C94C231BCA80001A8E5C /* LocalizationConfig.swift in Sources */,
 				8C508865230D1EFF00FB80CD /* Localization.swift in Sources */,
 				8C508861230D1EB400FB80CD /* FileManagerMock.swift in Sources */,
-				B4B6C949231BCA80001A8E5C /* Language.swift in Sources */,
 				8C508860230D1EA900FB80CD /* LocalizationsRepositoryMock.swift in Sources */,
 				8C50883C230D1D0A00FB80CD /* LocalizationManager_macOSTests.swift in Sources */,
 			);
@@ -993,7 +998,6 @@
 				B4B6C94B231BCA80001A8E5C /* LocalizationConfig.swift in Sources */,
 				8CA9F221230BD59800CF8065 /* Localization.swift in Sources */,
 				8CA9F220230BD57300CF8065 /* FileManagerMock.swift in Sources */,
-				B4B6C948231BCA80001A8E5C /* Language.swift in Sources */,
 				8CA9F21F230BD55400CF8065 /* LocalizationsRepositoryMock.swift in Sources */,
 				8CBF5810230BCA6C00C60FF7 /* LocalizationManager_tvOSTests.swift in Sources */,
 			);
@@ -1017,6 +1021,7 @@
 				B464DB6D2319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */,
 				C04AFBF72179E16E002CB099 /* ApplicationStateObserverType.swift in Sources */,
 				C01D69EF2178955100A1B354 /* UserDefaults+Codable.swift in Sources */,
+				B4B6C94F231ECB8B001A8E5C /* DefaultLanguage.swift in Sources */,
 				C01D69EB217894DE00A1B354 /* LocalizationManager.swift in Sources */,
 				C04AFBF32179DDC2002CB099 /* ApplicationStateObserverDelegate.swift in Sources */,
 				C04AFBF92179E2C7002CB099 /* UpdateMode.swift in Sources */,
@@ -1038,7 +1043,6 @@
 				23A4296A22BA2AA400D09EA1 /* LocalizationsRepositoryMock.swift in Sources */,
 				B4B6C94A231BCA80001A8E5C /* LocalizationConfig.swift in Sources */,
 				B4E63B2922BD2CC7003A1245 /* Localization.swift in Sources */,
-				B4B6C947231BCA80001A8E5C /* Language.swift in Sources */,
 				23A4296C22BA2AA400D09EA1 /* FileManagerMock.swift in Sources */,
 				23A4296B22BA2AA400D09EA1 /* BundleMock.swift in Sources */,
 				C01D69D12178904400A1B354 /* LocalizationManagerTests.swift in Sources */,

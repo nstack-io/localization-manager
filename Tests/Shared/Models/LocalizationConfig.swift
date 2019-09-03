@@ -11,7 +11,7 @@ import LocalizationManager
 
 public struct LocalizationConfig: LocalizationDescriptor {
 
-    public var language: Language
+    public var language: DefaultLanguage
     public var lastUpdatedAt = Date()
     public var shouldUpdate: Bool = false
     public var localeIdentifier: String
@@ -22,7 +22,7 @@ public struct LocalizationConfig: LocalizationDescriptor {
         localeIdentifier: String,
         shouldUpdate: Bool = false,
         url: String,
-        language: Language
+        language: DefaultLanguage
         ) {
         self.lastUpdatedAt = lastUpdatedAt
         self.localeIdentifier = localeIdentifier

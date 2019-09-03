@@ -15,7 +15,7 @@ import Foundation
 @testable import LocalizationManager_macOS
 #endif
 
-public final class Localizations: LocalizableModel {
+public final class Localization: LocalizableModel {
     public var otherSection = OtherSection()
     public var defaultSection = DefaultSection()
 

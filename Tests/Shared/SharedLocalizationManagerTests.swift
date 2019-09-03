@@ -17,24 +17,36 @@ import XCTest
 
 //swiftlint:disable file_length
 class SharedLocalizationManagerTests: XCTestCase {
-    typealias LanguageType = Language
+    typealias LanguageType = DefaultLanguage
     typealias LocalizationConfigType = LocalizationConfig
 
     var repositoryMock: LocalizationsRepositoryMock<LanguageType>!
     var fileManagerMock: FileManagerMock!
     var manager: LocalizationManager<LanguageType, LocalizationConfigType>!
 
-    let mockLanguage = Language(id: 0, name: "Danish",
-                                direction: "lrm", acceptLanguage: "da-DK",
-                                isDefault: false, isBestFit: false)
+    let mockDanishLanguage = DefaultLanguage(
+        id: 0, name: "Danish",
+        direction: "lrm", locale: Locale(identifier: "da-DK"),
+        isDefault: false, isBestFit: false
+    )
 
-    var mockLocalizations: LocalizationResponse<Language> {
+    let mockEnglishLanguage = DefaultLanguage(
+        id: 1, name: "English",
+        direction: "LRM", locale: Locale(identifier: "en-GB"),
+        isDefault: true, isBestFit: true
+    )
+
+    let mockJapaneseLanguage = DefaultLanguage(
+        id: 1, name: "Japanese",
+        direction: "LRM", locale: Locale(identifier: "ja-JP"),
+        isDefault: true, isBestFit: true
+    )
+
+    var mockLocalizations: LocalizationResponse<DefaultLanguage> {
         return LocalizationResponse(localizations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: LocalizationMeta(language: Language(id: 1, name: "English",
-                                                        direction: "LRM", acceptLanguage: "en-GB",
-                                                        isDefault: true, isBestFit: true)))
+            ], meta: LocalizationMeta(language: mockEnglishLanguage))
     }
 
     var mockLocalizationConfigWithUpdate: LocalizationConfig {
@@ -42,14 +54,15 @@ class SharedLocalizationManagerTests: XCTestCase {
                                   localeIdentifier: "da-DK",
                                   shouldUpdate: true,
                                   url: "",
-                                  language: mockLanguage)
+                                  language: mockDanishLanguage)
     }
 
     var mockLocalizationConfigWithoutUpdate: LocalizationConfig {
-        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR", shouldUpdate: false, url: "", language: mockLanguage)
+        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR",
+                                  shouldUpdate: false, url: "", language: mockDanishLanguage)
     }
 
-    //    // MARK: - Test Case Lifecycle -
+    // MARK: - Test Case Lifecycle -
 
     override func setUp() {
         super.setUp()
@@ -57,7 +70,10 @@ class SharedLocalizationManagerTests: XCTestCase {
 
         repositoryMock = LocalizationsRepositoryMock()
         fileManagerMock = FileManagerMock()
-        manager = LocalizationManager.init(repository: repositoryMock, contextRepository: repositoryMock, localizableModel: Localizations.self, updateMode: .manual)
+        manager = LocalizationManager(repository: repositoryMock,
+                                      contextRepository: repositoryMock,
+                                      localizableModel: Localization.self,
+                                      updateMode: .manual)
         manager.languageOverride = nil
         manager.bestFitLanguage = nil
         manager.fallbackLocale = nil
@@ -130,7 +146,7 @@ class SharedLocalizationManagerTests: XCTestCase {
         repositoryMock.localizationsResponse = mockLocalizations
         manager.updateLocalizations()
 
-        guard let localeId: String = mockLocalizations.meta?.language?.acceptLanguage else {
+        guard let localeId: String = mockLocalizations.meta?.language?.locale.identifier else {
             XCTFail("Failed to get locale id/accept language")
             return
         }
@@ -138,7 +154,7 @@ class SharedLocalizationManagerTests: XCTestCase {
         let fileURL = manager.localizationFileUrl(localeId: localeId)
         do {
             let data = try Data(contentsOf: fileURL!)
-            let localizations = try manager.decoder.decode(LocalizationResponse<Language>.self, from: data)
+            let localizations = try manager.decoder.decode(LocalizationResponse<DefaultLanguage>.self, from: data)
             XCTAssertNotNil(localizations)
         } catch {
             XCTFail("Failed to decode language")
@@ -167,9 +183,7 @@ class SharedLocalizationManagerTests: XCTestCase {
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
-                                                        direction: "LRM", acceptLanguage: "da-DK",
-                                                        isDefault: true, isBestFit: true)))
+            ], meta: LocalizationMeta(language: mockDanishLanguage))
         manager.updateLocalizations()
        // XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
     }
@@ -217,16 +231,14 @@ class SharedLocalizationManagerTests: XCTestCase {
 
     // MARK: - Localization for key
 
-    func testLocalizationForKeySuccessWithCurrentLanguage() {
+    func testLocalizationForKeySuccessWithCurrentDefaultLanguage() {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "Success", "successKey2": "SuccessUpdated2"],
             "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: LocalizationMeta(language: Language(id: 1, name: "English",
-                                                        direction: "LRM", acceptLanguage: "en-GB",
-                                                        isDefault: false, isBestFit: false)))
+            ], meta: LocalizationMeta(language: mockEnglishLanguage))
         manager.updateLocalizations()
 
         do {
@@ -244,15 +256,13 @@ class SharedLocalizationManagerTests: XCTestCase {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
-        repositoryMock.localizationsResponse = LocalizationResponse(translations: [
+        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
             "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
-                                                        direction: "LRM", acceptLanguage: "da-DK",
-                                                        isDefault: true, isBestFit: true)))
+            ], meta: LocalizationMeta(language: mockDanishLanguage))
         manager.updateLocalizations()
         do {
-            if let translations = try manager.translations() as? Localization {
+            if let translations = try manager.localization() as? Localization {
                 XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
             } else {
                 XCTFail("fail")
@@ -266,16 +276,14 @@ class SharedLocalizationManagerTests: XCTestCase {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
-        repositoryMock.localizationsResponse = LocalizationResponse(translations: [
+        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
             "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
-                                                        direction: "LRM", acceptLanguage: "da-DK",
-                                                        isDefault: true, isBestFit: true)))
+            ], meta: LocalizationMeta(language: mockDanishLanguage))
         //manager.updateTranslations()
         do {
             try manager.clearLocalizations(includingPersisted: true)
-            if let translations = try manager.translations() as? Localization {
+            if let translations = try manager.localization() as? Localization {
                 XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
             } else {
                 XCTFail()
@@ -289,15 +297,13 @@ class SharedLocalizationManagerTests: XCTestCase {
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
-        repositoryMock.localizationsResponse = LocalizationResponse(translations: [
+        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
             "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: LocalizationMeta(language: Language(id: 1, name: "Danish",
-                                                        direction: "LRM", acceptLanguage: "da-DK",
-                                                        isDefault: true, isBestFit: true)))
+            ], meta: LocalizationMeta(language: mockDanishLanguage))
         do {
             try manager.clearLocalizations(includingPersisted: false)
-            if let translations = try manager.translations() as? Localization {
+            if let translations = try manager.localization() as? Localization {
                 XCTAssertEqual(translations.defaultSection.successKey, "Success")
                 XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
             } else {
@@ -355,7 +361,7 @@ class SharedLocalizationManagerTests: XCTestCase {
 
     func testFallbackToDefaultLocaleForLocalizations() {
         do {
-            let tr = try manager.localization() as? Localizations
+            let tr = try manager.localization() as? Localization
             XCTAssertEqual(tr?.otherSection.otherKey, "FallbackValue")
         } catch {
             XCTFail(error.localizedDescription)
@@ -435,7 +441,7 @@ class SharedLocalizationManagerTests: XCTestCase {
 
     // MARK: - Accept -
 
-    func testAcceptLanguage() {
+    func testAcceptDefaultLanguage() {
         // Test simple language
         repositoryMock.preferredLanguages = ["en"]
         XCTAssertEqual(manager.acceptLanguageProvider.createHeaderString(languageOverride: nil), "en;q=1.0")
@@ -472,9 +478,7 @@ class SharedLocalizationManagerTests: XCTestCase {
         manager.lastAcceptHeader = nil
         XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
 
-        manager.languageOverride = Language(id: 1, name: "Japanese",
-                                            direction: "LRM", acceptLanguage: "ja-JP",
-                                            isDefault: true, isBestFit: true)
+        manager.languageOverride = mockJapaneseLanguage
 
         guard let acceptHeader = manager.lastAcceptHeader else {
             XCTFail("accept header should be present at this point")
@@ -488,9 +492,7 @@ class SharedLocalizationManagerTests: XCTestCase {
         manager.lastAcceptHeader = nil
         XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
 
-        manager.languageOverride = Language(id: 1, name: "Japanese",
-                                            direction: "LRM", acceptLanguage: "ja-JP",
-                                            isDefault: true, isBestFit: true)
+        manager.languageOverride = mockJapaneseLanguage
         guard let acceptHeader = manager.lastAcceptHeader else {
             XCTFail("accept header should be present at this point")
             return
