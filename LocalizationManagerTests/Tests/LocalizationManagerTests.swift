@@ -7,16 +7,16 @@
 
 import XCTest
 
-#if IOSTESTS
+#if os(iOS)
 @testable import LocalizationManager
-#elseif TVOSTESTS
+#elseif os(tvOS)
 @testable import LocalizationManager_tvOS
-#elseif MACOSTESTS
+#elseif os(macOS)
 @testable import LocalizationManager_macOS
 #endif
 
 //swiftlint:disable file_length
-class SharedLocalizationManagerTests: XCTestCase {
+class LocalizationManagerTests: XCTestCase {
     typealias LanguageType = DefaultLanguage
     typealias LocalizationConfigType = LocalizationConfig
 
