@@ -7,11 +7,11 @@
 //
 
 import Foundation
-#if IOSTESTS
+#if os(iOS)
 @testable import LocalizationManager
-#elseif TVOSTESTS
+#elseif os(tvOS)
 @testable import LocalizationManager_tvOS
-#elseif MACOSTESTS
+#elseif os(macOS)
 @testable import LocalizationManager_macOS
 #endif
 
