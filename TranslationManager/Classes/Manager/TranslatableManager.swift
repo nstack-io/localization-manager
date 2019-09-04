@@ -359,7 +359,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     public func updateTranslations(_ completion: ((_ error: Error?) -> Void)? = nil) {
 
         //check if we've got an override, if not, use default accept language
-        let languageAcceptHeader = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
+        let languageAcceptHeader = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride?.locale)
         repository.getLocalizationConfig(acceptLanguage: languageAcceptHeader,
                                          lastUpdated: lastUpdatedDate) { (response: Result<[C]>) in
             switch response {
@@ -429,7 +429,7 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
         group.enter()
 
         //check if we've got an override, if not, use default accept language
-        let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
+        let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride?.locale)
         repository.getTranslations(localization: localization,
                                    acceptLanguage: acceptLanguage) { (result: Result<TranslationResponse<L>>) in
             defer {
