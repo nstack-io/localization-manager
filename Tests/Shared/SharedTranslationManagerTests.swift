@@ -16,6 +16,7 @@ import XCTest
 #endif
 
 //swiftlint:disable file_length
+//swiftlint:disable type_body_length
 class SharedTranslationManagerTests: XCTestCase {
     typealias LanguageType = Language
     typealias LocalizationConfigType = LocalizationConfig
@@ -567,5 +568,50 @@ class SharedTranslationManagerTests: XCTestCase {
         manager.lastAcceptHeader = nil
         XCTAssertEqual(manager.updateMode, UpdateMode.automatic)
         XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
+    }
+
+    func testEncodingAndDecodingPersisted() {
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.translationsResponse = TranslationResponse(translations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: TranslationMeta(language: Language(id: 1, name: "Danish",
+                                                        direction: "LRM", acceptLanguage: "da-DK",
+                                                        isDefault: true, isBestFit: true)))
+        do {
+            try manager.deletePersistedTranslations()
+        } catch {
+            XCTFail()
+        }
+        let expectation = self.expectation(description: "update")
+        manager.updateTranslations { (error) in
+            if error != nil {
+                XCTFail()
+            } else {
+                //current language should be danish
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+        do {
+            guard let persisted = try self.manager.persistedTranslations(localeId: "en-GB") else {
+                XCTFail()
+                return
+            }
+            XCTAssertFalse(persisted.translations.isEmpty)
+        } catch {
+            XCTFail()
+        }
+    }
+
+    func testDecodingFallbackJSON() {
+        do {
+            let fallback = try self.manager.fallbackTranslations(localeId: "en-GB")
+            XCTAssertFalse(fallback.translations.isEmpty)
+        } catch {
+            XCTFail()
+        }
     }
 }
