@@ -17,7 +17,6 @@ public protocol TranslationRepository {
     func getTranslations<L>(localization: LocalizationModel,
                             acceptLanguage: String,
                             completion: @escaping (Result<TranslationResponse<L>>) -> Void) where L: LanguageModel
-    func getAvailableLanguages<L: LanguageModel>(completion:  @escaping (Result<[L]>) -> Void)
 }
 
 public protocol LocalizationContextRepository {
