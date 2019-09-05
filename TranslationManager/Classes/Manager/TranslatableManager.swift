@@ -24,16 +24,13 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     public var updateMode: UpdateMode
 
     /// The decoder used to decode on-the-fly downloaded translations into models.
-    /// By default uses a `.convertFromSnakeCase` for the `keyDecodingStrategy` property,
-    /// which you can change if your API works differently.
     public let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         return decoder
     }()
 
     /// The encoder used to encode on-the-fly downloaded translations into a file that can be loaded
-    /// on future starts. By default uses a `.convertToSnakeCase` for the `keyEncodingStrategy` property,
-    /// which you can change if your API works differently.
+    /// on future starts.
     public let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
         return encoder
@@ -96,7 +93,14 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
     internal var translatableObjectDictonary: [String: LocalizableModel] = [:]
 
     /// In memory cache of langauge objects
-    internal var availableLanguages: [L] = []
+    internal var availableLanguages: [L] {
+        get {
+            return userDefaults.codable(forKey: Constants.Keys.availableLanguages) ?? []
+        }
+        set {
+            userDefaults.setCodable(newValue, forKey: Constants.Keys.availableLanguages)
+        }
+    }
 
     /// The previous date the localizations were updated
     internal var lastUpdatedDate: Date? {
@@ -499,6 +503,11 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
         repository.getAvailableLanguages { (result: Result<[L]>) in
           switch result {
           case .success(let languages):
+            //if we dont have any, the call failed, we return what we know
+            if languages.isEmpty {
+                completion(self.availableLanguages)
+                return
+            }
             self.updateAvailableLanguages(languages: languages)
 
             //we can return self.available languages here as they will have been updated by the previous function if all were available
