@@ -88,7 +88,14 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     internal var localizationObjectDictonary: [String: LocalizableModel] = [:]
 
     /// In memory cache of langauge objects
-    internal var availableLanguages: [Language] = []
+    internal var availableLanguages: [Language] {
+        get {
+            return userDefaults.codable(forKey: Constants.Keys.availableLanguages) ?? []
+        }
+        set {
+            userDefaults.setCodable(newValue, forKey: Constants.Keys.availableLanguages)
+        }
+    }
 
     /// The previous date the localizations were updated
     internal var lastUpdatedDate: Date? {
@@ -351,7 +358,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     public func updateLocalizations(_ completion: ((_ error: Error?) -> Void)? = nil) {
 
         //check if we've got an override, if not, use default accept language
-        let languageAcceptHeader = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
+        let languageAcceptHeader = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride?.locale)
         repository.getLocalizationDescriptors(
             acceptLanguage: languageAcceptHeader,
             lastUpdated: lastUpdatedDate
@@ -434,7 +441,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         group.enter()
 
         //check if we've got an override, if not, use default accept language
-        let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
+        let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride?.locale)
         repository.getLocalization(descriptor: descriptor,
                                    acceptLanguage: acceptLanguage) { (result: Result<LocalizationResponse<Language>>) in
             defer {
@@ -506,6 +513,11 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         repository.getAvailableLanguages { (result: Result<[Language]>) in
           switch result {
           case .success(let languages):
+            //if we dont have any, the call failed, we return what we know
+            if languages.isEmpty {
+                completion(self.availableLanguages)
+                return
+            }
             self.updateAvailableLanguages(languages: languages)
 
             //we can return self.available languages here as they will have been updated by the previous function if all were available
@@ -564,8 +576,14 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         if let to = localizationObjectDictonary[locale] as? T {
             return to
         } else {
-            //no localizationObjectDictonaries decodable to defined LocalizbleModel type
-            throw LocalizationError.noLocalizationsFound
+            //we cant find any locales found, fdefault to first available if possible
+            let localizationObjectArray = Array(localizationObjectDictonary.values)
+            if let to = localizationObjectArray.first as? T {
+                return to
+            } else {
+                //no locales known, no localizationObjectDictonaries decodable to defined LocalizbleModel type
+                throw LocalizationError.noLocaleFound
+            }
         }
     }
 
@@ -721,7 +739,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         // Iterate through bundle until we find the localizations file
         for bundle: Bundle in [Bundle(for: localizableModel.self)] + contextRepository.getLocalizationBundles() {
             // Check if bundle contains localizations file, otheriwse continue with next bundle
-            guard let filePath = bundle.path(forResource: "Localizations_\(localeId)", ofType: "json") else {
+            guard let filePath = bundle.path(forResource: "Localization_\(localeId)", ofType: "json") else {
                 continue
             }
 

@@ -22,9 +22,9 @@ public protocol AcceptLanguageProviderType: class {
     ///
     /// "da;q=1.0,en-gb;q=0.8,en;q=0.7"
     ///
-    /// - Parameter languageOverride: Optionally provide a language override.
+    /// - Parameter languageOverride: Optionally provide a locale override.
     /// - Returns: An acceptLanguage string that can be used as header value.
-    func createHeaderString(languageOverride: LanguageModel?) -> String
+    func createHeaderString(languageOverride: Locale?) -> String
 }
 
 /// Provider used to generate the accept language header string for network requests.
@@ -41,13 +41,13 @@ public final class AcceptLanguageProvider: AcceptLanguageProviderType {
         self.repository = repository
     }
 
-    public func createHeaderString(languageOverride: LanguageModel? = nil) -> String {
+    public func createHeaderString(languageOverride: Locale? = nil) -> String {
         var components: [String] = []
         var quality = 1.0
 
         // If we have language override, then append custom language code
         if let override = languageOverride {
-            components.append(override.locale.identifier + ";q=\(quality)")
+            components.append(override.identifier + ";q=\(quality)")
             quality -= 0.1
         }
 

@@ -16,6 +16,7 @@ import XCTest
 #endif
 
 //swiftlint:disable file_length
+//swiftlint:disable type_body_length
 class LocalizationManagerTests: XCTestCase {
     typealias LanguageType = DefaultLanguage
     typealias LocalizationConfigType = LocalizationConfig
@@ -162,30 +163,103 @@ class LocalizationManagerTests: XCTestCase {
     }
 
     func testUpdateLocalizationsFail() {
-        let expect = expectation(description: "")
         let config = mockLocalizationConfigWithUpdate
         let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
-        repositoryMock.availableLocalizations = localizations
+        repositoryMock.availableLocalizations = nil
         repositoryMock.localizationsResponse = nil
+        let expectation = self.expectation(description: "update")
         manager.updateLocalizations { (error) in
-            XCTAssertNotNil(error)
-            expect.fulfill()
+            if error != nil {
+                expectation.fulfill()
+            } else {
+                XCTFail()
+            }
         }
-        waitForExpectations(timeout: 1.0) { (_) in
-            XCTFail()
-        }
+        waitForExpectations(timeout: 5.0, handler: nil)
     }
 
     func testUpdateCurrentLanguageWithBestFit() {
-        let config = mockLocalizationConfigWithUpdate //mock Danish config
+        let lang = LanguageType(id: 0, name: "Danish",
+                                    direction: "lrm",
+                                    locale: Locale(identifier: "da-DK"),
+                                    isDefault: false,
+                                    isBestFit: true)
+        let config = LocalizationConfig(lastUpdatedAt: Date(),
+                                        localeIdentifier: "da-DK",
+                                        shouldUpdate: true,
+                                        url: "",
+                                        language: lang)
         let localizations: [LocalizationConfig] = [config]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
-            ], meta: LocalizationMeta(language: mockDanishLanguage))
-        manager.updateLocalizations()
-       // XCTAssertEqual(manager.bestFitLanguage?.acceptLanguage, "da-DK")
+            ], meta: LocalizationMeta(language: lang))
+
+        // Create an expectation
+        let expectation = self.expectation(description: "update")
+        manager.updateLocalizations { (error) in
+            if error != nil {
+                XCTFail()
+            } else {
+                expectation.fulfill()
+            }
+        }
+
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(self.manager.bestFitLanguage?.locale, Locale(identifier: "da-DK"))
+
+    }
+
+    func testDoNotUpdateCurrentLanguageWithBestFit() {
+        let lang = LanguageType(id: 0, name: "Danish",
+                            direction: "lrm",
+                            locale: Locale(identifier: "da-DK"),
+                            isDefault: false,
+                            isBestFit: true)
+        let config = LocalizationConfig(lastUpdatedAt: Date(),
+                                        localeIdentifier: "da-DK",
+                                        shouldUpdate: true,
+                                        url: "",
+                                        language: lang)
+        let localizations: [LocalizationConfig] = [config]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
+            "default": ["successKey": "SuccessUpdated"],
+            "otherSection": ["anotherKey": "HeresAValue"]
+            ], meta: LocalizationMeta(language: lang))
+        // Create an expectation
+        let expectation = self.expectation(description: "update")
+        manager.updateLocalizations { (error) in
+            if error != nil {
+                XCTFail()
+            } else {
+                //current language should be danish
+                expectation.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(self.manager.bestFitLanguage?.locale, Locale(identifier: "da-DK"))
+
+        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url: "", language: mockDanishLanguage)]
+        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
+            "default": ["successKey": "SuccessUpdated"],
+            "otherSection": ["anotherKey": "HeresAValue"]
+            ], meta: LocalizationMeta(language: LanguageType(id: 1, name: "English",
+                                                             direction: "LRM", locale: Locale(identifier: "en-GB"),
+                                                        isDefault: false, isBestFit: false)))
+
+        let expectationTwo = self.expectation(description: "dontUpdate")
+        manager.updateLocalizations { (error) in
+            if error != nil {
+                XCTFail()
+            } else {
+                //current language should still be Danish as English is not 'best fit'
+                expectationTwo.fulfill()
+            }
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(self.manager.bestFitLanguage?.locale, Locale(identifier: "da-DK"))
     }
 
     // MARK: - Test Clear
@@ -263,7 +337,7 @@ class LocalizationManagerTests: XCTestCase {
         manager.updateLocalizations()
         do {
             if let translations = try manager.localization() as? Localization {
-                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+                XCTAssertEqual(translations.defaultSection.successKey, "DanishSuccessUpdated")
             } else {
                 XCTFail("fail")
             }
@@ -273,18 +347,11 @@ class LocalizationManagerTests: XCTestCase {
     }
 
     func testFullTranslationsResponseFallbackJSON() {
-        let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
-        repositoryMock.availableLocalizations = localizations
-        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
-            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
-            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: LocalizationMeta(language: mockDanishLanguage))
-        //manager.updateTranslations()
+        manager.defaultLanguage = mockEnglishLanguage
         do {
             try manager.clearLocalizations(includingPersisted: true)
             if let translations = try manager.localization() as? Localization {
-                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
+                XCTAssertEqual(translations.defaultSection.successKey, "Success")
             } else {
                 XCTFail()
             }
@@ -293,24 +360,16 @@ class LocalizationManagerTests: XCTestCase {
         }
     }
 
-    func testFullTranslationsResponseFallback() {
-        let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
-        repositoryMock.availableLocalizations = localizations
-        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
-            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
-            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
-            ], meta: LocalizationMeta(language: mockDanishLanguage))
+    func testFullTranslationsResponsePersistedFallback() {
         do {
             try manager.clearLocalizations(includingPersisted: false)
             if let translations = try manager.localization() as? Localization {
                 XCTAssertEqual(translations.defaultSection.successKey, "Success")
-                XCTAssertEqual(translations.defaultSection.testURL, "www.test.com")
             } else {
-                XCTFail()
+                XCTFail("fail")
             }
         } catch {
-            XCTFail()
+            XCTFail("fail")
         }
     }
 
@@ -332,30 +391,32 @@ class LocalizationManagerTests: XCTestCase {
     // MARK: - Fallback
 
     func testFallbackToJsonInNonMainBundle() throws {
-
-        try manager.clearLocalizations(includingPersisted: true)
+        manager.defaultLanguage = mockEnglishLanguage
         repositoryMock.customBundles = []
-
         do {
-            guard let str = try manager.localization(for: "other.otherKey") else {
-                XCTFail("String doesnt exist")
-                return
+            try manager.clearLocalizations(includingPersisted: true)
+            if let translations = try manager.localization() as? Localization {
+                XCTAssertEqual(translations.defaultSection.successKey, "Success")
+            } else {
+                XCTFail()
             }
-            XCTAssertEqual(str, "FallbackValue")
         } catch {
-            XCTFail(error.localizedDescription)
+            XCTFail()
         }
     }
 
     func testFallbackToDefaultLocale() {
+        manager.defaultLanguage = mockEnglishLanguage
+        manager.bestFitLanguage = nil
         do {
-            guard let str = try manager.localization(for: "other.otherKey") else {
-                XCTFail("String doesnt exist")
-                return
+            try manager.clearLocalizations(includingPersisted: true)
+            if let translations = try manager.localization() as? Localization {
+                XCTAssertEqual(translations.defaultSection.successKey, "Success")
+            } else {
+                XCTFail()
             }
-            XCTAssertEqual(str, "FallbackValue")
         } catch {
-            XCTFail(error.localizedDescription)
+            XCTFail()
         }
     }
 
@@ -385,28 +446,70 @@ class LocalizationManagerTests: XCTestCase {
     }
 
     func testFallbackToFirstLocaleAvailableIfWeHaveNotSetFallbackLocale() {
+        let expectation = self.expectation(description: "update")
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: LocalizationMeta(language: mockDanishLanguage))
+
+        manager.updateLocalizations { (_) in
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+
         manager.defaultLanguage = nil
+        manager.bestFitLanguage = nil
         XCTAssertNil(manager.bestFitLanguage)
         do {
-            let str = try manager.localization(for: "other.otherKey")
-            XCTAssertNotNil(str)
+            XCTAssertFalse(manager.localizationObjectDictonary.isEmpty)
+            if let translations = try manager.localization() as? Localization {
+                XCTAssertEqual(translations.defaultSection.successKey, "DanishSuccessUpdated")
+            } else {
+                XCTFail()
+            }
+
         } catch {
             XCTFail(error.localizedDescription)
         }
     }
 
+    //NOTE: This test fails because it throws an exception when looking for a falbcak json of an invalid locale
+    //I believe this hsould be the expected behaviour, as all supported languages should have a fallback JSON available
     func testFallbackLocalizationsInvalidLocale() {
+
+        //setup of danish localization
+        let expectation = self.expectation(description: "update")
+        let config = mockLocalizationConfigWithUpdate
+        let localizations: [LocalizationConfig] = [config]
+        repositoryMock.availableLocalizations = localizations
+        repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
+            "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
+            "otherSection": ["anotherKey": "HeresAValue", "anotherKey2": "HeresAValue2"]
+            ], meta: LocalizationMeta(language: mockDanishLanguage))
+
+        manager.updateLocalizations { (_) in
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+
+        manager.defaultLanguage = nil
+        manager.bestFitLanguage = nil
+        XCTAssertNil(manager.bestFitLanguage)
+
         let locale = Locale(identifier: "ja-JP")
         XCTAssertNotNil(locale)
         manager.fallbackLocale = locale
         XCTAssertNil(manager.bestFitLanguage)
 
         do {
-            guard let str = try manager.localization(for: "other.otherKey") else {
-                XCTFail("String doesnt exist")
-                return
+            if let translations = try manager.localization() as? Localization {
+                XCTAssertEqual(translations.defaultSection.successKey, "DanishSuccessUpdated")
+            } else {
+                XCTFail()
             }
-            XCTAssertEqual(str, "FallbackValue") //sets to default language as fallback is not found
         } catch {
             XCTFail("Failed to get localization for key")
         }
@@ -424,6 +527,8 @@ class LocalizationManagerTests: XCTestCase {
         }
     }
 
+    //NOTE: This test fails because it throws an exception when looking for a falbcak json of an invalid locale
+    //I believe this hsould be the expected behaviour, as all supported languages should have a fallback JSON available
     func testFallbackLocalizationsInvalidJSON() {
         let locale = Locale(identifier: "fr-FR")
         XCTAssertNotNil(locale)
@@ -501,5 +606,14 @@ class LocalizationManagerTests: XCTestCase {
 
         manager.lastAcceptHeader = nil
         XCTAssertNil(manager.lastAcceptHeader, "Last accept header should be nil at start.")
+    }
+
+    func testDecodingFallbackJSON() {
+        do {
+            let fallback = try self.manager.fallbackLocalization(localeId: "en-GB")
+            XCTAssertFalse(fallback.localization.isEmpty)
+        } catch {
+            XCTFail()
+        }
     }
 }
