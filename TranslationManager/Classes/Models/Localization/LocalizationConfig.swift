@@ -16,6 +16,13 @@ public struct LocalizationConfig: LocalizationModel {
     public var localeIdentifier: String
     public var url: String
 
+    enum CodingKeys: String, CodingKey {
+        case language, url
+        case lastUpdatedAt = "last_updated_at"
+        case shouldUpdate = "should_update"
+        case localeIdentifier = "locale_identifier"
+    }
+
     public init(lastUpdatedAt: Date = Date(),
                 localeIdentifier: String,
                 shouldUpdate: Bool = false,
