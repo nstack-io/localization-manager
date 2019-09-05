@@ -22,7 +22,9 @@ public struct Language: LanguageModel {
     }
 
     enum CodingKeys: String, CodingKey {
-        case id, name, direction, isDefault, isBestFit
+        case id, name, direction
+        case isDefault = "is_default"
+        case isBestFit = "is_best_fit"
         case acceptLanguage = "locale"
     }
 
