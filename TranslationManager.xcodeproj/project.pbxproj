@@ -18,7 +18,7 @@
 		23A4296E22BA37C800D09EA1 /* LocalizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296D22BA37C800D09EA1 /* LocalizationModel.swift */; };
 		23A4297022BA44B000D09EA1 /* LocalizationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */; };
 		6D6EF3DE2C52A97D9E0493BF /* Pods_TranslationManagerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC5EAB06726B4ABE9FD4C97 /* Pods_TranslationManagerTests.framework */; };
-		8C508837230D1D0A00FB80CD /* TranslationManager_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C50882E230D1D0A00FB80CD /* TranslationManager_macOS.framework */; };
+		8C508837230D1D0A00FB80CD /* TranslationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C50882E230D1D0A00FB80CD /* TranslationManager.framework */; };
 		8C50883C230D1D0A00FB80CD /* TranslationManager_macOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50883B230D1D0A00FB80CD /* TranslationManager_macOSTests.swift */; };
 		8C50883E230D1D0A00FB80CD /* TranslationManager_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 8C508830230D1D0A00FB80CD /* TranslationManager_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8C508845230D1D3700FB80CD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69F02178968700A1B354 /* Constants.swift */; };
@@ -89,7 +89,7 @@
 		8CA9F255230BE20100CF8065 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF02179DB79002CB099 /* ApplicationStateObserver.swift */; };
 		8CA9F256230BE20100CF8065 /* ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF42179DE04002CB099 /* ApplicationState.swift */; };
 		8CA9F257230BE20800CF8065 /* TranslationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C061C1F4217889E400449A14 /* TranslationManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8CBF580B230BCA6C00C60FF7 /* TranslationManager_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBF5802230BCA6B00C60FF7 /* TranslationManager_tvOS.framework */; };
+		8CBF580B230BCA6C00C60FF7 /* TranslationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBF5802230BCA6B00C60FF7 /* TranslationManager.framework */; };
 		8CBF5810230BCA6C00C60FF7 /* TranslationManager_tvOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBF580F230BCA6C00C60FF7 /* TranslationManager_tvOSTests.swift */; };
 		8CBF5812230BCA6C00C60FF7 /* TranslationManager_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CBF5804230BCA6C00C60FF7 /* TranslationManager_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8CBF5819230BCA7B00C60FF7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69F02178968700A1B354 /* Constants.swift */; };
@@ -183,17 +183,17 @@
 		23A4296F22BA44B000D09EA1 /* LocalizationConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfig.swift; sourceTree = "<group>"; };
 		2EC5EAB06726B4ABE9FD4C97 /* Pods_TranslationManagerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TranslationManagerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56F0D717D5949FB7DFAD0E56 /* Pods-TranslationManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TranslationManagerTests.debug.xcconfig"; path = "Target Support Files/Pods-TranslationManagerTests/Pods-TranslationManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		8C50882E230D1D0A00FB80CD /* TranslationManager_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TranslationManager_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C50882E230D1D0A00FB80CD /* TranslationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TranslationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C508830230D1D0A00FB80CD /* TranslationManager_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslationManager_macOS.h; sourceTree = "<group>"; };
 		8C508831230D1D0A00FB80CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C508836230D1D0A00FB80CD /* TranslationManager-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TranslationManager-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C50883B230D1D0A00FB80CD /* TranslationManager_macOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManager_macOSTests.swift; sourceTree = "<group>"; };
 		8C50883D230D1D0A00FB80CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CA9F21C230BCF8200CF8065 /* SharedTranslationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTranslationManagerTests.swift; sourceTree = "<group>"; };
-		8CA9F236230BE19F00CF8065 /* TranslationManager_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TranslationManager_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CA9F236230BE19F00CF8065 /* TranslationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TranslationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA9F238230BE1A000CF8065 /* TranslationManager_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslationManager_watchOS.h; sourceTree = "<group>"; };
 		8CA9F239230BE1A000CF8065 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8CBF5802230BCA6B00C60FF7 /* TranslationManager_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TranslationManager_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CBF5802230BCA6B00C60FF7 /* TranslationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TranslationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CBF5804230BCA6C00C60FF7 /* TranslationManager_tvOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslationManager_tvOS.h; sourceTree = "<group>"; };
 		8CBF5805230BCA6C00C60FF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8CBF580A230BCA6C00C60FF7 /* TranslationManager-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TranslationManager-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,7 +246,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C508837230D1D0A00FB80CD /* TranslationManager_macOS.framework in Frameworks */,
+				8C508837230D1D0A00FB80CD /* TranslationManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +268,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CBF580B230BCA6C00C60FF7 /* TranslationManager_tvOS.framework in Frameworks */,
+				8CBF580B230BCA6C00C60FF7 /* TranslationManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -499,10 +499,10 @@
 			children = (
 				C061C1F1217889E400449A14 /* TranslationManager.framework */,
 				C061C1FA217889E400449A14 /* TranslationManagerTests.xctest */,
-				8CBF5802230BCA6B00C60FF7 /* TranslationManager_tvOS.framework */,
+				8CBF5802230BCA6B00C60FF7 /* TranslationManager.framework */,
 				8CBF580A230BCA6C00C60FF7 /* TranslationManager-tvOSTests.xctest */,
-				8CA9F236230BE19F00CF8065 /* TranslationManager_watchOS.framework */,
-				8C50882E230D1D0A00FB80CD /* TranslationManager_macOS.framework */,
+				8CA9F236230BE19F00CF8065 /* TranslationManager.framework */,
+				8C50882E230D1D0A00FB80CD /* TranslationManager.framework */,
 				8C508836230D1D0A00FB80CD /* TranslationManager-macOSTests.xctest */,
 			);
 			name = Products;
@@ -582,7 +582,7 @@
 			);
 			name = "TranslationManager-macOS";
 			productName = "TranslationManager-macOS";
-			productReference = 8C50882E230D1D0A00FB80CD /* TranslationManager_macOS.framework */;
+			productReference = 8C50882E230D1D0A00FB80CD /* TranslationManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8C508835230D1D0A00FB80CD /* TranslationManager-macOSTests */ = {
@@ -618,7 +618,7 @@
 			);
 			name = "TranslationManager-watchOS";
 			productName = "TranslationManager-watchOS";
-			productReference = 8CA9F236230BE19F00CF8065 /* TranslationManager_watchOS.framework */;
+			productReference = 8CA9F236230BE19F00CF8065 /* TranslationManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8CBF5801230BCA6B00C60FF7 /* TranslationManager-tvOS */ = {
@@ -636,7 +636,7 @@
 			);
 			name = "TranslationManager-tvOS";
 			productName = "TranslationManager-tvOS";
-			productReference = 8CBF5802230BCA6B00C60FF7 /* TranslationManager_tvOS.framework */;
+			productReference = 8CBF5802230BCA6B00C60FF7 /* TranslationManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		8CBF5809230BCA6C00C60FF7 /* TranslationManager-tvOSTests */ = {
@@ -1084,7 +1084,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.TranslationManager-macOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1111,7 +1111,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.TranslationManager-macOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1179,7 +1179,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.TranslationManager-watchOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1206,7 +1206,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.TranslationManager-watchOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1232,7 +1232,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.TranslationManager-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1258,7 +1258,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.TranslationManager-tvOS";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1450,7 +1450,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.TranslationManager;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1477,7 +1477,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.TranslationManager;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = TranslationManager;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
