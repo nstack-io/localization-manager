@@ -13,10 +13,10 @@ import Foundation
 class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
 
     var localizationsResponse: LocalizationResponse<DefaultLanguage>?
-    var availableLocalizations: [LocalizationConfig]?
+    var availableLocalizations: [DefaultLocalizationDescriptor]?
     var availableLanguages: [L]?
     var currentLanguage: DefaultLanguage?
-    var currentLocalization: LocalizationConfig?
+    var currentLocalization: DefaultLocalizationDescriptor?
     var preferredLanguages = ["en"]
     var customBundles: [Bundle]?
 

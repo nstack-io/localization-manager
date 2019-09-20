@@ -13,7 +13,7 @@ import XCTest
 //swiftlint:disable type_body_length
 class LocalizationManagerTests: XCTestCase {
     typealias LanguageType = DefaultLanguage
-    typealias LocalizationConfigType = LocalizationConfig
+    typealias LocalizationConfigType = DefaultLocalizationDescriptor
 
     var repositoryMock: LocalizationsRepositoryMock<LanguageType>!
     var fileManagerMock: FileManagerMock!
@@ -44,16 +44,16 @@ class LocalizationManagerTests: XCTestCase {
             ], meta: LocalizationMeta(language: mockEnglishLanguage))
     }
 
-    var mockLocalizationConfigWithUpdate: LocalizationConfig {
-        return LocalizationConfig(lastUpdatedAt: Date(),
+    var mockLocalizationConfigWithUpdate: DefaultLocalizationDescriptor {
+        return DefaultLocalizationDescriptor(lastUpdatedAt: Date(),
                                   localeIdentifier: "da-DK",
                                   shouldUpdate: true,
                                   url: "",
                                   language: mockDanishLanguage)
     }
 
-    var mockLocalizationConfigWithoutUpdate: LocalizationConfig {
-        return LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "fr-FR",
+    var mockLocalizationConfigWithoutUpdate: DefaultLocalizationDescriptor {
+        return DefaultLocalizationDescriptor(lastUpdatedAt: Date(), localeIdentifier: "fr-FR",
                                   shouldUpdate: false, url: "", language: mockDanishLanguage)
     }
 
@@ -96,7 +96,7 @@ class LocalizationManagerTests: XCTestCase {
     // MARK: - Update -
 
     func testLoadLocalizations() {
-        let localizations: [LocalizationConfig] = [mockLocalizationConfigWithUpdate,
+        let localizations: [DefaultLocalizationDescriptor] = [mockLocalizationConfigWithUpdate,
                                                    mockLocalizationConfigWithUpdate,
                                                    mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
@@ -105,7 +105,7 @@ class LocalizationManagerTests: XCTestCase {
         let fileURL = manager.localizationConfigFileURL()
         do {
             let data = try Data(contentsOf: fileURL!)
-            let arrayOfConfigs = try manager.decoder.decode([LocalizationConfig].self, from: data)
+            let arrayOfConfigs = try manager.decoder.decode([DefaultLocalizationDescriptor].self, from: data)
             XCTAssertEqual(arrayOfConfigs.count, 3)
         } catch {
             XCTFail("Failed to decode localization configs")
@@ -125,7 +125,7 @@ class LocalizationManagerTests: XCTestCase {
     func testLastUpdatedDateIsSet() {
         let dateAtStartOfTest = Date()
         XCTAssertNil(manager.lastUpdatedDate)
-        let localizations: [LocalizationConfig] = [mockLocalizationConfigWithUpdate,
+        let localizations: [DefaultLocalizationDescriptor] = [mockLocalizationConfigWithUpdate,
                                                    mockLocalizationConfigWithUpdate,
                                                    mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
@@ -136,7 +136,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testUpdateLocalizations() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = mockLocalizations
         manager.updateLocalizations()
@@ -159,7 +159,7 @@ class LocalizationManagerTests: XCTestCase {
     func testUpdateLocalizationsFail() {
         let expect = expectation(description: "")
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = nil
         manager.updateLocalizations { (error) in
@@ -177,12 +177,12 @@ class LocalizationManagerTests: XCTestCase {
                                     locale: Locale(identifier: "da-DK"),
                                     isDefault: false,
                                     isBestFit: true)
-        let config = LocalizationConfig(lastUpdatedAt: Date(),
+        let config = DefaultLocalizationDescriptor(lastUpdatedAt: Date(),
                                         localeIdentifier: "da-DK",
                                         shouldUpdate: true,
                                         url: "",
                                         language: lang)
-        let localizations: [LocalizationConfig] = [config]
+        let localizations: [DefaultLocalizationDescriptor] = [config]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "SuccessUpdated"],
@@ -204,12 +204,12 @@ class LocalizationManagerTests: XCTestCase {
     }
 
     func testDoNotUpdateCurrentLanguageWithBestFit() {
-        let config = LocalizationConfig(lastUpdatedAt: Date(),
+        let config = DefaultLocalizationDescriptor(lastUpdatedAt: Date(),
                                         localeIdentifier: "da-DK",
                                         shouldUpdate: true,
                                         url: "",
                                         language: mockDanishLanguage)
-        let localizations: [LocalizationConfig] = [config]
+        let localizations: [DefaultLocalizationDescriptor] = [config]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "SuccessUpdated"],
@@ -228,7 +228,7 @@ class LocalizationManagerTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertEqual(self.manager.bestFitLanguage?.locale.identifier, "da-DK")
 
-        repositoryMock.availableLocalizations = [LocalizationConfig(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url: "", language: mockDanishLanguage)]
+        repositoryMock.availableLocalizations = [DefaultLocalizationDescriptor(lastUpdatedAt: Date(), localeIdentifier: "en-GB", shouldUpdate: true, url: "", language: mockDanishLanguage)]
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "SuccessUpdated"],
             "otherSection": ["anotherKey": "HeresAValue"]
@@ -252,7 +252,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testClearPersistedLocalizations() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = mockLocalizations
         manager.updateLocalizations()
@@ -271,7 +271,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testClearLocalizations() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = mockLocalizations
         manager.updateLocalizations()
@@ -293,7 +293,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testLocalizationForKeySuccessWithCurrentDefaultLanguage() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "Success", "successKey2": "SuccessUpdated2"],
@@ -314,7 +314,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testFullLocalizationsResponse() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
@@ -334,7 +334,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testFullLocalizationsResponseFallbackJSON() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
@@ -355,7 +355,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testFullLocalizationsResponseFallback() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],
@@ -376,7 +376,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testLocalizationForKeyFailure() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = mockLocalizations
         manager.updateLocalizations()
@@ -565,7 +565,7 @@ class LocalizationManagerTests: XCTestCase {
 
     func testEncodingAndDecodingPersisted() {
         let config = mockLocalizationConfigWithUpdate
-        let localizations: [LocalizationConfig] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
+        let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithoutUpdate, mockLocalizationConfigWithoutUpdate]
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = LocalizationResponse(localizations: [
             "default": ["successKey": "DanishSuccessUpdated", "successKey2": "DanishSuccessUpdated2"],

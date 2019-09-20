@@ -10,24 +10,26 @@ import Foundation
 
 public typealias Result<T> = Swift.Result<T, Error>
 
+/// {sourcery: AutoMockable: D=DefaultLocalizationDescriptor, L=DefaultLanguage}
 public protocol LocalizationRepository {
-    func getLocalizationDescriptors<D>(
+    func getLocalizationDescriptors<D: LocalizationDescriptor>(
         acceptLanguage: String,
         lastUpdated: Date?,
         completion: @escaping (Result<[D]>) -> Void
-        ) where D: LocalizationDescriptor
+        )
 
-    func getLocalization<L, D>(
+    func getLocalization<L: LanguageModel, D: LocalizationDescriptor>(
         descriptor: D,
         acceptLanguage: String,
         completion: @escaping (Result<LocalizationResponse<L>>) -> Void
-        ) where L: LanguageModel, D: LocalizationDescriptor
+        )
 
     func getAvailableLanguages<L: LanguageModel>(
         completion:  @escaping (Result<[L]>) -> Void
     )
 }
 
+/// sourcery: AutoMockable
 public protocol LocalizationContextRepository {
     func fetchPreferredLanguages() -> [String]
     func getLocalizationBundles() -> [Bundle]

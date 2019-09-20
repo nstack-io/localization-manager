@@ -13,6 +13,7 @@ disabled_rules:
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Pods/
   - Carthage/
+  - "*.generated.swift"
 
 file_length:
   warning: 400
