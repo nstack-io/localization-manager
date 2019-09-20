@@ -1,15 +1,14 @@
 //
-//  Localization.swift
+//  DefaultLocalizationDescriptor.swift
 //  LocalizationManager
 //
-//  Created by Andrew Lloyd on 19/06/2019.
+//  Created by Dominik Hádl on 20/09/2019.
 //  Copyright © 2019 Nodes. All rights reserved.
 //
 
 import Foundation
-import LocalizationManager
 
-public struct LocalizationConfig: LocalizationDescriptor {
+public struct DefaultLocalizationDescriptor: LocalizationDescriptor {
 
     public var language: DefaultLanguage
     public var lastUpdatedAt = Date()

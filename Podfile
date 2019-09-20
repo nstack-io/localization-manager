@@ -5,6 +5,7 @@ def test_pods
   pod 'Quick'
   pod 'Nimble'
   pod 'SwiftLint'
+  pod 'Sourcery'
 end
 
 # Pods for LocalizationManagerTests iOS
