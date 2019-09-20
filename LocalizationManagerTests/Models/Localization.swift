@@ -7,13 +7,7 @@
 //
 
 import Foundation
-#if os(iOS)
 @testable import LocalizationManager
-#elseif os(tvOS)
-@testable import LocalizationManager_tvOS
-#elseif os(macOS)
-@testable import LocalizationManager_macOS
-#endif
 
 public final class Localization: LocalizableModel {
     public var otherSection = OtherSection()

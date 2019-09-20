@@ -85,10 +85,10 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     }()
 
     /// In memory cache of localizations objects mapped with their locale id.
-    internal var translatableObjectDictonary: [String: LocalizableModel] = [:]
+    internal var localizableObjectDictonary: [String: LocalizableModel] = [:]
 
     /// In memory cache of langauge objects
-    internal var availableLanguages: [L] {
+    internal var availableLanguages: [Language] {
         get {
             return userDefaults.codable(forKey: Constants.Keys.availableLanguages) ?? []
         }
@@ -250,12 +250,12 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         if let currentLangCode = bestFitLanguage?.locale.identifier {
             //we have a current language
             // Try to load if we don't have any localizations
-            if translatableObjectDictonary[currentLangCode] == nil {
+            if localizableObjectDictonary[currentLangCode] == nil {
                 do {
-                    try createTranslatableObject(currentLangCode)
+                    try createLocalizationObject(currentLangCode)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[currentLangCode] {
+            if let localizations = localizableObjectDictonary[currentLangCode] {
                 return localizations[section]?[key]
             }
         }
@@ -264,12 +264,12 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         if let override = languageOverride?.locale.identifier {
             //we have a current language
             // Try to load if we don't have any localizations
-            if translatableObjectDictonary[override] == nil {
+            if localizableObjectDictonary[override] == nil {
                 do {
-                    try createTranslatableObject(override)
+                    try createLocalizationObject(override)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[override] {
+            if let localizations = localizableObjectDictonary[override] {
                 return localizations[section]?[key]
             }
         }
@@ -277,26 +277,26 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         //no override, try to see if any preferred languages are available
         for lang in contextRepository.fetchPreferredLanguages() {
 
-            if translatableObjectDictonary[lang] == nil {
+            if localizableObjectDictonary[lang] == nil {
                 do {
-                    try createTranslatableObject(lang)
+                    try createLocalizationObject(lang)
                 } catch {
                     continue
                 }
             }
-            if let localizations = translatableObjectDictonary[lang] {
+            if let localizations = localizableObjectDictonary[lang] {
                 return localizations[section]?[key]
             }
         }
 
         //if not, try fallback locale
         if let fallback = fallbackLocale?.identifier {
-            if translatableObjectDictonary[fallback] == nil {
+            if localizableObjectDictonary[fallback] == nil {
                 do {
-                    try createTranslatableObject(fallback)
+                    try createLocalizationObject(fallback)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[fallback] {
+            if let localizations = localizableObjectDictonary[fallback] {
                 return localizations[section]?[key]
             }
         }
@@ -305,18 +305,18 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         if let defaultLanguage = defaultLanguage?.locale.identifier {
             //we have a current language
             // Try to load if we don't have any localizations
-            if translatableObjectDictonary[defaultLanguage] == nil {
+            if localizableObjectDictonary[defaultLanguage] == nil {
                 do {
-                    try createTranslatableObject(defaultLanguage)
+                    try createLocalizationObject(defaultLanguage)
                 } catch {} //continue
             }
-            if let localizations = translatableObjectDictonary[defaultLanguage] {
+            if let localizations = localizableObjectDictonary[defaultLanguage] {
                 return localizations[section]?[key]
             }
         }
 
         //if all above failed, just use first value in localizations
-        return translatableObjectDictonary.first?.value[section]?[key]
+        return localizableObjectDictonary.first?.value[section]?[key]
     }
 
     // MARK: Update & Fetch
@@ -445,9 +445,9 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         group.enter()
 
         //check if we've got an override, if not, use default accept language
-        let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride)
+        let acceptLanguage = acceptLanguageProvider.createHeaderString(languageOverride: languageOverride?.locale)
         repository.getLocalization(descriptor: descriptor,
-                                   acceptLanguage: acceptLanguage) { (result: Result<LocalizationResponse<L>>) in
+                                   acceptLanguage: acceptLanguage) { (result: Result<LocalizationResponse<Language>>) in
 
             defer {
                 group.leave()
@@ -538,8 +538,8 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     private func updateAvailableLanguages(languages: [Language]) {
         for lang in languages {
             //we dont have translations for a particular fetched langauge, update to fetch what we need
-            if !translatableObjectDictonary.keys.contains(lang.locale.identifier) {
-                self.updateTranslations()
+            if !localizableObjectDictonary.keys.contains(lang.locale.identifier) {
+                self.updateLocalizations()
                 return
             }
         }
@@ -561,7 +561,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
             ?? fallbackLocale?.identifier
             ?? defaultLanguage?.locale.identifier
         else {
-            let translatableObjectArray = Array(translatableObjectDictonary.values)
+            let translatableObjectArray = Array(localizableObjectDictonary.values)
             if let to = translatableObjectArray.first as? T {
                 return to
             } else {
@@ -570,15 +570,15 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
             }
         }
         // Check object in memory
-        if let cachedObject = translatableObjectDictonary[locale] as? T {
+        if let cachedObject = localizableObjectDictonary[locale] as? T {
             return cachedObject
         }
 
         // Load persisted or fallback localizations
-        try createTranslatableObject(locale)
+        try createLocalizationObject(locale)
 
         // Now we must have correct localizations, so return it
-        if let to = translatableObjectDictonary[locale] as? T {
+        if let to = localizableObjectDictonary[locale] as? T {
             return to
         } else {
             //no translatableObjectDictonaries decodable to defined LocalizbleModel type
@@ -588,7 +588,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
 
     private func getAvailablePreferredLanguageLocale() -> String? {
         for lang in contextRepository.fetchPreferredLanguages() {
-            for key in translatableObjectDictonary.keys {
+            for key in localizableObjectDictonary.keys {
                 if key.contains(lang) {
                     return key
                 }
@@ -603,7 +603,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     ///                                 file will be deleted.
     public func clearLocalizations(includingPersisted: Bool = false) throws {
         // In memory localizations cleared
-        translatableObjectDictonary.removeAll()
+        localizableObjectDictonary.removeAll()
 
         if includingPersisted {
             try deletePersistedLocalizations()
@@ -629,12 +629,12 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
 
         // Figure out and set localizations
         guard let parsed = try processAllLocalizations(localization, shouldUnwrap: shouldUnwrapLocalization)  else {
-            localizationObjectDictonary.removeValue(forKey: localeId)
+            localizableObjectDictonary.removeValue(forKey: localeId)
             return
         }
 
         let data = try JSONSerialization.data(withJSONObject: parsed, options: [])
-        translatableObjectDictonary[localeId] = try decoder.decode(localizableModel, from: data)
+        localizableObjectDictonary[localeId] = try decoder.decode(localizableModel, from: data)
     }
 
     // MARK: Dictionaries
@@ -692,7 +692,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         userDefaults.set(type.rawValue, forKey: Constants.Keys.persistedLocalizationType)
 
         // Reload the localizations
-        try createTranslatableObject(locale)
+        try createLocalizationObject(locale)
     }
 
     internal func deletePersistedLocalizations() throws {
