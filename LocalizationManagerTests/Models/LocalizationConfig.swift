@@ -7,14 +7,7 @@
 //
 
 import Foundation
-
-#if os(iOS)
 import LocalizationManager
-#elseif os(tvOS)
-import LocalizationManager_tvOS
-#elseif os(macOS)
-import LocalizationManager_macOS
-#endif
 
 public struct LocalizationConfig: LocalizationDescriptor {
 
