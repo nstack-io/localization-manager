@@ -556,6 +556,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8C50883F230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "LocalizationManager-macOS" */;
 			buildPhases = (
+				B4C2C93E23363EF900385B26 /* SwiftLint */,
 				8C508829230D1D0A00FB80CD /* Headers */,
 				8C50882A230D1D0A00FB80CD /* Sources */,
 				8C50882B230D1D0A00FB80CD /* Frameworks */,
@@ -592,6 +593,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8CA9F23B230BE1A000CF8065 /* Build configuration list for PBXNativeTarget "LocalizationManager-watchOS" */;
 			buildPhases = (
+				B4C2C94023363F0E00385B26 /* SwiftLint */,
 				8CA9F231230BE19F00CF8065 /* Headers */,
 				8CA9F232230BE19F00CF8065 /* Sources */,
 				8CA9F233230BE19F00CF8065 /* Frameworks */,
@@ -610,6 +612,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8CBF5817230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "LocalizationManager-tvOS" */;
 			buildPhases = (
+				B4C2C93F23363F0400385B26 /* SwitfLint */,
 				8CBF57FD230BCA6B00C60FF7 /* Headers */,
 				8CBF57FE230BCA6B00C60FF7 /* Sources */,
 				8CBF57FF230BCA6B00C60FF7 /* Frameworks */,
@@ -841,6 +844,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/Sourcery/bin/sourcery --sources \"${SRCROOT}/LocalizationManager\" --templates \"${SRCROOT}/LocalizationManagerTests/Mocks/Stencils\" --output \"${SRCROOT}/LocalizationManagerTests/Mocks\"\n";
+		};
+		B4C2C93E23363EF900385B26 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e ${SRCROOT}/Pods/SwiftLint/swiftlint ]; then\n${SRCROOT}/Pods/SwiftLint/swiftlint autocorrect --config \"${SRCROOT}/.swiftlint.yml\"\n${SRCROOT}/Pods/SwiftLint/swiftlint --config \"${SRCROOT}/.swiftlint.yml\"\nfi\n";
+		};
+		B4C2C93F23363F0400385B26 /* SwitfLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwitfLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e ${SRCROOT}/Pods/SwiftLint/swiftlint ]; then\n${SRCROOT}/Pods/SwiftLint/swiftlint autocorrect --config \"${SRCROOT}/.swiftlint.yml\"\n${SRCROOT}/Pods/SwiftLint/swiftlint --config \"${SRCROOT}/.swiftlint.yml\"\nfi\n";
+		};
+		B4C2C94023363F0E00385B26 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -e ${SRCROOT}/Pods/SwiftLint/swiftlint ]; then\n${SRCROOT}/Pods/SwiftLint/swiftlint autocorrect --config \"${SRCROOT}/.swiftlint.yml\"\n${SRCROOT}/Pods/SwiftLint/swiftlint --config \"${SRCROOT}/.swiftlint.yml\"\nfi\n";
 		};
 		C9424D908B947525507B2FA9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
