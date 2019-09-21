@@ -3,6 +3,9 @@ osx_image: xcode10.3
 xcode_workspace: LocalizationManager.xcworkspace # path to your xcodeproj folder
 xcode_scheme: LocalizationManager
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone X
+branches:
+  only:
+  - master
 before_install:
     - pod install
 after_success:
@@ -17,4 +20,4 @@ deploy:
   local-dir: jazzy_docs
   keep_history: true
   on:
-    all_branches: true
+    branch: master
