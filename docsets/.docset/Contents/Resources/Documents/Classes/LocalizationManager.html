@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LocalizationManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+
+    <a name="//apple_ref/swift/Class/LocalizationManager" class="dashAnchor"></a>
+
+    <a title="LocalizationManager Class Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+           Docs
+        </a>
+         (37% documented)
+      </p>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/nodes-ios/TranslationManager">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html"> Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      LocalizationManager Class Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Guides.html">Guides</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../integrationguide.html">IntegrationGuide</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/AcceptLanguageProvider.html">AcceptLanguageProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LocalizableModel.html">LocalizableModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LocalizableSection.html">LocalizableSection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/LocalizationManager.html">LocalizationManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/LocalizationError.html">LocalizationError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/PersistedLocalizationType.html">PersistedLocalizationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/UpdateMode.html">UpdateMode</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/KeyedDecodingContainer.html">KeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/KeyedEncodingContainerProtocol.html">KeyedEncodingContainerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/UnkeyedDecodingContainer.html">UnkeyedDecodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/UnkeyedEncodingContainer.html">UnkeyedEncodingContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/UserDefaults.html">UserDefaults</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/AcceptLanguageProviderType.html">AcceptLanguageProviderType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/LanguageModel.html">LanguageModel</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/LocalizationContextRepository.html">LocalizationContextRepository</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/LocalizationDescriptor.html">LocalizationDescriptor</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/LocalizationManagerDelegate.html">LocalizationManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Protocols/LocalizationRepository.html">LocalizationRepository</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/JSONCodingKeys.html">JSONCodingKeys</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LocalizationMeta.html">LocalizationMeta</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/LocalizationResponse.html">LocalizationResponse</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Structs/Platform.html">Platform</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Typealiases.html#/s:19LocalizationManager6Resulta">Result</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            <h1>LocalizationManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">LocalizationManager</span><span class="o">&lt;</span><span class="kt">Language</span><span class="p">,</span> <span class="kt">Descriptor</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Language</span> <span class="o">==</span> <span class="kt">Descriptor</span><span class="o">.</span><span class="kt">LanguageType</span><span class="p">,</span> <span class="kt">Descriptor</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/LocalizationDescriptor.html">LocalizationDescriptor</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>The LocalizationManager handles everything related to localizations.</p>
+
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties"></a>
+                <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                <a href="#/Properties">
+                  <h3 class="section-name">Properties</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC10updateModeAA06UpdateD0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/updateMode" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC10updateModeAA06UpdateD0Ovp">updateMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The update mode used to determine how localizations should update.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/UpdateMode.html">UpdateMode</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC7decoder10Foundation11JSONDecoderCvp"></a>
+                    <a name="//apple_ref/swift/Property/decoder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC7decoder10Foundation11JSONDecoderCvp">decoder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The decoder used to decode on-the-fly downloaded localizations into models.
+By default uses a <code>.convertFromSnakeCase</code> for the <code>keyDecodingStrategy</code> property,
+which you can change if your API works differently.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">decoder</span><span class="p">:</span> <span class="kt">JSONDecoder</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC7encoder10Foundation11JSONEncoderCvp"></a>
+                    <a name="//apple_ref/swift/Property/encoder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC7encoder10Foundation11JSONEncoderCvp">encoder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The encoder used to encode on-the-fly downloaded localizations into a file that can be loaded
+on future starts. By default uses a <code>.convertToSnakeCase</code> for the <code>keyEncodingStrategy</code> property,
+which you can change if your API works differently.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">encoder</span><span class="p">:</span> <span class="kt">JSONEncoder</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC15bestFitLanguagexSgvp"></a>
+                    <a name="//apple_ref/swift/Property/bestFitLanguage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC15bestFitLanguagexSgvp">bestFitLanguage</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>In memory cache of the current best fit language object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">bestFitLanguage</span><span class="p">:</span> <span class="kt">Language</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC15defaultLanguagexSgvp"></a>
+                    <a name="//apple_ref/swift/Property/defaultLanguage" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC15defaultLanguagexSgvp">defaultLanguage</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>In memory cache of the set default language object.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">internal(set)</span> <span class="k">var</span> <span class="nv">defaultLanguage</span><span class="p">:</span> <span class="kt">Language</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC8delegateAA0aB8Delegate_pSgvp"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC8delegateAA0aB8Delegate_pSgvp">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Internal handler closure for language change.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/LocalizationManagerDelegate.html">LocalizationManagerDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Private"></a>
+                <a name="//apple_ref/swift/Section/Private" class="dashAnchor"></a>
+                <a href="#/Private">
+                  <h3 class="section-name">Private</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC16languageOverridexSgvp"></a>
+                    <a name="//apple_ref/swift/Property/languageOverride" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC16languageOverridexSgvp">languageOverride</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This locale will be used instead of the phones&rsquo; language when it is not <code>nil</code>.
+Remember to call <code>updateLocalizations()</code> after changing the value, otherwise the
+effect will not be seen.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">languageOverride</span><span class="p">:</span> <span class="kt">Language</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Lifecycle"></a>
+                <a name="//apple_ref/swift/Section/Lifecycle" class="dashAnchor"></a>
+                <a href="#/Lifecycle">
+                  <h3 class="section-name">Lifecycle</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC10repository17contextRepository16localizableModel10updateMode04fileB012userDefaultsAByxq_GAA0aE0_p_AA0a7ContextE0_pAA011LocalizableG0CmAA06UpdateI0OSo06NSFileB0CSo06NSUserL0Ctcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(repository:contextRepository:localizableModel:updateMode:fileManager:userDefaults:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC10repository17contextRepository16localizableModel10updateMode04fileB012userDefaultsAByxq_GAA0aE0_p_AA0a7ContextE0_pAA011LocalizableG0CmAA06UpdateI0OSo06NSFileB0CSo06NSUserL0Ctcfc">init(repository:contextRepository:localizableModel:updateMode:fileManager:userDefaults:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiates and sets the repository from which localizations are fetched and update mode
+that determines how localizations should be updated.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">repository</span><span class="p">:</span> <span class="kt"><a href="../Protocols/LocalizationRepository.html">LocalizationRepository</a></span><span class="p">,</span>
+                     <span class="nv">contextRepository</span><span class="p">:</span> <span class="kt"><a href="../Protocols/LocalizationContextRepository.html">LocalizationContextRepository</a></span><span class="p">,</span>
+                     <span class="nv">localizableModel</span><span class="p">:</span> <span class="kt"><a href="../Classes/LocalizableModel.html">LocalizableModel</a></span><span class="o">.</span><span class="k">Type</span><span class="p">,</span>
+                     <span class="nv">updateMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/UpdateMode.html">UpdateMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">automatic</span><span class="p">,</span>
+                     <span class="nv">fileManager</span><span class="p">:</span> <span class="kt">FileManager</span> <span class="o">=</span> <span class="o">.</span><span class="k">default</span><span class="p">,</span>
+                     <span class="nv">userDefaults</span><span class="p">:</span> <span class="kt">UserDefaults</span> <span class="o">=</span> <span class="o">.</span><span class="n">standard</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>repository</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The repository used to fetch localizations and locale/language settings.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>updateMode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Update mode that determines how should localizations be updated. See <code><a href="../Enums/UpdateMode.html">UpdateMode</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fileManager</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A file manager used to persist downloaded localizations and load fallback localizations.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>userDefaults</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>User defaults that are used to accept headers and language override.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fallbackLocale</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The locale used when there is no current language set.
+This should be a locale that has fallback localizations in the bundle. Defaults to english</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC12localization3forSSSgSS_tKF"></a>
+                    <a name="//apple_ref/swift/Method/localization(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC12localization3forSSSgSS_tKF">localization(for:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find a localization for a key.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">localization</span><span class="p">(</span><span class="k">for</span> <span class="nv">keyPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>keyPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The key that string should be found on.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Update%20&amp;%20Fetch"></a>
+                <a name="//apple_ref/swift/Section/Update &amp; Fetch" class="dashAnchor"></a>
+                <a href="#/Update%20&amp;%20Fetch">
+                  <h3 class="section-name">Update &amp; Fetch</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC19updateLocalizationsyyys5Error_pSgcSgF"></a>
+                    <a name="//apple_ref/swift/Method/updateLocalizations(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC19updateLocalizationsyyys5Error_pSgcSgF">updateLocalizations(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Fetches the latest version of the localizations config</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateLocalizations</span><span class="p">(</span><span class="n">_</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Called when localization fetching has finished. Check if the error
+                    object is nil to determine whether the operation was a succes.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC06handleA6Models11descriptors16acceptHeaderUsed10completionySayqd__G_SSSgys5Error_pSgcSgtAA0A10DescriptorRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/handleLocalizationModels(descriptors:acceptHeaderUsed:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC06handleA6Models11descriptors16acceptHeaderUsed10completionySayqd__G_SSSgys5Error_pSgcSgtAA0A10DescriptorRd__lF">handleLocalizationModels(descriptors:acceptHeaderUsed:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">handleLocalizationModels</span><span class="o">&lt;</span><span class="kt">D</span><span class="p">:</span> <span class="kt"><a href="../Protocols/LocalizationDescriptor.html">LocalizationDescriptor</a></span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">descriptors</span><span class="p">:</span> <span class="p">[</span><span class="kt">D</span><span class="p">],</span>
+    <span class="nv">acceptHeaderUsed</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span>
+    <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span>
+    <span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC23fetchAvailableLanguages10completionyySayxGc_tF"></a>
+                    <a name="//apple_ref/swift/Method/fetchAvailableLanguages(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC23fetchAvailableLanguages10completionyySayxGc_tF">fetchAvailableLanguages(completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the languages for which localizations are available.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">fetchAvailableLanguages</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(([</span><span class="kt">Language</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An completion object containing the array or languages either fetched or cached.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Localizations"></a>
+                <a name="//apple_ref/swift/Section/Localizations" class="dashAnchor"></a>
+                <a href="#/Localizations">
+                  <h3 class="section-name">Localizations</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC12localization8localeIdqd__SSSg_tKAA16LocalizableModelCRbd__lF"></a>
+                    <a name="//apple_ref/swift/Method/localization(localeId:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC12localization8localeIdqd__SSSg_tKAA16LocalizableModelCRbd__lF">localization(localeId:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The parsed localizations object is cached in memory, but persisted as a dictionary.
+If a persisted version cannot be found, the fallback json file in the bundle will be used.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">localization</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">localeId</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt"><a href="../Classes/LocalizableModel.html">LocalizableModel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A localizations object.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC18clearLocalizations18includingPersistedySb_tKF"></a>
+                    <a name="//apple_ref/swift/Method/clearLocalizations(includingPersisted:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC18clearLocalizations18includingPersistedySb_tKF">clearLocalizations(includingPersisted:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Clears both the memory and persistent cache. Used for debugging purposes.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearLocalizations</span><span class="p">(</span><span class="nv">includingPersisted</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>includingPersisted</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If set to <code>true</code>, local persisted localization
+                            file will be deleted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Dictionaries"></a>
+                <a name="//apple_ref/swift/Section/Dictionaries" class="dashAnchor"></a>
+                <a href="#/Dictionaries">
+                  <h3 class="section-name">Dictionaries</h3>
+                </a>
+              </div>
+              <ul class="item-container">
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC04saveA11DescriptorsyySayqd__GKAA0A10DescriptorRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/saveLocalizationDescriptors(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC04saveA11DescriptorsyySayqd__GKAA0A10DescriptorRd__lF">saveLocalizationDescriptors(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Saves the localization config set.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">saveLocalizationDescriptors</span><span class="o">&lt;</span><span class="kt">D</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">descriptors</span><span class="p">:</span> <span class="p">[</span><span class="kt">D</span><span class="p">])</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">D</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/LocalizationDescriptor.html">LocalizationDescriptor</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>[Localizations]</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The current Localizations available.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManagerAAC3set8response4typeyAA0A8ResponseVyqd__G_AA09PersistedA4TypeOtKAA13LanguageModelRd__lF"></a>
+                    <a name="//apple_ref/swift/Method/set(response:type:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManagerAAC3set8response4typeyAA0A8ResponseVyqd__G_AA09PersistedA4TypeOtKAA13LanguageModelRd__lF">set(response:type:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Saves the localizations set.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="k">set</span><span class="o">&lt;</span><span class="kt">L</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="kt"><a href="../Structs/LocalizationResponse.html">LocalizationResponse</a></span><span class="o">&lt;</span><span class="kt">L</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">type</span><span class="p">:</span> <span class="kt"><a href="../Enums/PersistedLocalizationType.html">PersistedLocalizationType</a></span><span class="p">)</span> <span class="k">throws</span> <span class="k">where</span> <span class="kt">L</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/LanguageModel.html">LanguageModel</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>localizations</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The new localizations.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2019 <a class="link" href="https://www.nodesagency.com" target="_blank" rel="external">Nodes</a>. All rights reserved. (Last updated: 2019-09-21)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>

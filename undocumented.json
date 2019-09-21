@@ -1,0 +1,467 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 11,
+      "symbol": "JSONCodingKeys",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 28,
+      "symbol": "KeyedDecodingContainer.decode(_:forKey:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 33,
+      "symbol": "KeyedDecodingContainer.decode(_:forKey:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 38,
+      "symbol": "KeyedDecodingContainer.decode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 59,
+      "symbol": "KeyedDecodingContainer.decodeIfPresent(_:forKey:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 66,
+      "symbol": "UnkeyedDecodingContainer.decode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 84,
+      "symbol": "UnkeyedDecodingContainer.decode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 91,
+      "symbol": "KeyedEncodingContainerProtocol.encode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 119,
+      "symbol": "KeyedEncodingContainerProtocol.encode(_:forKey:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 126,
+      "symbol": "KeyedEncodingContainerProtocol.encode(_:forKey:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 135,
+      "symbol": "UnkeyedEncodingContainer.encode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/Codable+Dictionary.swift",
+      "line": 161,
+      "symbol": "UnkeyedEncodingContainer.encode(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/LocalizableSection+ClassNameLowerCased.swift",
+      "line": 12,
+      "symbol": "LocalizableSection.classNameLowerCased()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/UserDefaults+Codable.swift",
+      "line": 12,
+      "symbol": "UserDefaults.setCodable(_:forKey:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Extensions/UserDefaults+Codable.swift",
+      "line": 18,
+      "symbol": "UserDefaults.codable(forKey:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Manager/AcceptLanguageProvider.swift",
+      "line": 11,
+      "symbol": "AcceptLanguageProviderType",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Manager/LocalizationManager.swift",
+      "line": 381,
+      "symbol": "LocalizationManager.handleLocalizationModels(descriptors:acceptHeaderUsed:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationMeta.swift",
+      "line": 11,
+      "symbol": "LocalizationMeta",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationMeta.swift",
+      "line": 12,
+      "symbol": "LocalizationMeta.language",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationMeta.swift",
+      "line": 13,
+      "symbol": "LocalizationMeta.platform",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationMeta.swift",
+      "line": 15,
+      "symbol": "LocalizationMeta.init(language:platform:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationResponse.swift",
+      "line": 11,
+      "symbol": "LocalizationResponse",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationResponse.swift",
+      "line": 12,
+      "symbol": "LocalizationResponse.localization",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationResponse.swift",
+      "line": 13,
+      "symbol": "LocalizationResponse.meta",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/LocalizationResponse.swift",
+      "line": 24,
+      "symbol": "LocalizationResponse.init(localizations:meta:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/Platform.swift",
+      "line": 11,
+      "symbol": "Platform",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/Platform.swift",
+      "line": 12,
+      "symbol": "Platform.id",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/Platform.swift",
+      "line": 13,
+      "symbol": "Platform.slug",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/Localization/Platform.swift",
+      "line": 15,
+      "symbol": "Platform.init(id:slug:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 11,
+      "symbol": "LocalizationError",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 12,
+      "symbol": "LocalizationError.invalidKeyPath",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 13,
+      "symbol": "LocalizationError.updateFailed(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 14,
+      "symbol": "LocalizationError.localizationsConfigFileUrlUnavailable",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 15,
+      "symbol": "LocalizationError.localizationFileUrlUnavailable",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 16,
+      "symbol": "LocalizationError.noLocaleFound",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 17,
+      "symbol": "LocalizationError.noLocalizationsFound",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 18,
+      "symbol": "LocalizationError.loadingFallbackLocalizationsFailed",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 19,
+      "symbol": "LocalizationError.unknown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/LocalizationError.swift",
+      "line": 21,
+      "symbol": "LocalizationError.localizedDescription",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/PersistedLocalizationType.swift",
+      "line": 11,
+      "symbol": "PersistedLocalizationType",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/UpdateMode.swift",
+      "line": 16,
+      "symbol": "UpdateMode.automatic",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Models/UpdateMode.swift",
+      "line": 17,
+      "symbol": "UpdateMode.manual",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizableModel.swift",
+      "line": 11,
+      "symbol": "LocalizableModel",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizableModel.swift",
+      "line": 11,
+      "symbol": "LocalizableSection",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizableModel.swift",
+      "line": 12,
+      "symbol": "LocalizableModel.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizableModel.swift",
+      "line": 13,
+      "symbol": "LocalizableModel.subscript(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizableModel.swift",
+      "line": 18,
+      "symbol": "LocalizableSection",
+      "symbol_kind": "source.lang.swift.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizableModel.swift",
+      "line": 19,
+      "symbol": "LocalizableSection.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizableModel.swift",
+      "line": 20,
+      "symbol": "LocalizableSection.subscript(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.subscript",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationDescriptor.swift",
+      "line": 11,
+      "symbol": "LocalizationDescriptor",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationDescriptor.swift",
+      "line": 12,
+      "symbol": "LocalizationDescriptor.LanguageType",
+      "symbol_kind": "source.lang.swift.decl.associatedtype",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationDescriptor.swift",
+      "line": 14,
+      "symbol": "LocalizationDescriptor.shouldUpdate",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationDescriptor.swift",
+      "line": 15,
+      "symbol": "LocalizationDescriptor.localeIdentifier",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationDescriptor.swift",
+      "line": 16,
+      "symbol": "LocalizationDescriptor.url",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationDescriptor.swift",
+      "line": 17,
+      "symbol": "LocalizationDescriptor.language",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationManagerDelegate.swift",
+      "line": 11,
+      "symbol": "LocalizationManagerDelegate",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationManagerDelegate.swift",
+      "line": 12,
+      "symbol": "LocalizationManagerDelegate.localizationManager(languageUpdated:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 11,
+      "symbol": "Result",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 13,
+      "symbol": "LocalizationRepository",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 14,
+      "symbol": "LocalizationRepository.getLocalizationDescriptors(acceptLanguage:lastUpdated:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 20,
+      "symbol": "LocalizationRepository.getLocalization(descriptor:acceptLanguage:completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 26,
+      "symbol": "LocalizationRepository.getAvailableLanguages(completion:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 31,
+      "symbol": "LocalizationContextRepository",
+      "symbol_kind": "source.lang.swift.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 32,
+      "symbol": "LocalizationContextRepository.fetchPreferredLanguages()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 33,
+      "symbol": "LocalizationContextRepository.getLocalizationBundles()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/travis/build/nodes-ios/TranslationManager/LocalizationManager/Classes/Protocols/LocalizationRepository.swift",
+      "line": 34,
+      "symbol": "LocalizationContextRepository.fetchCurrentPhoneLanguage()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/travis/build/nodes-ios/TranslationManager"
+}
