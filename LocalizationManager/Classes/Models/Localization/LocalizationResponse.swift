@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct LocalizationResponse<L: LanguageModel>: Codable {
+public struct LocalizationResponse<Language: LanguageModel>: Codable {
     public internal(set) var localization: [String: Any]
-    public let meta: LocalizationMeta<L>?
+    public let language: Language?
 
     enum CodingKeys: String, CodingKey {
-        case localizations = "data"
+        case localization = "data"
         case meta
     }
 
@@ -21,22 +21,26 @@ public struct LocalizationResponse<L: LanguageModel>: Codable {
         case language
     }
 
-    public init(localizations: [String: Any] = [:], meta: LocalizationMeta<L>? = nil) {
+    public init(localizations: [String: Any] = [:], language: Language? = nil) {
         self.localization = localizations
-        self.meta = meta
+        self.language = language
     }
 
     public init(from decoder: Decoder) throws {
+        // Get localization data
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        localization = try values.decodeIfPresent([String: Any].self, forKey: .localizations) ?? [:]
+        localization = try values.decodeIfPresent([String: Any].self, forKey: .localization) ?? [:]
 
-        let metaData = try decoder.container(keyedBy: CodingKeys.self)
-        meta = try metaData.decodeIfPresent(LocalizationMeta<L>.self, forKey: .meta)
+        // Extract language
+        let nestedContainer = try values.nestedContainer(keyedBy: LanguageCodingKeys.self, forKey: .meta)
+        language = try nestedContainer.decodeIfPresent(Language.self, forKey: .language)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(localization, forKey: .localizations)
-        try container.encode(meta, forKey: .meta)
+        try container.encode(localization, forKey: .localization)
+
+        var nested = container.nestedContainer(keyedBy: LanguageCodingKeys.self, forKey: .meta)
+        try nested.encode(language, forKey: .language)
     }
 }

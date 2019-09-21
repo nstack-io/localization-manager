@@ -481,7 +481,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
 
         //cache current best fit language
         if handleMeta {
-            if let lang = localizationsData.meta?.language {
+            if let lang = localizationsData.language {
 
                 //if language is best fit
                 if lang.isBestFit {
@@ -663,7 +663,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     ///
     /// - Parameter localizations: The new localizations.
     public func set<L>(response: LocalizationResponse<L>, type: PersistedLocalizationType) throws where L: LanguageModel {
-        guard let locale = response.meta?.language?.locale.identifier else {
+        guard let locale = response.language?.locale.identifier else {
             throw LocalizationError.localizationFileUrlUnavailable
         }
 
