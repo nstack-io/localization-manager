@@ -1,4 +1,4 @@
-TM_PLIST=TranslationManager/Supporting Files/Info.plist
+TM_PLIST=LocalizationManager/Supporting Files/Info.plist
 CURRENT_BRANCH=$(shell git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
 release:
@@ -19,3 +19,16 @@ endif
 	git push origin master
 	git push origin $(NEW_VERSION)
 	pod trunk push
+
+docs:
+	@jazzy \
+		--clean \
+		--author Nodes \
+		--author_url "https://www.nodesagency.com" \
+		--github_url "https://github.com/nodes-ios/TranslationManager" \
+		--no-hide-documentation-coverage \
+		--theme fullwidth \
+		--output ./jazzy_docs \
+		--documentation ./Documentation/*.md \
+		--readme README.md
+	@rm -rf ./build
