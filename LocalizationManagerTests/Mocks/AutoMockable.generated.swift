@@ -27,6 +27,11 @@ import AppKit
 class LocalizationContextRepositoryMock: LocalizationContextRepository {
 
 
+    var localizationBundle: Bundle {
+        get { return underlyingLocalizationBundle }
+        set(value) { underlyingLocalizationBundle = value }
+    }
+    var underlyingLocalizationBundle: Bundle!
 
     //MARK: - fetchPreferredLanguages
 
@@ -40,20 +45,6 @@ class LocalizationContextRepositoryMock: LocalizationContextRepository {
     func fetchPreferredLanguages() -> [String] {
         fetchPreferredLanguagesCallsCount += 1
         return fetchPreferredLanguagesClosure.map({ $0() }) ?? fetchPreferredLanguagesReturnValue
-    }
-
-    //MARK: - getLocalizationBundles
-
-    var getLocalizationBundlesCallsCount = 0
-    var getLocalizationBundlesCalled: Bool {
-        return getLocalizationBundlesCallsCount > 0
-    }
-    var getLocalizationBundlesReturnValue: [Bundle]!
-    var getLocalizationBundlesClosure: (() -> [Bundle])?
-
-    func getLocalizationBundles() -> [Bundle] {
-        getLocalizationBundlesCallsCount += 1
-        return getLocalizationBundlesClosure.map({ $0() }) ?? getLocalizationBundlesReturnValue
     }
 
     //MARK: - fetchCurrentPhoneLanguage

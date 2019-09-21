@@ -31,7 +31,7 @@ public protocol LocalizationRepository {
 
 /// sourcery: AutoMockable
 public protocol LocalizationContextRepository {
+    var localizationBundle: Bundle { get }
     func fetchPreferredLanguages() -> [String]
-    func getLocalizationBundles() -> [Bundle]
     func fetchCurrentPhoneLanguage() -> String?
 }

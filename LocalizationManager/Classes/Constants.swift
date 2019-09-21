@@ -18,4 +18,11 @@ enum Constants {
         static let languageOverride = "LocalizationManager-LGO"
         static let persistedLocalizationType = "LocalizationManager-PTT"
     }
+
+    enum Store {
+        static let localizationDirectory = "Localization"
+        static let descriptorFileName = "desc"
+        static let dataFileName = "data"
+        static let fileExtension = "loc"
+    }
 }

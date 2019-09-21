@@ -103,9 +103,6 @@
 		B4B6C96F231ED7D4001A8E5C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95A231ED7D4001A8E5C /* Localization.swift */; };
 		B4B6C970231ED7D4001A8E5C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95A231ED7D4001A8E5C /* Localization.swift */; };
 		B4B6C971231ED7D4001A8E5C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95A231ED7D4001A8E5C /* Localization.swift */; };
-		B4B6C975231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95D231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift */; };
-		B4B6C976231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95D231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift */; };
-		B4B6C977231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95D231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift */; };
 		B4B6C978231ED7D4001A8E5C /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95E231ED7D4001A8E5C /* FileManagerMock.swift */; };
 		B4B6C979231ED7D4001A8E5C /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95E231ED7D4001A8E5C /* FileManagerMock.swift */; };
 		B4B6C97A231ED7D4001A8E5C /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C95E231ED7D4001A8E5C /* FileManagerMock.swift */; };
@@ -124,6 +121,27 @@
 		B4B6C99B231EDA09001A8E5C /* DefaultLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C94E231ECB8B001A8E5C /* DefaultLanguage.swift */; };
 		B4B6C99C231EDA0A001A8E5C /* DefaultLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C94E231ECB8B001A8E5C /* DefaultLanguage.swift */; };
 		B4B6C99D231EDA0A001A8E5C /* DefaultLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C94E231ECB8B001A8E5C /* DefaultLanguage.swift */; };
+		B4C0383A2336456F000B9ACF /* StoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C038392336456F000B9ACF /* StoreError.swift */; };
+		B4C0383B2336456F000B9ACF /* StoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C038392336456F000B9ACF /* StoreError.swift */; };
+		B4C0383C2336456F000B9ACF /* StoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C038392336456F000B9ACF /* StoreError.swift */; };
+		B4C0383D2336456F000B9ACF /* StoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C038392336456F000B9ACF /* StoreError.swift */; };
+		B4C0383F233645A5000B9ACF /* BundleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C0383E233645A5000B9ACF /* BundleStore.swift */; };
+		B4C03840233645A5000B9ACF /* BundleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C0383E233645A5000B9ACF /* BundleStore.swift */; };
+		B4C03841233645A5000B9ACF /* BundleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C0383E233645A5000B9ACF /* BundleStore.swift */; };
+		B4C03842233645A5000B9ACF /* BundleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C0383E233645A5000B9ACF /* BundleStore.swift */; };
+		B4C0384A233649F3000B9ACF /* BundleStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03849233649F3000B9ACF /* BundleStoreSpec.swift */; };
+		B4C0384B233649F3000B9ACF /* BundleStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03849233649F3000B9ACF /* BundleStoreSpec.swift */; };
+		B4C0384C233649F3000B9ACF /* BundleStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03849233649F3000B9ACF /* BundleStoreSpec.swift */; };
+		B4C038522336585F000B9ACF /* TestDescriptor_en-GB.json in Resources */ = {isa = PBXBuildFile; fileRef = B4C038512336585F000B9ACF /* TestDescriptor_en-GB.json */; };
+		B4C038532336585F000B9ACF /* TestDescriptor_en-GB.json in Resources */ = {isa = PBXBuildFile; fileRef = B4C038512336585F000B9ACF /* TestDescriptor_en-GB.json */; };
+		B4C038542336585F000B9ACF /* TestDescriptor_en-GB.json in Resources */ = {isa = PBXBuildFile; fileRef = B4C038512336585F000B9ACF /* TestDescriptor_en-GB.json */; };
+		B4C0385523366352000B9ACF /* MutableStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03843233646A6000B9ACF /* MutableStore.swift */; };
+		B4C0385623366353000B9ACF /* MutableStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03843233646A6000B9ACF /* MutableStore.swift */; };
+		B4C0385723366353000B9ACF /* MutableStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03843233646A6000B9ACF /* MutableStore.swift */; };
+		B4C0385823366354000B9ACF /* MutableStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03843233646A6000B9ACF /* MutableStore.swift */; };
+		B4C0385A233666E1000B9ACF /* MutableStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03859233666E1000B9ACF /* MutableStoreSpec.swift */; };
+		B4C0385B233666E1000B9ACF /* MutableStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03859233666E1000B9ACF /* MutableStoreSpec.swift */; };
+		B4C0385C233666E1000B9ACF /* MutableStoreSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C03859233666E1000B9ACF /* MutableStoreSpec.swift */; };
 		B4C2C93D2335793500385B26 /* AutoMockable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B490AD7123356F4B00260A17 /* AutoMockable.generated.swift */; };
 		C00F5EE22178FAE600066823 /* LocalizationManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F5EE12178FAE600066823 /* LocalizationManagerDelegate.swift */; };
 		C01D69D82178912300A1B354 /* LocalizableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69D72178912300A1B354 /* LocalizableModel.swift */; };
@@ -197,7 +215,6 @@
 		B4B6C957231ED7D4001A8E5C /* Localization_fr-FR.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Localization_fr-FR.json"; sourceTree = "<group>"; };
 		B4B6C958231ED7D4001A8E5C /* Localization_en-GB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "Localization_en-GB.json"; sourceTree = "<group>"; };
 		B4B6C95A231ED7D4001A8E5C /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
-		B4B6C95D231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationsRepositoryMock.swift; sourceTree = "<group>"; };
 		B4B6C95E231ED7D4001A8E5C /* FileManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerMock.swift; sourceTree = "<group>"; };
 		B4B6C95F231ED7D4001A8E5C /* BundleMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleMock.swift; sourceTree = "<group>"; };
 		B4B6C961231ED7D4001A8E5C /* LocalizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManagerTests.swift; sourceTree = "<group>"; };
@@ -207,6 +224,12 @@
 		B4B6C98A231ED86D001A8E5C /* LocalizationManager_watchOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationManager_watchOS.h; sourceTree = "<group>"; };
 		B4B6C98C231ED874001A8E5C /* LocalizationManager_tvOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationManager_tvOS.h; sourceTree = "<group>"; };
 		B4B6C999231ED88A001A8E5C /* LocalizationManager_macOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationManager_macOS.h; sourceTree = "<group>"; };
+		B4C038392336456F000B9ACF /* StoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreError.swift; sourceTree = "<group>"; };
+		B4C0383E233645A5000B9ACF /* BundleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleStore.swift; sourceTree = "<group>"; };
+		B4C03843233646A6000B9ACF /* MutableStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableStore.swift; sourceTree = "<group>"; };
+		B4C03849233649F3000B9ACF /* BundleStoreSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleStoreSpec.swift; sourceTree = "<group>"; };
+		B4C038512336585F000B9ACF /* TestDescriptor_en-GB.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "TestDescriptor_en-GB.json"; sourceTree = "<group>"; };
+		B4C03859233666E1000B9ACF /* MutableStoreSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutableStoreSpec.swift; sourceTree = "<group>"; };
 		BD5866AAF251C41B6BD32122 /* Pods-LocalizationManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalizationManagerTests.release.xcconfig"; path = "Target Support Files/Pods-LocalizationManagerTests/Pods-LocalizationManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 		C00F5EE12178FAE600066823 /* LocalizationManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManagerDelegate.swift; sourceTree = "<group>"; };
 		C01D69D72178912300A1B354 /* LocalizableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableModel.swift; sourceTree = "<group>"; };
@@ -353,6 +376,7 @@
 				B4B6C956231ED7D4001A8E5C /* Localization_da-DK.json */,
 				B4B6C957231ED7D4001A8E5C /* Localization_fr-FR.json */,
 				B4B6C958231ED7D4001A8E5C /* Localization_en-GB.json */,
+				B4C038512336585F000B9ACF /* TestDescriptor_en-GB.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -368,9 +392,8 @@
 		B4B6C95C231ED7D4001A8E5C /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				B490AD7123356F4B00260A17 /* AutoMockable.generated.swift */,
 				B490AD6F23356E2500260A17 /* Stencils */,
-				B4B6C95D231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift */,
+				B490AD7123356F4B00260A17 /* AutoMockable.generated.swift */,
 				B4B6C95E231ED7D4001A8E5C /* FileManagerMock.swift */,
 				B4B6C95F231ED7D4001A8E5C /* BundleMock.swift */,
 			);
@@ -380,6 +403,7 @@
 		B4B6C960231ED7D4001A8E5C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B4C03848233649DF000B9ACF /* Store */,
 				B4B6C961231ED7D4001A8E5C /* LocalizationManagerTests.swift */,
 			);
 			path = Tests;
@@ -393,6 +417,26 @@
 				B4B6C964231ED7D4001A8E5C /* Info-tvOS.plist */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B4C03848233649DF000B9ACF /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				B4C03849233649F3000B9ACF /* BundleStoreSpec.swift */,
+				B4C03859233666E1000B9ACF /* MutableStoreSpec.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		B4C2C9412336400500385B26 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				B4020B9B22C5171C007EC5DD /* Store.swift */,
+				B4C038392336456F000B9ACF /* StoreError.swift */,
+				B4C0383E233645A5000B9ACF /* BundleStore.swift */,
+				B4C03843233646A6000B9ACF /* MutableStore.swift */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 		C01D69D22178909300A1B354 /* Supporting Files */ = {
@@ -414,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				C01D69F02178968700A1B354 /* Constants.swift */,
+				B4C2C9412336400500385B26 /* Store */,
 				C01D69D4217890D500A1B354 /* Models */,
 				C01D69D5217890EC00A1B354 /* Protocols */,
 				C01D69E6217893BE00A1B354 /* Extensions */,
@@ -443,7 +488,6 @@
 				23A4296D22BA37C800D09EA1 /* LocalizationDescriptor.swift */,
 				C01D69DB2178916B00A1B354 /* LocalizationRepository.swift */,
 				C00F5EE12178FAE600066823 /* LocalizationManagerDelegate.swift */,
-				B4020B9B22C5171C007EC5DD /* Store.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -757,6 +801,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B6C988231ED7D4001A8E5C /* Info-macOS.plist in Resources */,
+				B4C038532336585F000B9ACF /* TestDescriptor_en-GB.json in Resources */,
 				B4B6C96D231ED7D4001A8E5C /* Localization_en-GB.json in Resources */,
 				B4B6C96A231ED7D4001A8E5C /* Localization_fr-FR.json in Resources */,
 				B4B6C967231ED7D4001A8E5C /* Localization_da-DK.json in Resources */,
@@ -782,6 +827,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B6C986231ED7D4001A8E5C /* Info-tvOS.plist in Resources */,
+				B4C038542336585F000B9ACF /* TestDescriptor_en-GB.json in Resources */,
 				B4B6C96E231ED7D4001A8E5C /* Localization_en-GB.json in Resources */,
 				B4B6C96B231ED7D4001A8E5C /* Localization_fr-FR.json in Resources */,
 				B4B6C968231ED7D4001A8E5C /* Localization_da-DK.json in Resources */,
@@ -800,6 +846,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B6C981231ED7D4001A8E5C /* Info-iOS.plist in Resources */,
+				B4C038522336585F000B9ACF /* TestDescriptor_en-GB.json in Resources */,
 				B4B6C96C231ED7D4001A8E5C /* Localization_en-GB.json in Resources */,
 				B4B6C969231ED7D4001A8E5C /* Localization_fr-FR.json in Resources */,
 				B4B6C966231ED7D4001A8E5C /* Localization_da-DK.json in Resources */,
@@ -949,14 +996,17 @@
 				8C508849230D1D4B00FB80CD /* Platform.swift in Sources */,
 				8C50884D230D1D4B00FB80CD /* LocalizationError.swift in Sources */,
 				8C508846230D1D4B00FB80CD /* LocalizationResponse.swift in Sources */,
+				B4C0385623366353000B9ACF /* MutableStore.swift in Sources */,
 				8C508855230D1D9A00FB80CD /* Codable+Dictionary.swift in Sources */,
 				8C508854230D1D6F00FB80CD /* Store.swift in Sources */,
+				B4C03840233645A5000B9ACF /* BundleStore.swift in Sources */,
 				8C50884F230D1D6F00FB80CD /* LocalizationDescriptor.swift in Sources */,
 				8C50885D230D1DA200FB80CD /* ApplicationState.swift in Sources */,
 				8C50884E230D1D6F00FB80CD /* LocalizableModel.swift in Sources */,
 				B464DB702319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */,
 				8C508853230D1D6F00FB80CD /* LocalizationManagerDelegate.swift in Sources */,
 				8C508857230D1D9A00FB80CD /* String+Substring.swift in Sources */,
+				B4C0383B2336456F000B9ACF /* StoreError.swift in Sources */,
 				8C508847230D1D4B00FB80CD /* LocalizationMeta.swift in Sources */,
 				8C508850230D1D6F00FB80CD /* LanguageModel.swift in Sources */,
 				8C50885B230D1DA200FB80CD /* ApplicationStateObserverType.swift in Sources */,
@@ -978,8 +1028,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B6C97C231ED7D4001A8E5C /* BundleMock.swift in Sources */,
-				B4B6C976231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift in Sources */,
+				B4C0384B233649F3000B9ACF /* BundleStoreSpec.swift in Sources */,
 				B4B6C979231ED7D4001A8E5C /* FileManagerMock.swift in Sources */,
+				B4C0385B233666E1000B9ACF /* MutableStoreSpec.swift in Sources */,
 				B4B6C97F231ED7D4001A8E5C /* LocalizationManagerTests.swift in Sources */,
 				B4B6C970231ED7D4001A8E5C /* Localization.swift in Sources */,
 			);
@@ -993,14 +1044,17 @@
 				8CA9F242230BE1EB00CF8065 /* Platform.swift in Sources */,
 				8CA9F246230BE1F000CF8065 /* LocalizationError.swift in Sources */,
 				8CA9F23F230BE1EB00CF8065 /* LocalizationResponse.swift in Sources */,
+				B4C0385823366354000B9ACF /* MutableStore.swift in Sources */,
 				8CA9F24E230BE1F900CF8065 /* Codable+Dictionary.swift in Sources */,
 				8CA9F24D230BE1F400CF8065 /* Store.swift in Sources */,
+				B4C03842233645A5000B9ACF /* BundleStore.swift in Sources */,
 				8CA9F248230BE1F400CF8065 /* LocalizationDescriptor.swift in Sources */,
 				8CA9F256230BE20100CF8065 /* ApplicationState.swift in Sources */,
 				8CA9F247230BE1F400CF8065 /* LocalizableModel.swift in Sources */,
 				B464DB6F2319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */,
 				8CA9F24C230BE1F400CF8065 /* LocalizationManagerDelegate.swift in Sources */,
 				8CA9F250230BE1F900CF8065 /* String+Substring.swift in Sources */,
+				B4C0383D2336456F000B9ACF /* StoreError.swift in Sources */,
 				8CA9F240230BE1EB00CF8065 /* LocalizationMeta.swift in Sources */,
 				8CA9F249230BE1F400CF8065 /* LanguageModel.swift in Sources */,
 				8CA9F254230BE20100CF8065 /* ApplicationStateObserverType.swift in Sources */,
@@ -1025,14 +1079,17 @@
 				8CBF581D230BCA9100C60FF7 /* Platform.swift in Sources */,
 				8CBF5821230BCA9B00C60FF7 /* LocalizationError.swift in Sources */,
 				8CBF581A230BCA8700C60FF7 /* LocalizationResponse.swift in Sources */,
+				B4C0385723366353000B9ACF /* MutableStore.swift in Sources */,
 				8CBF5829230BCAB500C60FF7 /* Codable+Dictionary.swift in Sources */,
 				8CBF5828230BCAB200C60FF7 /* Store.swift in Sources */,
+				B4C03841233645A5000B9ACF /* BundleStore.swift in Sources */,
 				8CBF5823230BCAA300C60FF7 /* LocalizationDescriptor.swift in Sources */,
 				8CBF5831230BCACB00C60FF7 /* ApplicationState.swift in Sources */,
 				8CBF5822230BCAA000C60FF7 /* LocalizableModel.swift in Sources */,
 				B464DB6E2319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */,
 				8CBF5827230BCAAF00C60FF7 /* LocalizationManagerDelegate.swift in Sources */,
 				8CBF582B230BCABA00C60FF7 /* String+Substring.swift in Sources */,
+				B4C0383C2336456F000B9ACF /* StoreError.swift in Sources */,
 				8CBF581B230BCA8C00C60FF7 /* LocalizationMeta.swift in Sources */,
 				8CBF5824230BCAA700C60FF7 /* LanguageModel.swift in Sources */,
 				8CBF582F230BCAC600C60FF7 /* ApplicationStateObserverType.swift in Sources */,
@@ -1054,8 +1111,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B6C97D231ED7D4001A8E5C /* BundleMock.swift in Sources */,
-				B4B6C977231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift in Sources */,
+				B4C0384C233649F3000B9ACF /* BundleStoreSpec.swift in Sources */,
 				B4B6C97A231ED7D4001A8E5C /* FileManagerMock.swift in Sources */,
+				B4C0385C233666E1000B9ACF /* MutableStoreSpec.swift in Sources */,
 				B4B6C980231ED7D4001A8E5C /* LocalizationManagerTests.swift in Sources */,
 				B4B6C971231ED7D4001A8E5C /* Localization.swift in Sources */,
 			);
@@ -1071,6 +1129,7 @@
 				C00F5EE22178FAE600066823 /* LocalizationManagerDelegate.swift in Sources */,
 				C01D69E52178925900A1B354 /* LanguageModel.swift in Sources */,
 				2376952E22C0D4AD00D40DC1 /* Platform.swift in Sources */,
+				B4C0383A2336456F000B9ACF /* StoreError.swift in Sources */,
 				C01D69DC2178916B00A1B354 /* LocalizationRepository.swift in Sources */,
 				C469F15222FC3F48002F9FDF /* LocalizableSection+ClassNameLowerCased.swift in Sources */,
 				B4020B9C22C5171C007EC5DD /* Store.swift in Sources */,
@@ -1079,6 +1138,7 @@
 				B464DB6D2319CCAE00713265 /* LocalizationManager+ApplicationState.swift in Sources */,
 				C04AFBF72179E16E002CB099 /* ApplicationStateObserverType.swift in Sources */,
 				C01D69EF2178955100A1B354 /* UserDefaults+Codable.swift in Sources */,
+				B4C0383F233645A5000B9ACF /* BundleStore.swift in Sources */,
 				B4B6C94F231ECB8B001A8E5C /* DefaultLanguage.swift in Sources */,
 				C01D69EB217894DE00A1B354 /* LocalizationManager.swift in Sources */,
 				C04AFBF32179DDC2002CB099 /* ApplicationStateObserverDelegate.swift in Sources */,
@@ -1091,6 +1151,7 @@
 				2376952C22C0C00E00D40DC1 /* LocalizationMeta.swift in Sources */,
 				C04AFBF52179DE04002CB099 /* ApplicationState.swift in Sources */,
 				B416CA8523357140007935E9 /* DefaultLocalizationDescriptor.swift in Sources */,
+				B4C0385523366352000B9ACF /* MutableStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1099,8 +1160,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4B6C97B231ED7D4001A8E5C /* BundleMock.swift in Sources */,
-				B4B6C975231ED7D4001A8E5C /* LocalizationsRepositoryMock.swift in Sources */,
+				B4C0384A233649F3000B9ACF /* BundleStoreSpec.swift in Sources */,
 				B4B6C978231ED7D4001A8E5C /* FileManagerMock.swift in Sources */,
+				B4C0385A233666E1000B9ACF /* MutableStoreSpec.swift in Sources */,
 				B4B6C97E231ED7D4001A8E5C /* LocalizationManagerTests.swift in Sources */,
 				B4B6C96F231ED7D4001A8E5C /* Localization.swift in Sources */,
 				B4C2C93D2335793500385B26 /* AutoMockable.generated.swift in Sources */,

@@ -324,10 +324,10 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     internal func parseFallbackJSONLocalizations(_ completion: ((_ error: Error?) -> Void)? = nil) {
 
         var allJsonURLS: [URL] = []
-        for bundle in contextRepository.getLocalizationBundles() {
-            if let jsonURLS = bundle.urls(forResourcesWithExtension: ".json", subdirectory: nil) {
-                allJsonURLS.append(contentsOf: jsonURLS)
-            }
+        if let jsonURLS = contextRepository.localizationBundle.urls(
+            forResourcesWithExtension: ".json", subdirectory: nil
+            ) {
+            allJsonURLS.append(contentsOf: jsonURLS)
         }
 
         var localizationsURLs: [URL] = []
@@ -732,7 +732,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     /// - Returns: A dictionary representation of the selected local localizations set.
     internal func fallbackLocalization(localeId: String) throws -> LocalizationResponse<Language> {
         // Iterate through bundle until we find the localizations file
-        for bundle: Bundle in [Bundle(for: localizableModel.self)] + contextRepository.getLocalizationBundles() {
+        for bundle in [Bundle(for: localizableModel.self), contextRepository.localizationBundle] {
             // Check if bundle contains localizations file, otheriwse continue with next bundle
             guard let filePath = bundle.path(forResource: "Localizations_\(localeId)", ofType: "json") else {
                 continue
