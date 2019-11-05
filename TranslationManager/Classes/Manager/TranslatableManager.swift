@@ -209,7 +209,11 @@ public class TranslatableManager<L: LanguageModel, C: LocalizationModel> {
 
         // Start observing state changes
         stateObserver.startObserving()
-        parseFallbackJSONTranslations()
+
+        // Load persisted or fallback translations
+        if (try? translations()) == nil {
+            parseFallbackJSONTranslations()
+        }
 
         switch updateMode {
         case .automatic:
