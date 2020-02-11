@@ -605,4 +605,51 @@ class LocalizationManagerTests: XCTestCase {
             XCTFail()
         }
     }
+
+    func testAvailableLanguages() {
+        let lang = DefaultLanguage(id: 0, name: "Danish",
+                                   direction: "lrm",
+                                   locale: Locale(identifier: "da-DK"),
+                                   isDefault: false,
+                                   isBestFit: false)
+        manager.availableLanguages = [lang]
+        XCTAssertEqual(manager.availableLanguages, [lang])
+    }
+
+    func testLocalizationError() {
+        let error: LocalizationError = .noLocaleFound
+        XCTAssertEqual(error.localizedDescription, LocalizationError.noLocaleFound.localizedDescription)
+    }
+
+    func testFetchAvailableLanguages() {
+        manager.fetchAvailableLanguages { (_) in
+            XCTAssertNotNil(self.manager.availableLanguages)
+        }
+    }
+
+    func testExtractLanguageDictionary() {
+        let dict = ["default":
+            ["successKey": "DanishSuccessUpdated",
+             "successKey2": "DanishSuccessUpdated2"]]
+        do {
+            let result = try manager.extractLanguageDictionary(fromDictionary: dict)
+            XCTAssertFalse(result.isEmpty)
+        } catch {
+            XCTFail("Failed to get contents of dictionaries")
+        }
+    }
+
+    func testParseFallbackJSONLocalizations() {
+        manager.parseFallbackJSONLocalizations { (error) in
+            if error != nil {
+                XCTFail("Failed")
+            }
+        }
+    }
+}
+
+extension DefaultLanguage: Equatable {
+    public static func == (lhs: DefaultLanguage, rhs: DefaultLanguage) -> Bool {
+        return lhs.name == rhs.name
+    }
 }
