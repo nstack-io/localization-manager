@@ -206,7 +206,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         stateObserver.startObserving()
 
         // Load persisted or fallback translations
-        if (try? translations()) == nil {
+        if (try? localization()) == nil {
             parseFallbackJSONLocalizations()
         }
 
