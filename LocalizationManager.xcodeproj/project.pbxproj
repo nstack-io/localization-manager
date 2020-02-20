@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -115,9 +115,6 @@
 		B4B6C97E231ED7D4001A8E5C /* LocalizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C961231ED7D4001A8E5C /* LocalizationManagerTests.swift */; };
 		B4B6C97F231ED7D4001A8E5C /* LocalizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C961231ED7D4001A8E5C /* LocalizationManagerTests.swift */; };
 		B4B6C980231ED7D4001A8E5C /* LocalizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B6C961231ED7D4001A8E5C /* LocalizationManagerTests.swift */; };
-		B4B6C981231ED7D4001A8E5C /* Info-iOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B6C963231ED7D4001A8E5C /* Info-iOS.plist */; };
-		B4B6C986231ED7D4001A8E5C /* Info-tvOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B6C964231ED7D4001A8E5C /* Info-tvOS.plist */; };
-		B4B6C988231ED7D4001A8E5C /* Info-macOS.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4B6C965231ED7D4001A8E5C /* Info-macOS.plist */; };
 		B4B6C98B231ED86D001A8E5C /* LocalizationManager_watchOS.h in Headers */ = {isa = PBXBuildFile; fileRef = B4B6C98A231ED86D001A8E5C /* LocalizationManager_watchOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4B6C98D231ED874001A8E5C /* LocalizationManager_tvOS.h in Headers */ = {isa = PBXBuildFile; fileRef = B4B6C98C231ED874001A8E5C /* LocalizationManager_tvOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B4B6C99A231ED88A001A8E5C /* LocalizationManager_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = B4B6C999231ED88A001A8E5C /* LocalizationManager_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -670,7 +667,6 @@
 				C061C1F6217889E400449A14 /* Sources */,
 				C061C1F7217889E400449A14 /* Frameworks */,
 				C061C1F8217889E400449A14 /* Resources */,
-				EF6973162F624D5385C678DC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -689,7 +685,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1030;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = Nodes;
 				TargetAttributes = {
 					8C50882D230D1D0A00FB80CD = {
@@ -753,7 +749,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4B6C988231ED7D4001A8E5C /* Info-macOS.plist in Resources */,
 				B4B6C96D231ED7D4001A8E5C /* Localization_en-GB.json in Resources */,
 				B4B6C96A231ED7D4001A8E5C /* Localization_fr-FR.json in Resources */,
 				B4B6C967231ED7D4001A8E5C /* Localization_da-DK.json in Resources */,
@@ -778,7 +773,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4B6C986231ED7D4001A8E5C /* Info-tvOS.plist in Resources */,
 				B4B6C96E231ED7D4001A8E5C /* Localization_en-GB.json in Resources */,
 				B4B6C96B231ED7D4001A8E5C /* Localization_fr-FR.json in Resources */,
 				B4B6C968231ED7D4001A8E5C /* Localization_da-DK.json in Resources */,
@@ -796,7 +790,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4B6C981231ED7D4001A8E5C /* Info-iOS.plist in Resources */,
 				B4B6C96C231ED7D4001A8E5C /* Localization_en-GB.json in Resources */,
 				B4B6C969231ED7D4001A8E5C /* Localization_fr-FR.json in Resources */,
 				B4B6C966231ED7D4001A8E5C /* Localization_da-DK.json in Resources */,
@@ -862,23 +855,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EF6973162F624D5385C678DC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LocalizationManagerTests/Pods-LocalizationManagerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LocalizationManagerTests/Pods-LocalizationManagerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LocalizationManagerTests/Pods-LocalizationManagerTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -401,7 +401,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
             return
         }
 
-        if let bestFit = descriptors.filter ({ $0.language.isBestFit }).first {
+        if let bestFit = descriptors.filter({ $0.language.isBestFit }).first {
             if self.bestFitLanguage?.locale.identifier != bestFit.localeIdentifier {
                 // Running language changed action, if best fit language is now different
                 self.delegate?.localizationManager(languageUpdated: bestFit.language)
@@ -409,7 +409,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
             self.bestFitLanguage = bestFit.language as? Language
         }
 
-        if let defaultLang = descriptors.filter ({ $0.language.isDefault }).first {
+        if let defaultLang = descriptors.filter({ $0.language.isDefault }).first {
             self.defaultLanguage = defaultLang.language as? Language
         }
 
