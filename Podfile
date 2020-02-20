@@ -2,8 +2,6 @@ project 'LocalizationManager.xcodeproj'
 platform :ios, '10.3'
 
 def test_pods
-  pod 'Quick'
-  pod 'Nimble'
   pod 'SwiftLint'
   pod 'Sourcery'
 end
