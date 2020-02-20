@@ -1094,7 +1094,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1122,7 +1122,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1191,7 +1191,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-watchOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1219,7 +1219,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-watchOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1246,7 +1246,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.2;
@@ -1273,7 +1273,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = appletvos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 10.2;
@@ -1463,7 +1463,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManager;
 				PRODUCT_NAME = LocalizationManager;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1491,7 +1491,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManager;
 				PRODUCT_NAME = LocalizationManager;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
