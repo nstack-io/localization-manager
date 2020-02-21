@@ -20,8 +20,7 @@ public struct DefaultLanguage: LanguageModel {
         case id, name, direction, locale, isDefault, isBestFit
     }
 
-    init(id: Int, name: String, direction: String,
-         locale: Locale, isDefault: Bool, isBestFit: Bool) {
+    public init(id: Int, name: String, direction: String, locale: Locale, isDefault: Bool, isBestFit: Bool) {
         self.id = id
         self.name = name
         self.direction = direction
