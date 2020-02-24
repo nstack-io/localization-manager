@@ -402,7 +402,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         }
 
         if let bestFit = descriptors.filter({ $0.language.isBestFit }).first {
-            if self.bestFitLanguage?.locale.identifier != bestFit.localeIdentifier {
+            if self.bestFitLanguage?.locale.identifier != bestFit.language.locale.identifier {
                 // Running language changed action, if best fit language is now different
                 self.delegate?.localizationManager(languageUpdated: bestFit.language)
             }

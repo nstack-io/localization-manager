@@ -12,7 +12,6 @@ public protocol LocalizationDescriptor: Codable {
     associatedtype LanguageType: LanguageModel
 
     var shouldUpdate: Bool { get }
-    var localeIdentifier: String { get }
     var url: String { get }
     var language: LanguageType { get }
 }
