@@ -16,8 +16,10 @@ public struct DefaultLanguage: LanguageModel {
     public let isDefault: Bool
     public let isBestFit: Bool
 
-    enum CodingKeys: CodingKey {
-        case id, name, direction, locale, isDefault, isBestFit
+    enum CodingKeys: String, CodingKey {
+        case id, name, direction, locale
+        case isDefault = "is_default"
+        case isBestFit = "is_best_fit"
     }
 
     public init(id: Int, name: String, direction: String, locale: Locale, isDefault: Bool, isBestFit: Bool) {
