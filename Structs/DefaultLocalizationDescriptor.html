@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>LocalizableModel Class Reference</title>
+    <title>DefaultLocalizationDescriptor Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Class/LocalizableModel" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Struct/DefaultLocalizationDescriptor" class="dashAnchor"></a>
 
-    <a title="LocalizableModel Class Reference"></a>
+    <a title="DefaultLocalizationDescriptor Structure Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html"> Reference</a>
       <img class="carat" src="../img/carat.png" />
-      LocalizableModel Class Reference
+      DefaultLocalizationDescriptor Structure Reference
     </p>
 
     <div class="content-wrapper">
@@ -169,10 +169,10 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>LocalizableModel</h1>
+            <h1>DefaultLocalizationDescriptor</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">LocalizableModel</span> <span class="p">:</span> <span class="kt">Codable</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">DefaultLocalizationDescriptor</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/LocalizationDescriptor.html">LocalizationDescriptor</a></span></code></pre>
 
                 </div>
               </div>
@@ -188,9 +188,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:19LocalizationManager16LocalizableModelCACycfc"></a>
-                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:19LocalizationManager16LocalizableModelCACycfc">init()</a>
+                    <a name="/s:19LocalizationManager07DefaultA10DescriptorV8languageAA0C8LanguageVvp"></a>
+                    <a name="//apple_ref/swift/Property/language" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManager07DefaultA10DescriptorV8languageAA0C8LanguageVvp">language</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -205,7 +205,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">language</span><span class="p">:</span> <span class="kt"><a href="../Structs/DefaultLanguage.html">DefaultLanguage</a></span></code></pre>
 
                         </div>
                       </div>
@@ -215,9 +215,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:19LocalizationManager16LocalizableModelCyAA0C7SectionCSgSScip"></a>
-                    <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:19LocalizationManager16LocalizableModelCyAA0C7SectionCSgSScip">subscript(_:)</a>
+                    <a name="/s:19LocalizationManager07DefaultA10DescriptorV13lastUpdatedAt10Foundation4DateVvp"></a>
+                    <a name="//apple_ref/swift/Property/lastUpdatedAt" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManager07DefaultA10DescriptorV13lastUpdatedAt10Foundation4DateVvp">lastUpdatedAt</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -232,7 +232,121 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">key</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/LocalizableSection.html">LocalizableSection</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">lastUpdatedAt</span><span class="p">:</span> <span class="kt">Date</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManager07DefaultA10DescriptorV12shouldUpdateSbvp"></a>
+                    <a name="//apple_ref/swift/Property/shouldUpdate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManager07DefaultA10DescriptorV12shouldUpdateSbvp">shouldUpdate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">shouldUpdate</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManager07DefaultA10DescriptorV16localeIdentifierSSvp"></a>
+                    <a name="//apple_ref/swift/Property/localeIdentifier" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManager07DefaultA10DescriptorV16localeIdentifierSSvp">localeIdentifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">localeIdentifier</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManager07DefaultA10DescriptorV3urlSSvp"></a>
+                    <a name="//apple_ref/swift/Property/url" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManager07DefaultA10DescriptorV3urlSSvp">url</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19LocalizationManager07DefaultA10DescriptorV13lastUpdatedAt16localeIdentifier12shouldUpdate3url8languageAC10Foundation4DateV_SSSbSSAA0C8LanguageVtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(lastUpdatedAt:localeIdentifier:shouldUpdate:url:language:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19LocalizationManager07DefaultA10DescriptorV13lastUpdatedAt16localeIdentifier12shouldUpdate3url8languageAC10Foundation4DateV_SSSbSSAA0C8LanguageVtcfc">init(lastUpdatedAt:localeIdentifier:shouldUpdate:url:language:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span>
+    <span class="nv">lastUpdatedAt</span><span class="p">:</span> <span class="kt">Date</span> <span class="o">=</span> <span class="kt">Date</span><span class="p">(),</span>
+    <span class="nv">localeIdentifier</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">shouldUpdate</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+    <span class="nv">language</span><span class="p">:</span> <span class="kt"><a href="../Structs/DefaultLanguage.html">DefaultLanguage</a></span>
+    <span class="p">)</span></code></pre>
 
                         </div>
                       </div>
