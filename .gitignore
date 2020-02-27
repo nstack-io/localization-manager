@@ -184,3 +184,6 @@ playground.xcworkspace
 
 
 # End of https://www.gitignore.io/api/git,swift,xcode,macos,swiftpm,carthage,cocoapods,objective-c
+
+# Ignore generated docs in repo
+jazzy_docs/

@@ -1,8 +1,8 @@
-# Translation Manager
+# Localization Manager
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nodes-ios/NStackSDK/blob/master/LICENSE)
 
-Translation Manager is a tool for handling bundled and on-the-fly translations in your iOS application.
+Localization Manager is a tool for handling bundled and on-the-fly localization in your iOS application.
 
 ## How does it work?
 
@@ -26,7 +26,7 @@ Translation Manager is a tool for handling bundled and on-the-fly translations i
 
 ## 💻 Usage
 
-> **NOTE:** Don't forget to `import TranslationManager` in the top of the file.
+> **NOTE:** Don't forget to `import LocalizationManager` in the top of the file.
 
 ### Getting Started
 
@@ -56,4 +56,4 @@ $ make release '0.0.7: Update mode feature'
 Made with ❤️ at [Nodes](http://nodesagency.com).
 
 ## 📄 License
-**TranslationManager** is available under the MIT license. See the [LICENSE](https://github.com/nodes-ios/TranslationManager/blob/master/LICENSE) file for more info.
+**LocalizationManager** is available under the MIT license. See the [LICENSE](https://github.com/nodes-ios/LocalizationManager/blob/master/LICENSE) file for more info.

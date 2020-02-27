@@ -1,7 +1,7 @@
 ## Master
-## 0.0.17: Persisted Translations Improvements
-## 0.0.16: Persisted Translations Improvements
-## 0.0.15: Persisted Translations Improvements
+## 0.0.17: Persisted Localizations Improvements
+## 0.0.16: Persisted Localizations Improvements
+## 0.0.15: Persisted Localizations Improvements
 ## 0.0.14: Fixes in UserDefaults and Codable
 ## 0.0.13: More refactoring
 ## 0.0.12: More refactoring

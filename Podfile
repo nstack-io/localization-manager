@@ -1,14 +1,13 @@
-project 'TranslationManager.xcodeproj'
+project 'LocalizationManager.xcodeproj'
 platform :ios, '10.3'
 
 def test_pods
-  pod 'Quick'
-  pod 'Nimble'
   pod 'SwiftLint'
+  pod 'Sourcery'
 end
 
-# Pods for TranslationManagerTests iOS
-target 'TranslationManagerTests' do
+# Pods for LocalizationManagerTests iOS
+target 'LocalizationManagerTests' do
   use_frameworks!
   # Pods for testing
   test_pods
