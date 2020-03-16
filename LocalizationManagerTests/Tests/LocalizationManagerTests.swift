@@ -257,7 +257,15 @@ class LocalizationManagerTests: XCTestCase {
         repositoryMock.localizationsResponse = mockLocalizations
         manager.updateLocalizations()
 
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #if os(tvOS)
+        let dir = FileManager.default.urls(for: .cachesDirectory,
+                                           in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #else
+        let dir = FileManager.default.urls(for: .documentDirectory,
+                                           in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #endif
+        
+        
         do {
             let filePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
             XCTAssertFalse(filePaths.isEmpty)
@@ -276,7 +284,15 @@ class LocalizationManagerTests: XCTestCase {
         repositoryMock.localizationsResponse = mockLocalizations
         manager.updateLocalizations()
 
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #if os(tvOS)
+        let dir = FileManager.default.urls(for: .cachesDirectory,
+                                           in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #else
+        let dir = FileManager.default.urls(for: .documentDirectory,
+                                           in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #endif
+        
+        
         do {
             let filePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
             XCTAssertFalse(filePaths.isEmpty)
