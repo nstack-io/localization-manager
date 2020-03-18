@@ -161,14 +161,23 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
 
     /// The URL used to persist downloaded localizations.
     internal func localizationConfigFileURL() -> URL? {
-        var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        #if os(tvOS)
+            var url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
+        #else
+            var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        #endif
+        
         url = url?.appendingPathComponent("Localization", isDirectory: true)
         return url?.appendingPathComponent("LocalizationData.lclfile", isDirectory: false)
     }
 
     /// The URL used to persist downloaded localizations.
     internal func localizationFileUrl(localeId: String) -> URL? {
-        var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        #if os(tvOS)
+            var url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first
+        #else
+            var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
+        #endif
         url = url?.appendingPathComponent("Localization", isDirectory: true)
         url = url?.appendingPathComponent("Locales", isDirectory: true)
         return url?.appendingPathComponent("\(localeId).tmfile", isDirectory: false)
@@ -655,7 +664,14 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     }
 
     func createDirIfNeeded(dirName: String) {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(dirName + "/")
+        #if os(tvOS)
+        let dir = FileManager.default.urls(for: .cachesDirectory,
+                                           in: .userDomainMask)[0].appendingPathComponent(dirName + "/")
+        #else
+        let dir = FileManager.default.urls(for: .documentDirectory,
+                                           in: .userDomainMask)[0].appendingPathComponent(dirName + "/")
+        #endif
+        
         do {
             try FileManager.default.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
         } catch {
@@ -696,7 +712,12 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     }
 
     internal func deletePersistedLocalizations() throws {
+        #if os(tvOS)
+        let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #else
         let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
+        #endif
+        
 
         //get all filepaths in locale directory
         let filePaths = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
