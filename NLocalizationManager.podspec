@@ -15,7 +15,7 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "LocalizationManager"
+  spec.name         = "NLocalizationManager"
   spec.version      = "3.1.1"
   spec.summary      = "A manager for handling localization in your application."
 
