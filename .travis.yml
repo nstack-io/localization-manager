@@ -1,7 +1,7 @@
 language: objective-c
 osx_image: xcode10.3
-xcode_workspace: LocalizationManager.xcworkspace # path to your xcodeproj folder
-xcode_scheme: LocalizationManager
+xcode_workspace: NLocalizationManager.xcworkspace # path to your xcodeproj folder
+xcode_scheme: NLocalizationManager
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone X
 branches:
   only:

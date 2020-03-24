@@ -1,8 +1,8 @@
-# Localization Manager
+# NLocalizationManager
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/nodes-ios/NStackSDK/blob/master/LICENSE)
 
-Localization Manager is a tool for handling bundled and on-the-fly localization in your iOS application.
+NLocalizationManager is a tool for handling bundled and on-the-fly localization in your iOS application.
 
 ## How does it work?
 
@@ -12,13 +12,15 @@ Localization Manager is a tool for handling bundled and on-the-fly localization 
 
 > TODO: Write info
 
-* Swift 4.2+
+* Swift 5.0+
 
 ## 📦 Installation
 
 ### Carthage
 
-> TODO: Write info
+```
+github "nodes-ios/NLocalizationManager" ~> 3.1.1
+```
 
 ### CocoaPods
 
@@ -58,4 +60,4 @@ $ make release '0.0.7: Update mode feature'
 Made with ❤️ at [Nodes](http://nodesagency.com).
 
 ## 📄 License
-**LocalizationManager** is available under the MIT license. See the [LICENSE](https://github.com/nodes-ios/LocalizationManager/blob/master/LICENSE) file for more info.
+**NLocalizationManager** is available under the MIT license. See the [LICENSE](https://github.com/nodes-ios/NLocalizationManager/blob/master/LICENSE) file for more info.

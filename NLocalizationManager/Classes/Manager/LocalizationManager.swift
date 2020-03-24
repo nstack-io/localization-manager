@@ -166,7 +166,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         #else
             var url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
         #endif
-        
+
         url = url?.appendingPathComponent("Localization", isDirectory: true)
         return url?.appendingPathComponent("LocalizationData.lclfile", isDirectory: false)
     }
@@ -671,7 +671,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         let dir = FileManager.default.urls(for: .documentDirectory,
                                            in: .userDomainMask)[0].appendingPathComponent(dirName + "/")
         #endif
-        
+
         do {
             try FileManager.default.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
         } catch {
@@ -717,7 +717,6 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         #else
         let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
         #endif
-        
 
         //get all filepaths in locale directory
         let filePaths = try fileManager.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])

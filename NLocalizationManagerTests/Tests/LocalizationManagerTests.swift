@@ -7,7 +7,7 @@
 
 import XCTest
 
-@testable import LocalizationManager
+@testable import NLocalizationManager
 
 //swiftlint:disable file_length
 //swiftlint:disable type_body_length
@@ -264,8 +264,7 @@ class LocalizationManagerTests: XCTestCase {
         let dir = FileManager.default.urls(for: .documentDirectory,
                                            in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
         #endif
-        
-        
+
         do {
             let filePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
             XCTAssertFalse(filePaths.isEmpty)
@@ -291,8 +290,7 @@ class LocalizationManagerTests: XCTestCase {
         let dir = FileManager.default.urls(for: .documentDirectory,
                                            in: .userDomainMask)[0].appendingPathComponent("Localization/Locales")
         #endif
-        
-        
+
         do {
             let filePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
             XCTAssertFalse(filePaths.isEmpty)
