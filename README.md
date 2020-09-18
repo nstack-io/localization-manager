@@ -22,7 +22,9 @@ Localization Manager is a tool for handling bundled and on-the-fly localization 
 
 ### CocoaPods
 
-> TODO: Write info
+```ruby
+pod 'NLocalizationManager', ~> '3.1.1'
+```
 
 ## 💻 Usage
 
