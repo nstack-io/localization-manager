@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "NLocalizationManager"
-  spec.version      = "3.1.1"
+  spec.version      = "3.1.2"
   spec.summary      = "A manager for handling localization in your application."
 
   # This description is used to generate tags and improve search results.
@@ -90,7 +90,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "LocalizationManager/Classes/**.swift"
+  spec.source_files  = "LocalizationManager/Classes/**/*.swift"
   #spec.exclude_files = "Classes/Exclude"
   #spec.public_header_files = "LocalizationManager/Supporting Files/*.h"
 
