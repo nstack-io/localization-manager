@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8C50882D230D1D0A00FB80CD"
-               BuildableName = "LocalizationManager.framework"
-               BlueprintName = "LocalizationManager-macOS"
-               ReferencedContainer = "container:LocalizationManager.xcodeproj">
+               BuildableName = "NLocalizationManager.framework"
+               BlueprintName = "NLocalizationManager-macOS"
+               ReferencedContainer = "container:NLocalizationManager.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,9 +42,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8C508835230D1D0A00FB80CD"
-               BuildableName = "LocalizationManager-macOSTests.xctest"
-               BlueprintName = "LocalizationManager-macOSTests"
-               ReferencedContainer = "container:LocalizationManager.xcodeproj">
+               BuildableName = "NLocalizationManager-macOSTests.xctest"
+               BlueprintName = "NLocalizationManager-macOSTests"
+               ReferencedContainer = "container:NLocalizationManager.xcodeproj">
             </BuildableReference>
             <SkippedTests>
                <Test
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8C50882D230D1D0A00FB80CD"
-            BuildableName = "LocalizationManager.framework"
-            BlueprintName = "LocalizationManager-macOS"
-            ReferencedContainer = "container:LocalizationManager.xcodeproj">
+            BuildableName = "NLocalizationManager.framework"
+            BlueprintName = "NLocalizationManager-macOS"
+            ReferencedContainer = "container:NLocalizationManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -84,9 +84,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8C50882D230D1D0A00FB80CD"
-            BuildableName = "LocalizationManager.framework"
-            BlueprintName = "LocalizationManager-macOS"
-            ReferencedContainer = "container:LocalizationManager.xcodeproj">
+            BuildableName = "NLocalizationManager.framework"
+            BlueprintName = "NLocalizationManager-macOS"
+            ReferencedContainer = "container:NLocalizationManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

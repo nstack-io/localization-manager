@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/andrewlloydnodes/TranslationManager/LocalizationManager.xcodeproj">
+      location = "self:/Users/dominik/Projects/LocalizationManager/NLocalizationManager.xcodeproj">
    </FileRef>
 </Workspace>

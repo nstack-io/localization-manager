@@ -1,4 +1,4 @@
-project 'LocalizationManager.xcodeproj'
+project 'NLocalizationManager.xcodeproj'
 platform :ios, '10.3'
 
 def test_pods
@@ -6,8 +6,8 @@ def test_pods
   pod 'Sourcery'
 end
 
-# Pods for LocalizationManagerTests iOS
-target 'LocalizationManagerTests' do
+# Pods for NLocalizationManagerTests iOS
+target 'NLocalizationManagerTests' do
   use_frameworks!
   # Pods for testing
   test_pods
