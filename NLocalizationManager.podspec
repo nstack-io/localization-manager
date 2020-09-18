@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "NLocalizationManager"
-  spec.version      = "3.1.1"
+  spec.version      = "3.1.2"
   spec.summary      = "A manager for handling localization in your application."
   spec.description  = <<-DESC
   Handles localization logic for your application, including smart language
