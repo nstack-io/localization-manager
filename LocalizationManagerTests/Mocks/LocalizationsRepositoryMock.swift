@@ -8,7 +8,7 @@
 
 import Foundation
 
-@testable import NLocalizationManager
+@testable import LocalizationManager
 
 class LocalizationsRepositoryMock<L: LanguageModel>: LocalizationRepository {
 

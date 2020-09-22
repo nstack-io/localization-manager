@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03ABD524BB0A65D30B3C581C /* Pods_LocalizationManagerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FAD800EEEF7A10990BDDFC /* Pods_LocalizationManagerTests.framework */; };
 		2376952C22C0C00E00D40DC1 /* LocalizationMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376952B22C0C00E00D40DC1 /* LocalizationMeta.swift */; };
 		2376952E22C0D4AD00D40DC1 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376952D22C0D4AD00D40DC1 /* Platform.swift */; };
 		23A4296E22BA37C800D09EA1 /* LocalizationDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4296D22BA37C800D09EA1 /* LocalizationDescriptor.swift */; };
-		27B418554310777D5CE120E7 /* Pods_NLocalizationManagerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 235A44354698A23A835AEB5D /* Pods_NLocalizationManagerTests.framework */; };
-		8C508837230D1D0A00FB80CD /* NLocalizationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C50882E230D1D0A00FB80CD /* NLocalizationManager.framework */; };
+		8C508837230D1D0A00FB80CD /* LocalizationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C50882E230D1D0A00FB80CD /* LocalizationManager.framework */; };
 		8C508845230D1D3700FB80CD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69F02178968700A1B354 /* Constants.swift */; };
 		8C508846230D1D4B00FB80CD /* LocalizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69E0217891DF00A1B354 /* LocalizationResponse.swift */; };
 		8C508847230D1D4B00FB80CD /* LocalizationMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376952B22C0C00E00D40DC1 /* LocalizationMeta.swift */; };
@@ -56,7 +56,7 @@
 		8CA9F254230BE20100CF8065 /* ApplicationStateObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */; };
 		8CA9F255230BE20100CF8065 /* ApplicationStateObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF02179DB79002CB099 /* ApplicationStateObserver.swift */; };
 		8CA9F256230BE20100CF8065 /* ApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF42179DE04002CB099 /* ApplicationState.swift */; };
-		8CBF580B230BCA6C00C60FF7 /* NLocalizationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBF5802230BCA6B00C60FF7 /* NLocalizationManager.framework */; };
+		8CBF580B230BCA6C00C60FF7 /* LocalizationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBF5802230BCA6B00C60FF7 /* LocalizationManager.framework */; };
 		8CBF5819230BCA7B00C60FF7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69F02178968700A1B354 /* Constants.swift */; };
 		8CBF581A230BCA8700C60FF7 /* LocalizationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D69E0217891DF00A1B354 /* LocalizationResponse.swift */; };
 		8CBF581B230BCA8C00C60FF7 /* LocalizationMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2376952B22C0C00E00D40DC1 /* LocalizationMeta.swift */; };
@@ -139,7 +139,7 @@
 		C04AFBF72179E16E002CB099 /* ApplicationStateObserverType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */; };
 		C04AFBF92179E2C7002CB099 /* UpdateMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04AFBF82179E2C7002CB099 /* UpdateMode.swift */; };
 		C0537375219C0A170022368E /* PersistedLocalizationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0537374219C0A170022368E /* PersistedLocalizationType.swift */; };
-		C061C1FB217889E400449A14 /* NLocalizationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C061C1F1217889E400449A14 /* NLocalizationManager.framework */; };
+		C061C1FB217889E400449A14 /* LocalizationManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C061C1F1217889E400449A14 /* LocalizationManager.framework */; };
 		C469F15222FC3F48002F9FDF /* LocalizableSection+ClassNameLowerCased.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469F15122FC3F48002F9FDF /* LocalizableSection+ClassNameLowerCased.swift */; };
 		C4A2EC752419201900CD9724 /* LocalizableSection+ClassNameLowerCased.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469F15122FC3F48002F9FDF /* LocalizableSection+ClassNameLowerCased.swift */; };
 		C4A2EC762419201900CD9724 /* LocalizableSection+ClassNameLowerCased.swift in Sources */ = {isa = PBXBuildFile; fileRef = C469F15122FC3F48002F9FDF /* LocalizableSection+ClassNameLowerCased.swift */; };
@@ -171,27 +171,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		235A44354698A23A835AEB5D /* Pods_NLocalizationManagerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NLocalizationManagerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2376952B22C0C00E00D40DC1 /* LocalizationMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationMeta.swift; sourceTree = "<group>"; };
 		2376952D22C0D4AD00D40DC1 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		23A4296D22BA37C800D09EA1 /* LocalizationDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationDescriptor.swift; sourceTree = "<group>"; };
 		360F17E40123FC2109DC2C1C /* Pods-LocalizationManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalizationManagerTests.debug.xcconfig"; path = "Target Support Files/Pods-LocalizationManagerTests/Pods-LocalizationManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		43710D5F3E31051A7CF3BF87 /* Pods-NLocalizationManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NLocalizationManagerTests.debug.xcconfig"; path = "Target Support Files/Pods-NLocalizationManagerTests/Pods-NLocalizationManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		8C50882E230D1D0A00FB80CD /* NLocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NLocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C50882E230D1D0A00FB80CD /* LocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C508831230D1D0A00FB80CD /* Info-macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
-		8C508836230D1D0A00FB80CD /* NLocalizationManager-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NLocalizationManager-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8CA9F236230BE19F00CF8065 /* NLocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NLocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8C508836230D1D0A00FB80CD /* LocalizationManager-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LocalizationManager-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CA9F236230BE19F00CF8065 /* LocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CA9F239230BE1A000CF8065 /* Info-watchOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-watchOS.plist"; sourceTree = "<group>"; };
-		8CBF5802230BCA6B00C60FF7 /* NLocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NLocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CBF5802230BCA6B00C60FF7 /* LocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CBF5805230BCA6C00C60FF7 /* Info-tvOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-tvOS.plist"; sourceTree = "<group>"; };
-		8CBF580A230BCA6C00C60FF7 /* NLocalizationManager-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NLocalizationManager-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CBF580A230BCA6C00C60FF7 /* LocalizationManager-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LocalizationManager-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4020B9122C3C82F007EC5DD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B4020B9222C3C851007EC5DD /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		B4020B9B22C5171C007EC5DD /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		B4020B9F22C517B7007EC5DD /* AcceptLanguageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptLanguageProvider.swift; sourceTree = "<group>"; };
 		B416CA8423357140007935E9 /* DefaultLocalizationDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocalizationDescriptor.swift; sourceTree = "<group>"; };
 		B464DB6C2319CCAE00713265 /* LocalizationManager+ApplicationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizationManager+ApplicationState.swift"; sourceTree = "<group>"; };
-		B4829FF8242A8B880068C69E /* NLocalizationManager.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = NLocalizationManager.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B490AD7023356E3700260A17 /* AutoMockable.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
 		B490AD7123356F4B00260A17 /* AutoMockable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoMockable.generated.swift; sourceTree = "<group>"; };
 		B4B6C94E231ECB8B001A8E5C /* DefaultLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLanguage.swift; sourceTree = "<group>"; };
@@ -228,11 +225,11 @@
 		C04AFBF62179E16E002CB099 /* ApplicationStateObserverType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStateObserverType.swift; sourceTree = "<group>"; };
 		C04AFBF82179E2C7002CB099 /* UpdateMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMode.swift; sourceTree = "<group>"; };
 		C0537374219C0A170022368E /* PersistedLocalizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedLocalizationType.swift; sourceTree = "<group>"; };
-		C061C1F1217889E400449A14 /* NLocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NLocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C061C1F1217889E400449A14 /* LocalizationManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LocalizationManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C061C1F5217889E400449A14 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
-		C061C1FA217889E400449A14 /* NLocalizationManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NLocalizationManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C061C1FA217889E400449A14 /* LocalizationManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalizationManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C469F15122FC3F48002F9FDF /* LocalizableSection+ClassNameLowerCased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalizableSection+ClassNameLowerCased.swift"; sourceTree = "<group>"; };
-		E0580DA016A938209AFF06D1 /* Pods-NLocalizationManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NLocalizationManagerTests.release.xcconfig"; path = "Target Support Files/Pods-NLocalizationManagerTests/Pods-NLocalizationManagerTests.release.xcconfig"; sourceTree = "<group>"; };
+		C6FAD800EEEF7A10990BDDFC /* Pods_LocalizationManagerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocalizationManagerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,7 +244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C508837230D1D0A00FB80CD /* NLocalizationManager.framework in Frameworks */,
+				8C508837230D1D0A00FB80CD /* LocalizationManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,7 +266,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CBF580B230BCA6C00C60FF7 /* NLocalizationManager.framework in Frameworks */,
+				8CBF580B230BCA6C00C60FF7 /* LocalizationManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,8 +281,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C061C1FB217889E400449A14 /* NLocalizationManager.framework in Frameworks */,
-				27B418554310777D5CE120E7 /* Pods_NLocalizationManagerTests.framework in Frameworks */,
+				C061C1FB217889E400449A14 /* LocalizationManager.framework in Frameworks */,
+				03ABD524BB0A65D30B3C581C /* Pods_LocalizationManagerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,12 +292,12 @@
 		10D8845F42D7F1B8E954D182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				235A44354698A23A835AEB5D /* Pods_NLocalizationManagerTests.framework */,
+				C6FAD800EEEF7A10990BDDFC /* Pods_LocalizationManagerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8CBF5833230BCB8000C60FF7 /* NLocalizationManagerTests */ = {
+		8CBF5833230BCB8000C60FF7 /* LocalizationManagerTests */ = {
 			isa = PBXGroup;
 			children = (
 				B4B6C95C231ED7D4001A8E5C /* Mocks */,
@@ -309,7 +306,7 @@
 				B4B6C955231ED7D4001A8E5C /* Resources */,
 				B4B6C962231ED7D4001A8E5C /* Supporting Files */,
 			);
-			path = NLocalizationManagerTests;
+			path = LocalizationManagerTests;
 			sourceTree = "<group>";
 		};
 		B4020B9022C3C74A007EC5DD /* Application State Observer */ = {
@@ -475,11 +472,10 @@
 		C061C1E7217889E400449A14 = {
 			isa = PBXGroup;
 			children = (
-				B4829FF8242A8B880068C69E /* NLocalizationManager.podspec */,
 				B4020B9122C3C82F007EC5DD /* README.md */,
 				B4020B9222C3C851007EC5DD /* CHANGELOG.md */,
-				C061C1F3217889E400449A14 /* NLocalizationManager */,
-				8CBF5833230BCB8000C60FF7 /* NLocalizationManagerTests */,
+				C061C1F3217889E400449A14 /* LocalizationManager */,
+				8CBF5833230BCB8000C60FF7 /* LocalizationManagerTests */,
 				C061C1F2217889E400449A14 /* Products */,
 				10D8845F42D7F1B8E954D182 /* Frameworks */,
 				F4F9F4801E266FD8F6189F6E /* Pods */,
@@ -489,24 +485,24 @@
 		C061C1F2217889E400449A14 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C061C1F1217889E400449A14 /* NLocalizationManager.framework */,
-				C061C1FA217889E400449A14 /* NLocalizationManagerTests.xctest */,
-				8CBF5802230BCA6B00C60FF7 /* NLocalizationManager.framework */,
-				8CBF580A230BCA6C00C60FF7 /* NLocalizationManager-tvOSTests.xctest */,
-				8CA9F236230BE19F00CF8065 /* NLocalizationManager.framework */,
-				8C50882E230D1D0A00FB80CD /* NLocalizationManager.framework */,
-				8C508836230D1D0A00FB80CD /* NLocalizationManager-macOSTests.xctest */,
+				C061C1F1217889E400449A14 /* LocalizationManager.framework */,
+				C061C1FA217889E400449A14 /* LocalizationManagerTests.xctest */,
+				8CBF5802230BCA6B00C60FF7 /* LocalizationManager.framework */,
+				8CBF580A230BCA6C00C60FF7 /* LocalizationManager-tvOSTests.xctest */,
+				8CA9F236230BE19F00CF8065 /* LocalizationManager.framework */,
+				8C50882E230D1D0A00FB80CD /* LocalizationManager.framework */,
+				8C508836230D1D0A00FB80CD /* LocalizationManager-macOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C061C1F3217889E400449A14 /* NLocalizationManager */ = {
+		C061C1F3217889E400449A14 /* LocalizationManager */ = {
 			isa = PBXGroup;
 			children = (
 				C01D69D3217890C800A1B354 /* Classes */,
 				C01D69D22178909300A1B354 /* Supporting Files */,
 			);
-			path = NLocalizationManager;
+			path = LocalizationManager;
 			sourceTree = "<group>";
 		};
 		F4F9F4801E266FD8F6189F6E /* Pods */ = {
@@ -514,8 +510,6 @@
 			children = (
 				360F17E40123FC2109DC2C1C /* Pods-LocalizationManagerTests.debug.xcconfig */,
 				BD5866AAF251C41B6BD32122 /* Pods-LocalizationManagerTests.release.xcconfig */,
-				43710D5F3E31051A7CF3BF87 /* Pods-NLocalizationManagerTests.debug.xcconfig */,
-				E0580DA016A938209AFF06D1 /* Pods-NLocalizationManagerTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -558,9 +552,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8C50882D230D1D0A00FB80CD /* NLocalizationManager-macOS */ = {
+		8C50882D230D1D0A00FB80CD /* LocalizationManager-macOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8C50883F230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "NLocalizationManager-macOS" */;
+			buildConfigurationList = 8C50883F230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "LocalizationManager-macOS" */;
 			buildPhases = (
 				8C508829230D1D0A00FB80CD /* Headers */,
 				8C50882A230D1D0A00FB80CD /* Sources */,
@@ -571,14 +565,14 @@
 			);
 			dependencies = (
 			);
-			name = "NLocalizationManager-macOS";
+			name = "LocalizationManager-macOS";
 			productName = "TranslationManager-macOS";
-			productReference = 8C50882E230D1D0A00FB80CD /* NLocalizationManager.framework */;
+			productReference = 8C50882E230D1D0A00FB80CD /* LocalizationManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8C508835230D1D0A00FB80CD /* NLocalizationManager-macOSTests */ = {
+		8C508835230D1D0A00FB80CD /* LocalizationManager-macOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8C508842230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "NLocalizationManager-macOSTests" */;
+			buildConfigurationList = 8C508842230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "LocalizationManager-macOSTests" */;
 			buildPhases = (
 				8C508832230D1D0A00FB80CD /* Sources */,
 				8C508833230D1D0A00FB80CD /* Frameworks */,
@@ -589,14 +583,14 @@
 			dependencies = (
 				8C508839230D1D0A00FB80CD /* PBXTargetDependency */,
 			);
-			name = "NLocalizationManager-macOSTests";
+			name = "LocalizationManager-macOSTests";
 			productName = "TranslationManager-macOSTests";
-			productReference = 8C508836230D1D0A00FB80CD /* NLocalizationManager-macOSTests.xctest */;
+			productReference = 8C508836230D1D0A00FB80CD /* LocalizationManager-macOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		8CA9F235230BE19F00CF8065 /* NLocalizationManager-watchOS */ = {
+		8CA9F235230BE19F00CF8065 /* LocalizationManager-watchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8CA9F23B230BE1A000CF8065 /* Build configuration list for PBXNativeTarget "NLocalizationManager-watchOS" */;
+			buildConfigurationList = 8CA9F23B230BE1A000CF8065 /* Build configuration list for PBXNativeTarget "LocalizationManager-watchOS" */;
 			buildPhases = (
 				8CA9F231230BE19F00CF8065 /* Headers */,
 				8CA9F232230BE19F00CF8065 /* Sources */,
@@ -607,14 +601,14 @@
 			);
 			dependencies = (
 			);
-			name = "NLocalizationManager-watchOS";
+			name = "LocalizationManager-watchOS";
 			productName = "TranslationManager-watchOS";
-			productReference = 8CA9F236230BE19F00CF8065 /* NLocalizationManager.framework */;
+			productReference = 8CA9F236230BE19F00CF8065 /* LocalizationManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8CBF5801230BCA6B00C60FF7 /* NLocalizationManager-tvOS */ = {
+		8CBF5801230BCA6B00C60FF7 /* LocalizationManager-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8CBF5817230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "NLocalizationManager-tvOS" */;
+			buildConfigurationList = 8CBF5817230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "LocalizationManager-tvOS" */;
 			buildPhases = (
 				8CBF57FD230BCA6B00C60FF7 /* Headers */,
 				8CBF57FE230BCA6B00C60FF7 /* Sources */,
@@ -625,14 +619,14 @@
 			);
 			dependencies = (
 			);
-			name = "NLocalizationManager-tvOS";
+			name = "LocalizationManager-tvOS";
 			productName = "TranslationManager-tvOS";
-			productReference = 8CBF5802230BCA6B00C60FF7 /* NLocalizationManager.framework */;
+			productReference = 8CBF5802230BCA6B00C60FF7 /* LocalizationManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8CBF5809230BCA6C00C60FF7 /* NLocalizationManager-tvOSTests */ = {
+		8CBF5809230BCA6C00C60FF7 /* LocalizationManager-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8CBF5818230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "NLocalizationManager-tvOSTests" */;
+			buildConfigurationList = 8CBF5818230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "LocalizationManager-tvOSTests" */;
 			buildPhases = (
 				8CBF5806230BCA6C00C60FF7 /* Sources */,
 				8CBF5807230BCA6C00C60FF7 /* Frameworks */,
@@ -643,14 +637,14 @@
 			dependencies = (
 				8CBF580D230BCA6C00C60FF7 /* PBXTargetDependency */,
 			);
-			name = "NLocalizationManager-tvOSTests";
+			name = "LocalizationManager-tvOSTests";
 			productName = "TranslationManager-tvOSTests";
-			productReference = 8CBF580A230BCA6C00C60FF7 /* NLocalizationManager-tvOSTests.xctest */;
+			productReference = 8CBF580A230BCA6C00C60FF7 /* LocalizationManager-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C061C1F0217889E400449A14 /* NLocalizationManager */ = {
+		C061C1F0217889E400449A14 /* LocalizationManager */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C061C205217889E400449A14 /* Build configuration list for PBXNativeTarget "NLocalizationManager" */;
+			buildConfigurationList = C061C205217889E400449A14 /* Build configuration list for PBXNativeTarget "LocalizationManager" */;
 			buildPhases = (
 				B4020BA222C519FA007EC5DD /* SwiftLint */,
 				C061C1EC217889E400449A14 /* Headers */,
@@ -662,14 +656,14 @@
 			);
 			dependencies = (
 			);
-			name = NLocalizationManager;
+			name = LocalizationManager;
 			productName = TranslationManager;
-			productReference = C061C1F1217889E400449A14 /* NLocalizationManager.framework */;
+			productReference = C061C1F1217889E400449A14 /* LocalizationManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C061C1F9217889E400449A14 /* NLocalizationManagerTests */ = {
+		C061C1F9217889E400449A14 /* LocalizationManagerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C061C208217889E400449A14 /* Build configuration list for PBXNativeTarget "NLocalizationManagerTests" */;
+			buildConfigurationList = C061C208217889E400449A14 /* Build configuration list for PBXNativeTarget "LocalizationManagerTests" */;
 			buildPhases = (
 				C9424D908B947525507B2FA9 /* [CP] Check Pods Manifest.lock */,
 				B490AD6E23356DE000260A17 /* Sourcery */,
@@ -682,9 +676,9 @@
 			dependencies = (
 				C061C1FD217889E400449A14 /* PBXTargetDependency */,
 			);
-			name = NLocalizationManagerTests;
+			name = LocalizationManagerTests;
 			productName = TranslationManagerTests;
-			productReference = C061C1FA217889E400449A14 /* NLocalizationManagerTests.xctest */;
+			productReference = C061C1FA217889E400449A14 /* LocalizationManagerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -722,7 +716,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C061C1EB217889E400449A14 /* Build configuration list for PBXProject "NLocalizationManager" */;
+			buildConfigurationList = C061C1EB217889E400449A14 /* Build configuration list for PBXProject "LocalizationManager" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -735,13 +729,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C061C1F0217889E400449A14 /* NLocalizationManager */,
-				8C50882D230D1D0A00FB80CD /* NLocalizationManager-macOS */,
-				8CBF5801230BCA6B00C60FF7 /* NLocalizationManager-tvOS */,
-				8CA9F235230BE19F00CF8065 /* NLocalizationManager-watchOS */,
-				C061C1F9217889E400449A14 /* NLocalizationManagerTests */,
-				8C508835230D1D0A00FB80CD /* NLocalizationManager-macOSTests */,
-				8CBF5809230BCA6C00C60FF7 /* NLocalizationManager-tvOSTests */,
+				C061C1F0217889E400449A14 /* LocalizationManager */,
+				8C50882D230D1D0A00FB80CD /* LocalizationManager-macOS */,
+				8CBF5801230BCA6B00C60FF7 /* LocalizationManager-tvOS */,
+				8CA9F235230BE19F00CF8065 /* LocalizationManager-watchOS */,
+				C061C1F9217889E400449A14 /* LocalizationManagerTests */,
+				8C508835230D1D0A00FB80CD /* LocalizationManager-macOSTests */,
+				8CBF5809230BCA6C00C60FF7 /* LocalizationManager-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -842,7 +836,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/Sourcery/bin/sourcery --sources \"${SRCROOT}/NLocalizationManager\" --templates \"${SRCROOT}/NLocalizationManagerTests/Mocks/Stencils\" --output \"${SRCROOT}/NLocalizationManagerTests/Mocks\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/Sourcery/bin/sourcery --sources \"${SRCROOT}/LocalizationManager\" --templates \"${SRCROOT}/LocalizationManagerTests/Mocks/Stencils\" --output \"${SRCROOT}/LocalizationManagerTests/Mocks\"\n";
 		};
 		C9424D908B947525507B2FA9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -859,7 +853,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NLocalizationManagerTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-LocalizationManagerTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1043,17 +1037,17 @@
 /* Begin PBXTargetDependency section */
 		8C508839230D1D0A00FB80CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8C50882D230D1D0A00FB80CD /* NLocalizationManager-macOS */;
+			target = 8C50882D230D1D0A00FB80CD /* LocalizationManager-macOS */;
 			targetProxy = 8C508838230D1D0A00FB80CD /* PBXContainerItemProxy */;
 		};
 		8CBF580D230BCA6C00C60FF7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8CBF5801230BCA6B00C60FF7 /* NLocalizationManager-tvOS */;
+			target = 8CBF5801230BCA6B00C60FF7 /* LocalizationManager-tvOS */;
 			targetProxy = 8CBF580C230BCA6C00C60FF7 /* PBXContainerItemProxy */;
 		};
 		C061C1FD217889E400449A14 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C061C1F0217889E400449A14 /* NLocalizationManager */;
+			target = C061C1F0217889E400449A14 /* LocalizationManager */;
 			targetProxy = C061C1FC217889E400449A14 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1071,7 +1065,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-macOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-macOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1079,8 +1073,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-macOS";
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOS";
+				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
@@ -1099,7 +1093,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-macOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-macOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1107,8 +1101,8 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-macOS";
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOS";
+				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
@@ -1122,14 +1116,14 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "NLocalizationManagerTests/Supporting Files/Info-macOS.plist";
+				INFOPLIST_FILE = "LocalizationManagerTests/Supporting Files/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-macOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1144,14 +1138,14 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "NLocalizationManagerTests/Supporting Files/Info-macOS.plist";
+				INFOPLIST_FILE = "LocalizationManagerTests/Supporting Files/Info-macOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-macOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -1169,15 +1163,15 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-watchOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-watchOS";
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-watchOS";
+				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
@@ -1197,15 +1191,15 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-watchOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-watchOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-watchOS";
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-watchOS";
+				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
@@ -1224,15 +1218,15 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-tvOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-tvOS";
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOS";
+				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
@@ -1251,15 +1245,15 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-tvOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-tvOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-tvOS";
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOS";
+				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
@@ -1273,13 +1267,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "NLocalizationManagerTests/Supporting Files/Info-tvOS.plist";
+				INFOPLIST_FILE = "LocalizationManagerTests/Supporting Files/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -1293,13 +1287,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "NLocalizationManagerTests/Supporting Files/Info-tvOS.plist";
+				INFOPLIST_FILE = "LocalizationManagerTests/Supporting Files/Info-tvOS.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.NLocalizationManager-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -1312,7 +1306,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1377,7 +1370,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1443,7 +1435,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-iOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1451,8 +1443,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.NLocalizationManager;
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManager;
+				PRODUCT_NAME = LocalizationManager;
 				SKIP_INSTALL = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1471,7 +1463,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/NLocalizationManager/Supporting Files/Info-iOS.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1479,8 +1471,8 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.NLocalizationManager;
-				PRODUCT_NAME = NLocalizationManager;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManager;
+				PRODUCT_NAME = LocalizationManager;
 				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1489,19 +1481,19 @@
 		};
 		C061C209217889E400449A14 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43710D5F3E31051A7CF3BF87 /* Pods-NLocalizationManagerTests.debug.xcconfig */;
+			baseConfigurationReference = 360F17E40123FC2109DC2C1C /* Pods-LocalizationManagerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "NLocalizationManagerTests/Supporting Files/Info-iOS.plist";
+				INFOPLIST_FILE = "LocalizationManagerTests/Supporting Files/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.NLocalizationManagerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManagerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1512,19 +1504,19 @@
 		};
 		C061C20A217889E400449A14 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0580DA016A938209AFF06D1 /* Pods-NLocalizationManagerTests.release.xcconfig */;
+			baseConfigurationReference = BD5866AAF251C41B6BD32122 /* Pods-LocalizationManagerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = "NLocalizationManagerTests/Supporting Files/Info-iOS.plist";
+				INFOPLIST_FILE = "LocalizationManagerTests/Supporting Files/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.NLocalizationManagerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManagerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1534,7 +1526,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8C50883F230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "NLocalizationManager-macOS" */ = {
+		8C50883F230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "LocalizationManager-macOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8C508840230D1D0A00FB80CD /* Debug */,
@@ -1543,7 +1535,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8C508842230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "NLocalizationManager-macOSTests" */ = {
+		8C508842230D1D0A00FB80CD /* Build configuration list for PBXNativeTarget "LocalizationManager-macOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8C508843230D1D0A00FB80CD /* Debug */,
@@ -1552,7 +1544,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8CA9F23B230BE1A000CF8065 /* Build configuration list for PBXNativeTarget "NLocalizationManager-watchOS" */ = {
+		8CA9F23B230BE1A000CF8065 /* Build configuration list for PBXNativeTarget "LocalizationManager-watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8CA9F23C230BE1A000CF8065 /* Debug */,
@@ -1561,7 +1553,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8CBF5817230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "NLocalizationManager-tvOS" */ = {
+		8CBF5817230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "LocalizationManager-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8CBF5813230BCA6C00C60FF7 /* Debug */,
@@ -1570,7 +1562,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8CBF5818230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "NLocalizationManager-tvOSTests" */ = {
+		8CBF5818230BCA6C00C60FF7 /* Build configuration list for PBXNativeTarget "LocalizationManager-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8CBF5815230BCA6C00C60FF7 /* Debug */,
@@ -1579,7 +1571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C061C1EB217889E400449A14 /* Build configuration list for PBXProject "NLocalizationManager" */ = {
+		C061C1EB217889E400449A14 /* Build configuration list for PBXProject "LocalizationManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C061C203217889E400449A14 /* Debug */,
@@ -1588,7 +1580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C061C205217889E400449A14 /* Build configuration list for PBXNativeTarget "NLocalizationManager" */ = {
+		C061C205217889E400449A14 /* Build configuration list for PBXNativeTarget "LocalizationManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C061C206217889E400449A14 /* Debug */,
@@ -1597,7 +1589,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C061C208217889E400449A14 /* Build configuration list for PBXNativeTarget "NLocalizationManagerTests" */ = {
+		C061C208217889E400449A14 /* Build configuration list for PBXNativeTarget "LocalizationManagerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C061C209217889E400449A14 /* Debug */,

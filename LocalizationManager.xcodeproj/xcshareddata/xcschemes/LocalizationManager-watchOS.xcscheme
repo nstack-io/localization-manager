@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8CA9F235230BE19F00CF8065"
-               BuildableName = "NLocalizationManager.framework"
-               BlueprintName = "NLocalizationManager-watchOS"
-               ReferencedContainer = "container:NLocalizationManager.xcodeproj">
+               BuildableName = "LocalizationManager.framework"
+               BlueprintName = "LocalizationManager-watchOS"
+               ReferencedContainer = "container:LocalizationManager.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8CA9F235230BE19F00CF8065"
-            BuildableName = "NLocalizationManager.framework"
-            BlueprintName = "NLocalizationManager-watchOS"
-            ReferencedContainer = "container:NLocalizationManager.xcodeproj">
+            BuildableName = "LocalizationManager.framework"
+            BlueprintName = "LocalizationManager-watchOS"
+            ReferencedContainer = "container:LocalizationManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -60,9 +60,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8CA9F235230BE19F00CF8065"
-            BuildableName = "NLocalizationManager.framework"
-            BlueprintName = "NLocalizationManager-watchOS"
-            ReferencedContainer = "container:NLocalizationManager.xcodeproj">
+            BuildableName = "LocalizationManager.framework"
+            BlueprintName = "LocalizationManager-watchOS"
+            ReferencedContainer = "container:LocalizationManager.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

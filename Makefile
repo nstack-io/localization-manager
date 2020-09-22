@@ -1,4 +1,4 @@
-TM_PLIST=NLocalizationManager/Supporting Files/Info.plist
+TM_PLIST=LocalizationManager/Supporting Files/Info.plist
 CURRENT_BRANCH=$(shell git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
 release:
@@ -12,7 +12,7 @@ endif
 	$(eval NEW_VERSION := $(shell echo $(NEW_VERSION_AND_NAME) | sed 's/:.*//' ))
 	@sed -i '' 's/## Master/## $(NEW_VERSION_AND_NAME)/g' CHANGELOG.md
 	@echo "## Master" | cat - CHANGELOG.md > /tmp/out && mv /tmp/out CHANGELOG.md
-	@sed -i '' 's/spec.version      = ".*"/spec.version      = "${NEW_VERSION}"/g' NLocalizationManager.podspec
+	@sed -i '' 's/spec.version      = ".*"/spec.version      = "${NEW_VERSION}"/g' TranslationManager.podspec
 	@/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $(NEW_VERSION)" "$(TM_PLIST)"
 	git commit -a -m "release $(NEW_VERSION)"
 	git tag -a $(NEW_VERSION) -m "$(NEW_VERSION_AND_NAME)"
@@ -25,7 +25,7 @@ docs:
 		--clean \
 		--author Nodes \
 		--author_url "https://www.nodesagency.com" \
-		--github_url "https://github.com/nodes-ios/NLocalizationManager" \
+		--github_url "https://github.com/nodes-ios/TranslationManager" \
 		--no-hide-documentation-coverage \
 		--theme fullwidth \
 		--output ./jazzy_docs \
