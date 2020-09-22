@@ -2,7 +2,7 @@
 // DO NOT EDIT
 
 import Foundation
-@testable import NLocalizationManager
+@testable import LocalizationManager
 #if os(iOS) || os(tvOS) || os(watchOS)
 import UIKit
 #elseif os(OSX)

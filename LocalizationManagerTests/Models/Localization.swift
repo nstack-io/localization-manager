@@ -1,13 +1,13 @@
 //
 //  Localization.swift
-//  NLocalizationManagerTests
+//  LocalizationManagerTests
 //
 //  Created by Dominik Hádl on 21/06/2019.
 //  Copyright © 2019 Nodes. All rights reserved.
 //
 
 import Foundation
-@testable import NLocalizationManager
+@testable import LocalizationManager
 
 public final class Localization: LocalizableModel {
     public var otherSection = OtherSection()
