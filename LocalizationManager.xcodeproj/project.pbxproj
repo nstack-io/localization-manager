@@ -804,7 +804,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		B4020BA222C519FA007EC5DD /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -816,7 +816,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "if [ -e ${SRCROOT}/Pods/SwiftLint/swiftlint ]; then\n    ${SRCROOT}/Pods/SwiftLint/swiftlint autocorrect --config \"${SRCROOT}/.swiftlint.yml\"\n    ${SRCROOT}/Pods/SwiftLint/swiftlint --config \"${SRCROOT}/.swiftlint.yml\"\nfi\n";
 		};
@@ -1073,6 +1073,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = macosx;
@@ -1101,6 +1102,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-macOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = macosx;
@@ -1170,6 +1172,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-watchOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = watchos;
@@ -1198,6 +1201,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-watchOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = watchos;
@@ -1225,6 +1229,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = appletvos;
@@ -1252,6 +1257,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nodes.LocalizationManager-tvOS";
 				PRODUCT_NAME = LocalizationManager;
 				SDKROOT = appletvos;
@@ -1437,12 +1443,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManager;
 				PRODUCT_NAME = LocalizationManager;
 				SKIP_INSTALL = NO;
@@ -1465,12 +1472,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/LocalizationManager/Supporting Files/Info-iOS.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nodes.LocalizationManager;
 				PRODUCT_NAME = LocalizationManager;
 				SKIP_INSTALL = NO;
