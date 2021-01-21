@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "NLocalizationManager"
-  spec.version      = "3.1.2"
+  spec.version      = "3.1.3"
   spec.summary      = "A manager for handling localization in your application."
 
   # This description is used to generate tags and improve search results.
@@ -65,7 +65,7 @@ Pod::Spec.new do |spec|
   #
 
   #  When using multiple platforms
-  spec.ios.deployment_target = "10.3"
+  spec.ios.deployment_target = "9.0"
   spec.osx.deployment_target = "10.11"
   spec.watchos.deployment_target = "2.0"
   spec.tvos.deployment_target = "10.2"
