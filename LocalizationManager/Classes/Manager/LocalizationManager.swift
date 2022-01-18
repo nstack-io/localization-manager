@@ -200,6 +200,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
                          contextRepository: LocalizationContextRepository,
                          localizableModel: LocalizableModel.Type,
                          updateMode: UpdateMode = .automatic,
+                         lookupPersistedLocalizations: Bool = true,
                          fileManager: FileManager = .default,
                          userDefaults: UserDefaults = .standard) {
         // Set the properties
@@ -215,7 +216,8 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         stateObserver.startObserving()
 
         // Load persisted or fallback translations
-        if (try? localization()) == nil {
+
+        if (try? localization(lookupPersistedLocalizations: lookupPersistedLocalizations)) == nil {
             parseFallbackJSONLocalizations()
         }
 
@@ -563,7 +565,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     /// If a persisted version cannot be found, the fallback json file in the bundle will be used.
     ///
     /// - Returns: A localizations object.
-    public func localization<T: LocalizableModel>(localeId: String? = nil) throws -> T {
+    public func localization<T: LocalizableModel>(localeId: String? = nil, lookupPersistedLocalizations: Bool = true) throws -> T {
         guard let locale = localeId ?? bestFitLanguage?.locale.identifier
             ?? languageOverride?.locale.identifier
             ?? getAvailablePreferredLanguageLocale()
@@ -584,7 +586,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         }
 
         // Load persisted or fallback localizations
-        try createLocalizationObject(locale)
+        try createLocalizationObject(locale, lookupPersistedLocalizations: lookupPersistedLocalizations)
 
         // Now we must have correct localizations, so return it
         if let to = localizableObjectDictonary[locale] as? T {
@@ -620,21 +622,26 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     }
 
     /// Loads and initializes the localizations object from either persisted or fallback dictionary.
-    func createLocalizationObject(_ localeId: String) throws {
+    func createLocalizationObject(_ localeId: String, lookupPersistedLocalizations: Bool = true) throws {
         let localization: LocalizationResponse<Language>
         var shouldUnwrapLocalization = false
 
-        //try to use persisted localizations for locale
-        if let persisted = try persistedLocalization(localeId: localeId),
-            let typeString = userDefaults.string(forKey: Constants.Keys.persistedLocalizationType),
-            let localizationType = PersistedLocalizationType(rawValue: typeString) {
-            localization = persisted
-            shouldUnwrapLocalization = localizationType == .all // only unwrap when all localizations are stored
+        if lookupPersistedLocalizations {
+            //try to use persisted localizations for locale
+            if let persisted = try persistedLocalization(localeId: localeId),
+               let typeString = userDefaults.string(forKey: Constants.Keys.persistedLocalizationType),
+               let localizationType = PersistedLocalizationType(rawValue: typeString) {
+                localization = persisted
+                shouldUnwrapLocalization = localizationType == .all // only unwrap when all localizations are stored
 
+            } else {
+                //otherwise search for fallback
+                localization = try fallbackLocalization(localeId: localeId)
+            }
         } else {
-            //otherwise search for fallback
             localization = try fallbackLocalization(localeId: localeId)
         }
+
 
         // Figure out and set localizations
         guard let parsed = try processAllLocalizations(localization, shouldUnwrap: shouldUnwrapLocalization)  else {
@@ -759,7 +766,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         // Iterate through bundle until we find the localizations file
         for bundle: Bundle in [Bundle(for: localizableModel.self)] + contextRepository.getLocalizationBundles() {
             // Check if bundle contains localizations file, otheriwse continue with next bundle
-            guard let filePath = bundle.path(forResource: "Localizations_\(localeId)", ofType: "json") else {
+            guard let filePath = bundle.path(forResource: "Localization_\(localeId)", ofType: "json") else {
                 continue
             }
 

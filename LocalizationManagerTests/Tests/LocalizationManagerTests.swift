@@ -160,6 +160,7 @@ class LocalizationManagerTests: XCTestCase {
         let expect = expectation(description: "")
         let config = mockLocalizationConfigWithUpdate
         let localizations: [DefaultLocalizationDescriptor] = [config, mockLocalizationConfigWithUpdate, mockLocalizationConfigWithoutUpdate]
+        expect.expectedFulfillmentCount = 3
         repositoryMock.availableLocalizations = localizations
         repositoryMock.localizationsResponse = nil
         manager.updateLocalizations { (error) in
