@@ -200,7 +200,6 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
                          contextRepository: LocalizationContextRepository,
                          localizableModel: LocalizableModel.Type,
                          updateMode: UpdateMode = .automatic,
-                         lookupPersistedLocalizations: Bool = true,
                          fileManager: FileManager = .default,
                          userDefaults: UserDefaults = .standard) {
         // Set the properties
@@ -216,8 +215,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         stateObserver.startObserving()
 
         // Load persisted or fallback translations
-
-        if (try? localization(lookupPersistedLocalizations: lookupPersistedLocalizations)) == nil {
+        if (try? localization(lookupPersistedLocalizations: updateMode != .never)) == nil {
             parseFallbackJSONLocalizations()
         }
 
@@ -225,9 +223,11 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         case .automatic:
             // Try updating the localizations
             updateLocalizations()
-
         case .manual:
             // Don't do anything on manual update mode
+            break
+        case .never:
+            // Same goes for never
             break
         }
     }
