@@ -766,7 +766,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         // Iterate through bundle until we find the localizations file
         for bundle: Bundle in [Bundle(for: localizableModel.self)] + contextRepository.getLocalizationBundles() {
             // Check if bundle contains localizations file, otheriwse continue with next bundle
-            guard let filePath = bundle.path(forResource: "Localization_\(localeId)", ofType: "json") else {
+            guard let filePath = bundle.path(forResource: "Localizations_\(localeId)", ofType: "json") else {
                 continue
             }
 
