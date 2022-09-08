@@ -272,6 +272,7 @@ class LocalizationManagerTests: XCTestCase {
             try manager.clearLocalizations(includingPersisted: true)
             let newFilePaths = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [])
             XCTAssertTrue(newFilePaths.isEmpty)
+            XCTAssertEqual(manager.lastUpdatedDate, Date.distantPast)
         } catch {
             XCTFail("Failed to get contents of directories")
         }

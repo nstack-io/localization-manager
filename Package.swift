@@ -11,6 +11,17 @@ let package = Package(
         .target(
             name: "LocalizationManager",
             path: "LocalizationManager/Classes"
+        ),
+        .testTarget(
+            name: "LocalizationManagerTests",
+            dependencies: [.target(name: "LocalizationManager")],
+            path: "LocalizationManagerTests"
+//            exclude: <#T##[String]#>,
+//            sources: <#T##[String]?#>,
+//            cSettings: <#T##[CSetting]?#>,
+//            cxxSettings: <#T##[CXXSetting]?#>,
+//            swiftSettings: <#T##[SwiftSetting]?#>,
+//            linkerSettings: <#T##[LinkerSetting]?#>
         )
     ]
 )

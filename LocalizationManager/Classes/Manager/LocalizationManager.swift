@@ -381,7 +381,8 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
                 self.handleLocalizationModels(
                     descriptors: configs,
                     acceptHeaderUsed: languageAcceptHeader,
-                    completion: completion)
+                    completion: completion
+                )
 
             case .failure(let error):
                 //error fetching configs
@@ -615,6 +616,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
         localizableObjectDictonary.removeAll()
 
         if includingPersisted {
+            lastUpdatedDate = .distantPast
             try deletePersistedLocalizations()
         }
     }
