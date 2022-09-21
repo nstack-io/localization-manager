@@ -98,7 +98,7 @@ public class LocalizationManager<Language, Descriptor: LocalizationDescriptor> w
     }
 
     /// The previous date the localizations were updated
-    internal var lastUpdatedDate: Date? {
+    public var lastUpdatedDate: Date? {
         get {
             let timeInterval = userDefaults.double(forKey: Constants.Keys.lastUpdatedDate)
             if timeInterval == 0 {

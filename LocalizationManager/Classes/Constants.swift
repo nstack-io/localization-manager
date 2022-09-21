@@ -8,10 +8,10 @@
 
 import Foundation
 
-public enum Constants {
-    public enum Keys {
+enum Constants {
+    enum Keys {
         static let previousAcceptLanguage = "LocalizationManager-PAL"
-        public static let lastUpdatedDate = "LocalizationManager-LUD"
+        static let lastUpdatedDate = "LocalizationManager-LUD"
         static let currentBestFitLanguage = "LocalizationManager-BFL"
         static let availableLanguages = "LocalizationManager-AVL"
         static let defaultLanguage = "LocalizationManager-DFL"
