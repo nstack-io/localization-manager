@@ -11,6 +11,11 @@ let package = Package(
         .target(
             name: "LocalizationManager",
             path: "LocalizationManager/Classes"
+        ),
+        .testTarget(
+            name: "LocalizationManagerTests",
+            dependencies: [.target(name: "LocalizationManager")],
+            path: "LocalizationManagerTests"
         )
     ]
 )
