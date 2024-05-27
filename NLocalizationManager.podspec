@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "NLocalizationManager"
-  spec.version      = "3.1.5"
+  spec.version      = "3.1.6"
   spec.summary      = "A manager for handling localization in your application."
 
   # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Pod::Spec.new do |spec|
   choosing and other features.
                    DESC
 
-  spec.homepage     = "https://nodes-ios.github.io/TranslationManager/"
+  spec.homepage     = "https://github.com/nstack-io/localization-manager"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -79,7 +79,7 @@ Pod::Spec.new do |spec|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/nodes-ios/TranslationManager.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/nstack-io/localization-manager.git", :tag => "#{spec.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
